@@ -1,0 +1,37 @@
+name: build
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build macOS app
+        run: |
+          VER=$(cat VERSION)
+          xcodebuild -version | tee build.log
+          set -o pipefail
+          xcodebuild -project BillionairePlanner.xcodeproj -target BillionairePlanner -configuration Release -sdk macosx \
+            SYMROOT=$PWD/out OBJROOT=$PWD/out/obj CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= build 2>&1 \
+            | tee -a build.log | grep -E "error:|BUILD" || true
+          test -d out/Release/BillionairePlanner.app
+          ditto -c -k --keepParent out/Release/BillionairePlanner.app "BillionairePlanner_v$VER.app.zip"
+      - name: Check iOS compiles
+        if: always()
+        run: |
+          xcodebuild -project BillionairePlanner.xcodeproj -target BillionairePlanner -configuration Debug -sdk iphonesimulator \
+            SYMROOT=$PWD/out-ios OBJROOT=$PWD/out-ios/obj CODE_SIGNING_ALLOWED=NO build > ios.log 2>&1 \
+            && echo "iOS OK" >> ios.log || echo "iOS FAILED" >> ios.log
+      - name: Publish to build branch
+        if: always()
+        run: |
+          git config user.name github-actions; git config user.email actions@github.com
+          git checkout --orphan build
+          git rm -rf --cached . > /dev/null
+          git add -f build.log ios.log BillionairePlanner_v*.app.zip 2>/dev/null || git add -f build.log ios.log 2>/dev/null || git add -f build.log
+          git commit -m "build $(cat VERSION) ${GITHUB_SHA::7}"
+          git push -f origin build
