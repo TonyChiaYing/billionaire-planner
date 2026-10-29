@@ -1,0 +1,7 @@
+out/
+out-ios/
+*.app.zip
+build.log
+ios.log
+xcuserdata/
+.DS_Store

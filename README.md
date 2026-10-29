@@ -3,7 +3,12 @@
 給自己用的計畫／回顧 App：**少做（巴菲特）→ 排細（馬斯克）→ 復盤（達利奧）→ 深想（蓋茲）**。
 SwiftUI 單一多平台 target，iOS 17+ / iPadOS / macOS 14+，資料以 SwiftData 存在本機。
 
-## 開啟與執行
+## 取得 .app
+- `Planner/BillionairePlanner_v<版本>.app` 就是可直接雙擊的 Mac App（Apple 晶片／Intel 通用）。
+- 編譯由 GitHub 私人 repo `TonyChiaYing/billionaire-planner` 的雲端 Mac 完成：推送到 main 就會自動編譯 macOS 版並檢查 iOS 版，成品與紀錄在 `build` 分支。
+- 也可以在本機自己編：`bash ~/Desktop/Planner/_Archive/build.sh`（需 Xcode），結果見 `_Archive/build.log`。
+
+## 用 Xcode 開發
 1. 用 **Xcode 16 以上** 開啟 `BillionairePlanner.xcodeproj`。
 2. 上方執行目標選 **My Mac** → ⌘R，直接在 Mac 上跑。
 3. 要裝到 iPhone：Target → Signing & Capabilities → Team 選你的 Apple ID，執行目標改成你的 iPhone。
@@ -21,9 +26,11 @@ SwiftUI 單一多平台 target，iOS 17+ / iPadOS / macOS 14+，資料以 SwiftD
 資料夾結構：
 ```
 Planner/
-├── BillionairePlanner_v1.0.0/   ← 永遠只有一個：最新（目前）版本
+├── BillionairePlanner_v1.0.0.app  ← 最新版 App（雙擊開啟）
+├── BillionairePlanner_v1.0.0/   ← 最新版原始碼（永遠只有一個）
 └── _Archive/
-    ├── version.sh               ← 版本工具
+    ├── version.sh               ← 版本工具（升級／退回）
+    ├── build.sh                 ← 本機編譯 .app
     └── BillionairePlanner_v<版本>_<日期-時間>.zip   ← 舊版封存
 ```
 在「終端機」中：
