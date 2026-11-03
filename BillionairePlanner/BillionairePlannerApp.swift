@@ -175,7 +175,7 @@ struct RootView: View {
             TabView(selection: Binding(get: { tab ?? .today }, set: { tab = $0 })) {
                 ForEach(AppTab.allCases) { t in
                     t.view
-                        .tabItem { Label(t.title, systemImage: t.symbol) }
+                        .tabItem { Label(t.title, systemImage: t.symbol).accessibilityIdentifier("tab.\(t.rawValue)") }
                         .tag(t)
                 }
             }
@@ -183,6 +183,7 @@ struct RootView: View {
             NavigationSplitView {
                 List(AppTab.allCases, selection: $tab) { t in
                     Label(t.title, systemImage: t.symbol).tag(t)
+                        .accessibilityIdentifier("tab.\(t.rawValue)")
                 }
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
                 .safeAreaInset(edge: .bottom) {

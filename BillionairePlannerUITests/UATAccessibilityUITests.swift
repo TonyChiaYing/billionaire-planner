@@ -29,8 +29,15 @@ final class UATAccessibilityUITests: XCTestCase {
     func element(_ id: String) -> XCUIElement { app.descendants(matching: .any)[id].firstMatch }
 
     func openTab(_ title: String) {
-        let row = app.outlines.staticTexts[title].firstMatch
-        XCTAssertTrue(row.waitForExistence(timeout: 5), "找不到分頁 \(title)")
+        let ids = ["今天": "today", "目標": "goals", "回顧": "review", "思考": "think"]
+        let byID = app.descendants(matching: .any)["tab.\(ids[title] ?? title)"].firstMatch
+        let candidates = [byID, app.outlines.staticTexts[title].firstMatch, app.cells.staticTexts[title].firstMatch,
+                          app.staticTexts[title].firstMatch]
+        _ = byID.waitForExistence(timeout: 8)
+        guard let row = candidates.first(where: { $0.exists }) else {
+            XCTFail("找不到分頁 \(title)\n" + String(app.debugDescription.prefix(6000)))
+            return
+        }
         row.click()
     }
 

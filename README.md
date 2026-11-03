@@ -1,4 +1,4 @@
-# 億萬計畫 Billionaire Planner v2.0.0.0
+# 億萬計畫 Billionaire Planner v2.0.0.1
 
 給自己用的目標循環 App：**目標 → 策略 → 行動 → 今日安排 → 成果 → 回顧 → 恢復**。
 目標是讓「調整」取代「放棄」：沒做到不是失敗，系統會幫你縮小、重排、調期或重新開始，而且不會抹掉過去的成果。
@@ -44,15 +44,22 @@ BillionairePlannerTests/     SwiftData 遷移與主要流程整合測試
 ```
 
 - 雲端：推送到 GitHub `main` 會自動跑 Domain 測試、App 測試、macOS Release（Apple 晶片＋Intel）與 iOS 編譯；成品與紀錄在 `build` 分支。
-- 本機：Xcode 16 以上開啟 `BillionairePlanner.xcodeproj`，⌘U 跑測試、⌘R 執行；或 `bash ~/Desktop/Planner/_Archive/build.sh`。
+- 本機測試（在 Planner 資料夾也穩定，產物放在系統暫存區）：
+  ```bash
+  cd ~/Desktop/Planner/BillionairePlanner_v2.0.0.1
+  bash scripts/test.sh --core   # 只跑 PlannerCore（最快）
+  bash scripts/test.sh --unit   # Domain＋App 整合
+  bash scripts/test.sh          # 全部（含 macOS UI 測試，第一次會要求「輔助使用」權限）
+  ```
+- 本機執行：Xcode 16 以上開啟 `BillionairePlanner.xcodeproj`，⌘R；或 `bash ~/Desktop/Planner/_Archive/build.sh` 產生 .app。
 - 裝到 iPhone：Target → Signing & Capabilities 選你的 Apple ID。
 
 ## 版本管理
 
 ```
 Planner/
-├── BillionairePlanner_v2.0.0.0.app   ← 最新版 App
-├── BillionairePlanner_v2.0.0.0/      ← 最新版原始碼
+├── BillionairePlanner_v2.0.0.1.app   ← 最新版 App
+├── BillionairePlanner_v2.0.0.1/      ← 最新版原始碼
 └── _Archive/                         ← 舊版 zip（原始碼＋.app）、version.sh、build.sh
 ```
 

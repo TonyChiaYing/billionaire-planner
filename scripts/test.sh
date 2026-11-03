@@ -9,16 +9,16 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TMP="${BP_TEST_TMP:-${TMPDIR:-/tmp}/BillionairePlannerTests}"
-mkdir -p "$TMP"
+mkdir -p "${TMP}"
 MODE="${1:-all}"
 XCB=(xcodebuild test -project "$ROOT/BillionairePlanner.xcodeproj" -scheme BillionairePlanner
-     -destination 'platform=macOS' -derivedDataPath "$TMP/DerivedData"
+     -destination 'platform=macOS' -derivedDataPath "${TMP}/DerivedData"
      CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM=)
 
 if [ "$MODE" = all ] || [ "$MODE" = --core ] || [ "$MODE" = --unit ]; then
-  echo "▶ PlannerCore（scratch：$TMP/core-build）"
-  CLANG_MODULE_CACHE_PATH="$TMP/module-cache" \
-    swift test --package-path "$ROOT/PlannerCore" --scratch-path "$TMP/core-build"
+  echo "▶ PlannerCore（scratch：${TMP}/core-build）"
+  CLANG_MODULE_CACHE_PATH="${TMP}/module-cache" \
+    swift test --package-path "$ROOT/PlannerCore" --scratch-path "${TMP}/core-build"
 fi
 if [ "$MODE" = all ] || [ "$MODE" = --unit ]; then
   echo "▶ App 整合測試（macOS）"
@@ -28,4 +28,4 @@ if [ "$MODE" = all ] || [ "$MODE" = --ui ]; then
   echo "▶ UI 測試（macOS）"
   "${XCB[@]}" -only-testing:BillionairePlannerUITests
 fi
-echo "✅ 測試完成（產物在 $TMP，可隨時刪除）"
+echo "✅ 測試完成（產物在 ${TMP}，可隨時刪除）"
