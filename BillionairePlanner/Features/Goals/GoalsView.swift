@@ -38,6 +38,7 @@ struct GoalsView: View {
                     }
                 } header: {
                     Text("焦點目標 \(focus.count)/\(FocusPolicy.hardLimit)")
+                        .accessibilityIdentifier("goals.focusHeader")
                 } footer: {
                     if focus.count > FocusPolicy.recommended {
                         Text("超過 3 個焦點時，每個目標每天能分到的時間會變少。")

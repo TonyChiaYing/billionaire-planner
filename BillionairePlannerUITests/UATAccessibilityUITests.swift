@@ -105,7 +105,10 @@ final class UATAccessibilityUITests: XCTestCase {
     func testUAT01_LaterHasNoSideEffects() {
         createGoalToFinishStep()
         button("wizard.later").click()
-        XCTAssertTrue(app.staticTexts["焦點目標 0/5"].firstMatch.waitForExistence(timeout: 5))
+        let header = element("goals.focusHeader")
+        XCTAssertTrue(header.waitForExistence(timeout: 5))
+        let text = [header.label, header.value as? String ?? "", header.title].joined(separator: " ")
+        XCTAssertTrue(text.contains("0/5") || app.staticTexts["焦點目標 0/5"].exists, "焦點數不是 0：\(text)")
         openTab("今天")
         XCTAssertFalse(app.staticTexts["Walk-run 25 min"].firstMatch.waitForExistence(timeout: 2))
     }
