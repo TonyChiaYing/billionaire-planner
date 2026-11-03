@@ -10,7 +10,12 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - name: Domain tests (PlannerCore)
+        run: |
+          swift test --package-path PlannerCore 2>&1 | tee core-test.log | grep -E "error:|failed|Executed|passed after" | tail -40
+          test ${PIPESTATUS[0]} -eq 0
       - name: Build macOS app
+        if: always()
         run: |
           VER=$(cat VERSION)
           xcodebuild -version | tee build.log
@@ -32,6 +37,6 @@ jobs:
           git config user.name github-actions; git config user.email actions@github.com
           git checkout --orphan build
           git rm -rf --cached . > /dev/null
-          git add -f build.log ios.log BillionairePlanner_v*.app.zip 2>/dev/null || git add -f build.log ios.log 2>/dev/null || git add -f build.log
+          for f in core-test.log app-test.log build.log ios.log BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
           git commit -m "build $(cat VERSION) ${GITHUB_SHA::7}"
           git push -f origin build
