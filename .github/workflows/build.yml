@@ -39,6 +39,8 @@ jobs:
             CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= > ui-test.log 2>&1
           code=$?
           grep -E "error:|failed|passed|Executed|TEST (SUCCEEDED|FAILED)" ui-test.log | tail -60
+          mkdir -p ui-diag; D=$(grep -oE "diag=[^ ]+" ui-test.log | head -1 | cut -d= -f2); [ -n "$D" ] && cp -R "$D"/. ui-diag/ 2>/dev/null
+          ls ui-diag || true
           exit $code
 
       - name: Build macOS app (Release, universal)
@@ -72,6 +74,6 @@ jobs:
           git config user.name github-actions; git config user.email actions@github.com
           git checkout --orphan build
           git rm -rf --cached . > /dev/null
-          for f in core-test.log app-test.log ui-test.log build.log ios.log BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
+          for f in core-test.log app-test.log ui-test.log build.log ios.log ui-diag BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
           git commit -m "build $(cat VERSION) ${GITHUB_SHA::7}"
           git push -f origin build

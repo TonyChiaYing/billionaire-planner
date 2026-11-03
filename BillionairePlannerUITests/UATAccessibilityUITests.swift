@@ -35,8 +35,11 @@ final class UATAccessibilityUITests: XCTestCase {
                           app.staticTexts[title].firstMatch]
         _ = byID.waitForExistence(timeout: 8)
         guard let row = candidates.first(where: { $0.exists }) else {
-            let w = app.windows.firstMatch
-            XCTFail("找不到分頁 \(title)；windows=\(app.windows.count)\n" + String(w.debugDescription.prefix(8000)))
+            let dir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("bp-ui-diag")
+            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            try? XCUIScreen.main.screenshot().pngRepresentation.write(to: dir.appendingPathComponent("\(name).png"))
+            try? app.debugDescription.write(to: dir.appendingPathComponent("tree.txt"), atomically: true, encoding: .utf8)
+            XCTFail("找不到分頁 \(title)；windows=\(app.windows.count)；diag=\(dir.path)")
             return
         }
         row.click()
