@@ -128,14 +128,16 @@ final class UATAccessibilityUITests: XCTestCase {
         createGoalToFinishStep()
         let cap = element("wizard.capacity")
         XCTAssertTrue(cap.waitForExistence(timeout: 5))
-        let before = cap.label
+        func text(_ e: XCUIElement) -> String { (e.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? e.label }
+        let before = text(cap)
         XCTAssertTrue(before.hasPrefix("安排前預估"), before)
         button("wizard.focusAndToday").click()
         let after = element("wizard.capacity")
         XCTAssertTrue(after.waitForExistence(timeout: 5))
-        XCTAssertTrue(after.label.hasPrefix("今天實際"), after.label)
+        let afterText = text(after)
+        XCTAssertTrue(afterText.hasPrefix("今天實際"), afterText)
         func load(_ s: String) -> String { s.components(separatedBy: "已安排 ").last?.components(separatedBy: "／").first ?? s }
-        XCTAssertEqual(load(after.label), load(before), "before=\(before) after=\(after.label)")
+        XCTAssertEqual(load(afterText), load(before), "before=\(before) after=\(afterText)")
     }
 
     func testUAT01_LaterHasNoSideEffects() {
