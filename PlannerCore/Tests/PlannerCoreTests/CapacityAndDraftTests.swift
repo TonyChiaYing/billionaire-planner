@@ -25,18 +25,27 @@ final class CapacityPolicyTests: XCTestCase {
         XCTAssertEqual(state(101), .overloaded)
     }
 
-    func testMissingRestRaisesTight() {
-        let a = CapacityCalculator.assess(CapacityInput(availableMinutes: 600, fixedWorkMinutes: 0, restMinutes: 0,
-                                                        items: [CapacityItem(minutes: 60)]))
-        XCTAssertEqual(a.state, .tight)
-        XCTAssertTrue(a.reasons.contains(.missingProtectedRest(have: 0, floor: 30)))
+    /// UAT-05：低負荷但沒休息 → 容量仍是「寬鬆」，缺休息另列為結構風險
+    func testMissingRestIsSeparateFromLoadState() {
+        let a = CapacityCalculator.assess(CapacityInput(availableMinutes: 900, fixedWorkMinutes: 0, restMinutes: 0,
+                                                        items: [CapacityItem(minutes: 25)]))
+        XCTAssertEqual(a.state, .comfortable)
+        XCTAssertTrue(a.missingRest)
+        XCTAssertTrue(a.needsAdjustment)
+        XCTAssertTrue(a.structuralRisks.contains(.missingProtectedRest(have: 0, floor: 30)))
+        XCTAssertFalse(a.reasons.contains(.missingProtectedRest(have: 0, floor: 30)))
     }
 
-    func testExcessiveSwitchesRaiseTight() {
+    func testExcessiveSwitchesAreStructuralRisk() {
         let items = (0..<8).map { CapacityItem(minutes: 5, context: $0 % 2 == 0 ? .work : .personal) }
         let a = CapacityCalculator.assess(CapacityInput(availableMinutes: 600, fixedWorkMinutes: 0, restMinutes: 60, items: items))
-        XCTAssertEqual(a.state, .tight)
-        XCTAssertTrue(a.reasons.contains(.tooManySwitches(count: 7)))
+        XCTAssertEqual(a.state, .comfortable)
+        XCTAssertTrue(a.structuralRisks.contains(.tooManySwitches(count: 7)))
+    }
+
+    func testEmptyDayHasNoStructuralNag() {
+        let a = CapacityCalculator.assess(CapacityInput(availableMinutes: 900, fixedWorkMinutes: 0, restMinutes: 0, items: []))
+        XCTAssertFalse(a.needsAdjustment)
     }
 
     func testZeroAvailabilityIsSafe() {

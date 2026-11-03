@@ -11,6 +11,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AA0000000000000000000045 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA0000000000000000000009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA0000000000000000000006;
+			remoteInfo = BillionairePlanner;
+		};
 		AA0000000000000000000026 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AA0000000000000000000009 /* Project object */;
@@ -21,16 +28,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA0000000000000000000040 /* BillionairePlannerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillionairePlannerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000000000000000000001 /* BillionairePlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BillionairePlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA0000000000000000000020 /* BillionairePlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillionairePlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AA0000000000000000000041 /* BillionairePlannerUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = BillionairePlannerUITests; sourceTree = "<group>"; };
 		AA0000000000000000000002 /* BillionairePlanner */ = {isa = PBXFileSystemSynchronizedRootGroup; path = BillionairePlanner; sourceTree = "<group>"; };
 		AA0000000000000000000021 /* BillionairePlannerTests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = BillionairePlannerTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AA0000000000000000000042 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0000000000000000000003 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -54,6 +70,7 @@
 			children = (
 				AA0000000000000000000002 /* BillionairePlanner */,
 				AA0000000000000000000021 /* BillionairePlannerTests */,
+				AA0000000000000000000041 /* BillionairePlannerUITests */,
 				AA0000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +80,7 @@
 			children = (
 				AA0000000000000000000001 /* BillionairePlanner.app */,
 				AA0000000000000000000020 /* BillionairePlannerTests.xctest */,
+				AA0000000000000000000040 /* BillionairePlannerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +88,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AA0000000000000000000043 /* BillionairePlannerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000047 /* Build configuration list for PBXNativeTarget "BillionairePlannerUITests" */;
+			buildPhases = (
+				AA0000000000000000000044 /* Sources */,
+				AA0000000000000000000042 /* Frameworks */,
+				AA0000000000000000000048 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA0000000000000000000046 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AA0000000000000000000041 /* BillionairePlannerUITests */,
+			);
+			name = BillionairePlannerUITests;
+			packageProductDependencies = (
+			);
+			productName = BillionairePlannerUITests;
+			productReference = AA0000000000000000000040 /* BillionairePlannerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		AA0000000000000000000006 /* BillionairePlanner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA0000000000000000000010 /* Build configuration list for PBXNativeTarget "BillionairePlanner" */;
@@ -133,6 +174,10 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = AA0000000000000000000006;
 					};
+					AA0000000000000000000043 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = AA0000000000000000000006;
+					};
 				};
 			};
 			buildConfigurationList = AA0000000000000000000011 /* Build configuration list for PBXProject "BillionairePlanner" */;
@@ -155,11 +200,19 @@
 			targets = (
 				AA0000000000000000000006 /* BillionairePlanner */,
 				AA0000000000000000000023 /* BillionairePlannerTests */,
+				AA0000000000000000000043 /* BillionairePlannerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AA0000000000000000000048 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0000000000000000000008 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -177,6 +230,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AA0000000000000000000044 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AA0000000000000000000007 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -194,6 +254,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AA0000000000000000000046 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA0000000000000000000006 /* BillionairePlanner */;
+			targetProxy = AA0000000000000000000045 /* PBXContainerItemProxy */;
+		};
 		AA0000000000000000000028 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AA0000000000000000000006 /* BillionairePlanner */;
@@ -202,6 +267,48 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		AA0000000000000000000049 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiaying.BillionairePlannerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BillionairePlanner;
+			};
+			name = Debug;
+		};
+		AA0000000000000000000050 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 2.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiaying.BillionairePlannerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BillionairePlanner;
+			};
+			name = Release;
+		};
 		AA0000000000000000000012 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -243,7 +350,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CURRENT_PROJECT_VERSION = 2.0.0.0;
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "億萬計畫";
@@ -276,7 +383,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CURRENT_PROJECT_VERSION = 2.0.0.0;
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "億萬計畫";
@@ -309,7 +416,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CURRENT_PROJECT_VERSION = 2.0.0.0;
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -332,7 +439,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CURRENT_PROJECT_VERSION = 2.0.0.0;
+				CURRENT_PROJECT_VERSION = 2.0.0.1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -352,6 +459,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AA0000000000000000000047 /* Build configuration list for PBXNativeTarget "BillionairePlannerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000049 /* Debug */,
+				AA0000000000000000000050 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AA0000000000000000000010 /* Build configuration list for PBXNativeTarget "BillionairePlanner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

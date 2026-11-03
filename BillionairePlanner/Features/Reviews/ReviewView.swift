@@ -21,60 +21,72 @@ struct ReviewView: View {
         let migration = planner.context.all(MigrationRun.self).first { $0.completedAt != nil }?.report
 
         NavigationStack {
-            List {
-                Section {
-                    stepRow("下班整理", detail: "工作收尾，約 1–2 分鐘", done: r?.workClosedAt, symbol: "briefcase") { sheet = .workClose }
-                    stepRow("晚間日結", detail: "確認今天、記下成果，約 2–4 分鐘", done: r?.eveningClosedAt, symbol: "moon.stars") { sheet = .evening }
-                    stepRow("明日草案", detail: r?.draftAcceptedAt == nil ? "根據今天的紀錄產生，可逐項接受" : "已接受部分草案",
-                            done: r?.draftAcceptedAt, symbol: "sunrise") { sheet = .draft }
-                } header: { Text("今天") } footer: { Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。") }
+            // UAT-03：不用 List 承載入口（macOS 的 List 會把按鈕變成不可按的列），改用真正的按鈕
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    Card(title: "今天", symbol: "sun.max") {
+                        stepButton("下班整理", detail: "工作收尾，約 1–2 分鐘", done: r?.workClosedAt, symbol: "briefcase",
+                                   id: "review.workClose") { sheet = .workClose }
+                        stepButton("晚間日結", detail: "確認今天、看看有沒有值得保存的成果，約 2–4 分鐘", done: r?.eveningClosedAt,
+                                   symbol: "moon.stars", id: "review.evening") { sheet = .evening }
+                        stepButton("明日草案", detail: r?.draftAcceptedAt == nil ? "根據今天的紀錄產生，可逐項接受" : "已接受部分草案",
+                                   done: r?.draftAcceptedAt, symbol: "sunrise", id: "review.draft") { sheet = .draft }
+                        Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。").font(.caption).foregroundStyle(.secondary)
+                    }
 
-                Section("每週") {
                     let w = planner.context.all(WeeklyReview.self).first { $0.weekStartKey == planner.weekStart.description }
-                    stepRow("每週回顧", detail: "成果與行動趨勢、策略決定、下週容量", done: w?.completedAt, symbol: "calendar") { sheet = .weekly }
-                }
+                    Card(title: "每週", symbol: "calendar") {
+                        stepButton("每週回顧", detail: "成果與行動趨勢、策略決定、下週容量", done: w?.completedAt, symbol: "calendar",
+                                   id: "review.weekly") { sheet = .weekly }
+                    }
 
-                Section {
                     let principles = planner.context.all(Principle.self).sorted { $0.createdAt > $1.createdAt }
-                    if principles.isEmpty { EmptyHint(text: "從回顧中提煉的做事原則會累積在這裡。") }
-                    ForEach(principles.prefix(20)) { p in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(p.text).bold()
-                            if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.caption).foregroundStyle(.secondary) }
-                            HStack(spacing: 6) {
-                                if !p.rootCause.isEmpty { Text("[\(p.causeType)] \(p.rootCause)") }
-                                if let g = planner.goal(p.goalID) { Text("· \(g.title)") }
-                                if !p.contextTag.isEmpty { Text("· \(p.contextTag)") }
+                    Card(title: "原則（痛苦＋反思＝進步）", symbol: "book.closed") {
+                        if principles.isEmpty { EmptyHint(text: "從回顧中提煉的做事原則會累積在這裡。") }
+                        ForEach(principles.prefix(20)) { p in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(p.text).bold()
+                                if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.caption).foregroundStyle(.secondary) }
+                                HStack(spacing: 6) {
+                                    if !p.rootCause.isEmpty { Text("[\(p.causeType)] \(p.rootCause)") }
+                                    if let g = planner.goal(p.goalID) { Text("· \(g.title)") }
+                                    if !p.contextTag.isEmpty { Text("· \(p.contextTag)") }
+                                }
+                                .font(.caption).foregroundStyle(.secondary)
                             }
-                            .font(.caption).foregroundStyle(.secondary)
+                            .accessibilityElement(children: .combine)
                         }
+                        Button { sheet = .principle } label: { Label("寫下一條原則", systemImage: "plus") }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("review.principle")
                     }
-                    Button { sheet = .principle } label: { Label("寫下一條原則", systemImage: "plus") }
-                } header: { Text("原則（痛苦＋反思＝進步）") }
 
-                Section("最近的成果") {
                     let ev = planner.context.all(OutcomeEvidence.self).filter { !$0.isReversed }.sorted { $0.recordedAt > $1.recordedAt }
-                    if ev.isEmpty { EmptyHint(text: "還沒有成果紀錄。") }
-                    ForEach(ev.prefix(15)) { e in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(e.note.isEmpty ? e.kind.label : e.note)
-                                Text(planner.goal(e.goalID)?.title ?? "").font(.caption).foregroundStyle(.secondary)
+                    Card(title: "最近的成果", symbol: "checkmark.seal") {
+                        if ev.isEmpty { EmptyHint(text: "還沒有成果紀錄。") }
+                        ForEach(ev.prefix(15)) { e in
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(e.note.isEmpty ? e.kind.label : e.note)
+                                    Text(planner.goal(e.goalID)?.title ?? "").font(.caption).foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                if let v = e.value { Text("\(v.formatted()) \(e.unit)").font(.callout.monospacedDigit()) }
+                                Text(e.recordedAt.shortDay).font(.caption).foregroundStyle(.secondary)
                             }
-                            Spacer()
-                            if let v = e.value { Text("\(v.formatted()) \(e.unit)").font(.callout.monospacedDigit()) }
-                            Text(e.recordedAt.shortDay).font(.caption).foregroundStyle(.secondary)
+                            .accessibilityElement(children: .combine)
                         }
                     }
-                }
+                    .accessibilityIdentifier("review.outcomes")
 
-                if let migration {
-                    Section {
+                    if let migration {
                         Button { report = ReportBox(report: migration) } label: { Label("v1 遷移報告", systemImage: "doc.text") }
+                            .buttonStyle(.bordered)
                     }
                 }
+                .padding()
             }
-            .darkCanvas()
+            .background(Color.black)
             .navigationTitle("回顧")
             .toolbar { ToolbarItem { SettingsToolbarButton() } }
             .sheet(item: $sheet) { s in
@@ -90,7 +102,9 @@ struct ReviewView: View {
         }
     }
 
-    private func stepRow(_ title: String, detail: String, done: Date?, symbol: String, action: @escaping () -> Void) -> some View {
+    /// 可用鍵盤（Tab／空白鍵）與 VoiceOver 啟動的入口按鈕
+    private func stepButton(_ title: String, detail: String, done: Date?, symbol: String, id: String,
+                            action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack {
                 Image(systemName: done == nil ? symbol : "checkmark.circle.fill")
@@ -104,8 +118,13 @@ struct ReviewView: View {
                 Spacer()
                 Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
             }
+            .padding(.vertical, 6)
+            .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.borderless)
+        .accessibilityLabel(title)
+        .accessibilityHint(done == nil ? detail : "已完成，可以再次開啟")
+        .accessibilityIdentifier(id)
     }
 }
 
@@ -201,28 +220,35 @@ struct EveningCloseSheet: View {
                 } header: { Text("1. 今天實際做完了哪些？") } footer: { Text("沒勾的會成為明日草案的延續候選。") }
 
                 Section {
-                    Toggle("今天是休息日／沒有可量化的進度", isOn: $isRestDay)
-                    if !isRestDay {
-                        ForEach(candidates) { c in
-                            Toggle(isOn: Binding(get: { outcomeSelected.contains(c.placement.id) },
-                                                 set: { if $0 { outcomeSelected.insert(c.placement.id) } else { outcomeSelected.remove(c.placement.id) } })) {
-                                VStack(alignment: .leading) {
-                                    Text(c.action.title)
-                                    Text(c.goal.title).font(.caption).foregroundStyle(.secondary)
-                                }
-                            }
-                            if outcomeSelected.contains(c.placement.id) {
-                                TextField("成果是什麼？（例：讀完第 3 章）", text: Binding(get: { outcomeNotes[c.placement.id] ?? "" },
-                                                                                set: { outcomeNotes[c.placement.id] = $0 }))
-                            }
-                        }
-                        Picker("其他成果的目標", selection: $extraGoalID) {
-                            Text("不記錄").tag(UUID?.none)
-                            ForEach(planner.goals.filter(\.isOpen)) { Text($0.title).tag(UUID?.some($0.id)) }
-                        }
-                        if extraGoalID != nil { TextField("其他成果", text: $extraNote) }
+                    if candidates.isEmpty {
+                        Text("今天沒有連結目標的完成行動。").font(.caption).foregroundStyle(.secondary)
                     }
-                } header: { Text("2. 記下至少一項成果") } footer: { Text("完成行動不等於成果；只勾選真的有推進的。") }
+                    ForEach(candidates) { c in
+                        Toggle(isOn: Binding(get: { outcomeSelected.contains(c.id) },
+                                             set: { if $0 { outcomeSelected.insert(c.id) } else { outcomeSelected.remove(c.id) } })) {
+                            VStack(alignment: .leading) {
+                                Text("「\(c.action.title)」有帶來成果嗎？")
+                                Text(c.goal.title).font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                        .accessibilityIdentifier("evening.candidate")
+                        if outcomeSelected.contains(c.id) {
+                            TextField("成果是什麼？（例：第一次連續慢跑 10 分鐘）", text: Binding(get: { outcomeNotes[c.id] ?? "" },
+                                                                                  set: { outcomeNotes[c.id] = $0 }))
+                            if (outcomeNotes[c.id] ?? "").trimmed.isEmpty {
+                                Text("請寫下成果內容，或取消勾選。").font(.caption).foregroundStyle(Color.attention)
+                            }
+                        }
+                    }
+                    Picker("其他成果的目標", selection: $extraGoalID) {
+                        Text("不記錄").tag(UUID?.none)
+                        ForEach(planner.goals.filter(\.isOpen)) { Text($0.title).tag(UUID?.some($0.id)) }
+                    }
+                    if extraGoalID != nil { TextField("其他成果", text: $extraNote) }
+                    Toggle("今天是休息日", isOn: $isRestDay)
+                } header: { Text("2. 今天有沒有值得保存的成果？") } footer: {
+                    Text("完成行動不等於成果；沒有可量化的成果也完全沒關係，不勾就好。")
+                }
 
                 Section("3. 選填") {
                     Picker("精力", selection: $energy) {
@@ -248,25 +274,17 @@ struct EveningCloseSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("完成日結") {
                         for p in unfinished where confirmedDone.contains(p.id) { planner.complete(p) }
-                        var evidence: [EveningEvidenceInput] = []
-                        if !isRestDay {
-                            for c in candidates where outcomeSelected.contains(c.placement.id) {
-                                evidence.append(EveningEvidenceInput(goalID: c.goal.id, kind: .note, value: nil,
-                                                                     note: outcomeNotes[c.placement.id] ?? c.action.title, actionID: c.action.id))
-                            }
-                            if let g = extraGoalID, !extraNote.trimmed.isEmpty {
-                                evidence.append(EveningEvidenceInput(goalID: g, kind: .note, value: nil, note: extraNote, actionID: nil))
-                            }
-                        }
+                        let confirmed = outcomeNotes.filter { outcomeSelected.contains($0.key) }
+                        let evidence = planner.eveningEvidence(candidates: candidates, confirmed: confirmed,
+                                                               extraGoalID: extraGoalID, extraNote: extraNote)
                         planner.closeEvening(day: day, evidence: evidence, energy: energy == 0 ? nil : energy, blockers: blockers,
                                              blockedGoalIDs: Array(blocked), principle: principle, isRestDay: isRestDay, note: note)
                         dismiss()
                         openDraft()
                     }
+                    .disabled(outcomeSelected.contains { (outcomeNotes[$0] ?? "").trimmed.isEmpty })
+                    .accessibilityIdentifier("evening.done")
                 }
-            }
-            .onAppear {
-                for c in candidates { outcomeSelected.insert(c.placement.id) }
             }
         }
         .frame(minWidth: 460, minHeight: 600)

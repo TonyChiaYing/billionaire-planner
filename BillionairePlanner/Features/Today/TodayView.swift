@@ -59,11 +59,14 @@ struct TodayView: View {
             .toolbar {
                 ToolbarItemGroup {
                     Button { showInsert = true } label: { Label("快速插入", systemImage: "bolt.badge.clock") }
+                        .accessibilityIdentifier("today.insert")
                         .keyboardShortcut("i", modifiers: [.command])
                         .help("快速插入臨時工作")
                     Button { showAdd = true } label: { Label("加入今天", systemImage: "plus") }
+                        .accessibilityIdentifier("today.add")
                         .keyboardShortcut("n", modifiers: [.command])
                     Button { showSkeleton = true } label: { Label("今日骨架", systemImage: "rectangle.split.3x1") }
+                        .accessibilityIdentifier("today.skeleton")
                     SettingsToolbarButton()
                 }
             }
@@ -118,12 +121,19 @@ struct TodayView: View {
                     if !a.minimumVersion.isEmpty {
                         Text("縮小版本：\(a.minimumVersion)").font(.caption).foregroundStyle(.secondary)
                     }
+                    if planner.isFocusing(p) {
+                        Label("專注中 · 已 \(planner.focusElapsedMinutes(p)) 分", systemImage: "timer")
+                            .font(.callout).foregroundStyle(Color.assetGreen)
+                            .accessibilityIdentifier("today.focusing")
+                    }
                     HStack {
-                        Button { focusTarget = p } label: { Label(p.startedAt == nil ? "開始專注" : "繼續專注", systemImage: "timer") }
+                        Button { focusTarget = p } label: { Label(p.startedAt == nil ? "開始專注" : "回到計時", systemImage: "timer") }
                             .buttonStyle(.borderedProminent)
                             .foregroundStyle(.black)
+                            .accessibilityIdentifier("today.focus")
                         Button { planner.complete(p) } label: { Label("完成", systemImage: "checkmark") }
                             .buttonStyle(.bordered)
+                            .accessibilityIdentifier("today.complete")
                     }
                 }
             } else {
@@ -136,8 +146,16 @@ struct TodayView: View {
 
     private func capacityCard(_ c: CapacityAssessment, planner: Planner, day: LocalDay) -> some View {
         Card(title: "今天裝得下嗎", symbol: "gauge.with.dots.needle.33percent") {
-            HStack {
-                CapacityBadge(state: c.state)
+            HStack(spacing: 8) {
+                StatusBadge(text: "容量：\(c.state.label)", symbol: c.state.symbol, color: c.state.color)
+                    .accessibilityIdentifier("capacity.load")
+                if c.missingRest {
+                    StatusBadge(text: "需要補休息", symbol: "cup.and.saucer", color: .attention)
+                        .accessibilityIdentifier("capacity.rest")
+                } else if c.needsAdjustment {
+                    StatusBadge(text: "計畫需調整", symbol: "slider.horizontal.3", color: .attention)
+                        .accessibilityIdentifier("capacity.structure")
+                }
                 Spacer()
                 Text("已安排 \(formatDuration(c.loadMinutes)) ／ 可承諾 \(formatDuration(c.committableMinutes))")
                     .font(.callout.monospacedDigit())
@@ -149,6 +167,22 @@ struct TodayView: View {
                 .font(.caption).foregroundStyle(.secondary)
             ForEach(Array(c.reasons.enumerated()), id: \.offset) { _, r in
                 Text("· \(r.text)").font(.caption).foregroundStyle(.secondary)
+            }
+            if c.needsAdjustment {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(c.missingRest ? "不是事情太多，而是還沒保護休息時間。" : "時間夠，但安排方式可能讓你很累。")
+                        .font(.callout.bold())
+                    ForEach(Array(c.structuralRisks.enumerated()), id: \.offset) { _, r in
+                        Text("· \(r.text)").font(.caption).foregroundStyle(.secondary)
+                    }
+                    if c.missingRest {
+                        Button { showSkeleton = true } label: { Label("加入休息", systemImage: "plus") }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("capacity.addRest")
+                    }
+                }
+                .padding(10)
+                .background(Color.attention.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
             }
             if c.state == .overloaded {
                 let proposals = OverloadAdvisor.proposals(for: planner.capacityInput(for: day), assessment: c)

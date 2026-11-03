@@ -9,7 +9,7 @@ struct BillionairePlannerApp: App {
 
     init() {
         do {
-            container = try PlannerContainer.make()
+            container = try (AppEnvironment.isUITesting ? PlannerContainer.inMemory() : PlannerContainer.make())
             storeError = nil
         } catch {
             container = nil
@@ -71,6 +71,10 @@ struct LaunchGate: View {
     }
 
     private func migrate() {
+        if AppEnvironment.isUITesting {
+            phase = .ready
+            return
+        }
         let migrator = V1Migrator(v1Store: StoreLocation.v1Store, backupRoot: StoreLocation.backups, container: context.container)
         switch migrator.runIfNeeded() {
         case .noLegacyStore, .alreadyCompleted:

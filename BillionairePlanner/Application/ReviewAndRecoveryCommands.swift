@@ -82,6 +82,20 @@ extension Planner {
         }
     }
 
+    /// UAT-02：完成行動只是「成果候選」。只有使用者勾選且寫下非空內容的才成為成果證據；不以行動名稱補值。
+    func eveningEvidence(candidates: [OutcomeCandidate], confirmed: [UUID: String],
+                         extraGoalID: UUID?, extraNote: String) -> [EveningEvidenceInput] {
+        var result: [EveningEvidenceInput] = []
+        for c in candidates {
+            guard let note = confirmed[c.id]?.trimmed, !note.isEmpty else { continue }
+            result.append(EveningEvidenceInput(goalID: c.goal.id, kind: .note, value: nil, note: note, actionID: c.action.id))
+        }
+        if let g = extraGoalID, !extraNote.trimmed.isEmpty {
+            result.append(EveningEvidenceInput(goalID: g, kind: .note, value: nil, note: extraNote.trimmed, actionID: nil))
+        }
+        return result
+    }
+
     func closeEvening(day: LocalDay, evidence: [EveningEvidenceInput], energy: Int?, blockers: String,
                       blockedGoalIDs: [UUID], principle: String, isRestDay: Bool, note: String) {
         for e in evidence {

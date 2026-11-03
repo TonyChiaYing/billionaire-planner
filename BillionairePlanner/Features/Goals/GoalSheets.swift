@@ -210,7 +210,7 @@ struct RecoverySheet: View {
                                 if option == o { Image(systemName: "checkmark").foregroundStyle(Color.assetGreen) }
                             }
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.borderless)
                         .accessibilityAddTraits(option == o ? .isSelected : [])
                     }
                 } header: { Text("從改動最小的開始") }

@@ -239,7 +239,7 @@ struct GoalDetailView: View {
                         if let d = m.targetDate { Text(d.shortDay).font(.caption).foregroundStyle(.secondary) }
                     }
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.borderless)
                 .accessibilityLabel("\(m.title)，\(m.completedAt == nil ? "未完成" : "已完成")")
             }
             Button { sheet = .milestone } label: { Label("新增里程碑", systemImage: "plus") }

@@ -110,8 +110,17 @@ public struct CapacityAssessment: Sendable, Equatable {
     public var committableMinutes: Int
     public var loadMinutes: Int
     public var loadRatio: Double
+    /// 純容量狀態（只看分鐘負荷）
     public var state: LoadState
+    /// 容量相關原因（負荷比例、超出分鐘）
     public var reasons: [CapacityReason]
+    /// 計畫結構風險（缺休息、切換過多、高耗能集中）——與容量分開呈現（UAT-05）
+    public var structuralRisks: [CapacityReason]
+
+    public var needsAdjustment: Bool { !structuralRisks.isEmpty }
+    public var missingRest: Bool {
+        structuralRisks.contains { if case .missingProtectedRest = $0 { return true } else { return false } }
+    }
 
     public var overloadMinutes: Int { max(0, loadMinutes - committableMinutes) }
     public var remainingMinutes: Int { max(0, committableMinutes - loadMinutes) }
@@ -148,7 +157,7 @@ public enum CapacityCalculator {
         if committable > 0, load > 0 { reasons.append(.loadRatio(percent: Int((ratio * 100).rounded()))) }
         if load > committable, committable > 0 { reasons.append(.overBy(minutes: load - committable)) }
 
-        // 總分鐘未超載，也可能因結構因素「偏滿」
+        // 結構風險另列，不再把低負荷的容量狀態硬升為「偏滿」（UAT-05，使用者新決定優先於 skill 基準）
         var structural: [CapacityReason] = []
         if available >= policy.restFloorAppliesFromMinutes, rest < policy.restFloorMinutes {
             structural.append(.missingProtectedRest(have: rest, floor: policy.restFloorMinutes))
@@ -156,13 +165,12 @@ public enum CapacityCalculator {
         if switches > policy.maxContextSwitches { structural.append(.tooManySwitches(count: switches)) }
         let high = input.items.filter(\.isHighEnergy).count
         if high > policy.maxHighEnergyItems { structural.append(.clusteredHighEnergy(count: high)) }
-        if !structural.isEmpty, state.rank < LoadState.tight.rank, load > 0 { state = .tight }
-        reasons += structural
 
         return CapacityAssessment(availableMinutes: available, fixedWorkMinutes: fixed, restMinutes: rest,
                                   discretionaryMinutes: discretionary, bufferMinutes: buffer,
                                   committableMinutes: max(0, committable), loadMinutes: load,
-                                  loadRatio: ratio, state: state, reasons: reasons)
+                                  loadRatio: ratio, state: state, reasons: reasons,
+                                  structuralRisks: load > 0 || fixed > 0 ? structural : [])
     }
 
     static func contextSwitches(_ items: [CapacityItem]) -> Int {

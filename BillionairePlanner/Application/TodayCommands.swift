@@ -167,18 +167,39 @@ extension Planner {
         save()
     }
 
+    /// 開始專注；若已在進行中（背景繼續）就沿用原本的開始時間
     func start(_ p: PlanPlacement) {
-        p.startedAt = now
+        if p.startedAt == nil { p.startedAt = now }
         p.disposition = p.disposition == .shrink ? .shrink : nil
         if let a = actionMap()[p.actionID] { a.status = .inProgress }
         save()
     }
 
-    /// 專注計時結束：記錄實際投入（使用者確認後才寫入）
+    func isFocusing(_ p: PlanPlacement) -> Bool { p.startedAt != nil && !p.isDone }
+
+    func focusElapsedMinutes(_ p: PlanPlacement) -> Int {
+        guard let s = p.startedAt else { return 0 }
+        return max(0, Int(now.timeIntervalSince(s) / 60))
+    }
+
+    /// 結束專注並記錄實際投入（使用者確認後才寫入）。不足 1 分記 0，不假造時間（UAT-04）
     func logFocus(_ p: PlanPlacement, minutes: Int, markDone: Bool) {
         guard let a = actionMap()[p.actionID] else { return }
         a.actualMinutes += max(0, minutes)
-        if markDone { complete(p) } else { save() }
+        p.startedAt = nil
+        if markDone {
+            complete(p)
+        } else {
+            a.status = .planned
+            save()
+        }
+    }
+
+    /// 停止但不記錄：清除進行中狀態，投入分鐘不變（UAT-04）
+    func cancelFocus(_ p: PlanPlacement) {
+        p.startedAt = nil
+        if let a = actionMap()[p.actionID], a.status == .inProgress { a.status = .planned }
+        save()
     }
 
     // MARK: - 錯過＝需要處置（AC-09）

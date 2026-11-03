@@ -139,6 +139,13 @@ struct AddToTodaySheet: View {
                     }
                 }
 
+                ForEach(planner.goals.filter { $0.status == .active && !$0.isFocus }) { g in
+                    let candidates = planner.openActions(for: g.id).filter { !placedIDs.contains($0.id) && !added.contains($0.id) }
+                    if !candidates.isEmpty {
+                        Section("其他目標：\(g.title)") { ForEach(candidates) { a in addRow(a, planner: planner) } }
+                    }
+                }
+
                 let inbox = planner.context.all(ActionItem.self).filter {
                     $0.goalID == nil && ($0.status == .inbox || $0.status == .ready) && !placedIDs.contains($0.id) && !added.contains($0.id)
                 }
@@ -219,39 +226,52 @@ struct DaySkeletonSheet: View {
         let planner = Planner(context)
         let blocks = planner.dayBlocks(on: day)
         NavigationStack {
-            List {
-                Section {
-                    if blocks.isEmpty { Text("今天沒有固定區段。").foregroundStyle(.secondary) }
-                    ForEach(blocks) { b in
-                        Button { editing = b } label: {
+            // UAT-03：用真正的按鈕（不放在 List 裡），鍵盤與 VoiceOver 才能啟動
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    Card(title: "今天的固定區段", symbol: "rectangle.split.3x1") {
+                        if blocks.isEmpty { Text("今天沒有固定區段。").foregroundStyle(.secondary) }
+                        ForEach(blocks) { b in
                             HStack {
-                                Image(systemName: b.kind.symbol).frame(width: 22)
+                                Image(systemName: b.kind.symbol).frame(width: 22).accessibilityHidden(true)
                                 VStack(alignment: .leading) {
                                     Text(b.title)
                                     Text(b.kind.label + (b.isOverride ? " · 今天已修改" : "")).font(.caption).foregroundStyle(.secondary)
                                 }
                                 Spacer()
                                 Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.caption.monospacedDigit())
+                                Button("編輯") { editing = b }
+                                    .buttonStyle(.bordered)
+                                    .accessibilityLabel("編輯 \(b.title)")
+                                Button("今天移除") { planner.removeDayBlock(b) }
+                                    .buttonStyle(.borderless)
+                                    .accessibilityLabel("今天移除 \(b.title)")
                             }
                         }
-                        .buttonStyle(.plain)
-                        .swipeActions { Button("今天移除", role: .destructive) { planner.removeDayBlock(b) } }
-                        .contextMenu { Button("今天移除", role: .destructive) { planner.removeDayBlock(b) } }
+                        Text("這裡的修改只影響今天。想讓以後也一樣，請在編輯時選「同時更新模板」。")
+                            .font(.caption).foregroundStyle(.secondary)
                     }
-                } footer: {
-                    Text("這裡的修改只影響今天。想讓以後也一樣，請在編輯時選「同時更新模板」。")
-                }
-                Section {
-                    Button { adding = true } label: { Label("新增區段（休息、用餐、工作…）", systemImage: "plus") }
-                    if let t = planner.activeTemplate {
-                        Button { planner.applyTemplate(t, to: day) } label: { Label("套用「\(t.name)」模板", systemImage: "square.stack.3d.down.right") }
-                    } else {
-                        Button { planner.applyTemplate(planner.createDefaultTemplate(), to: day) } label: {
-                            Label("建立平日工作模板並套用", systemImage: "wand.and.stars")
+                    Card {
+                        Button { adding = true } label: { Label("新增區段（休息、用餐、工作…）", systemImage: "plus") }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("skeleton.addBlock")
+                        if let t = planner.activeTemplate {
+                            Button { planner.applyTemplate(t, to: day) } label: { Label("套用「\(t.name)」模板", systemImage: "square.stack.3d.down.right") }
+                                .buttonStyle(.bordered)
+                                .accessibilityIdentifier("skeleton.applyTemplate")
+                        } else {
+                            Button { planner.applyTemplate(planner.createDefaultTemplate(), to: day) } label: {
+                                Label("建立平日工作模板並套用", systemImage: "wand.and.stars")
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .foregroundStyle(.black)
+                            .accessibilityIdentifier("skeleton.createTemplate")
                         }
                     }
                 }
+                .padding()
             }
+            .background(Color.black)
             .navigationTitle("今日骨架")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
             .sheet(item: $editing) { DayBlockEditor(block: $0, day: day) }
@@ -373,7 +393,6 @@ struct FocusTimerSheet: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @AppStorage(SettingKey.breakAfter) private var breakAfter = 50
-    @State private var startedAt = Date()
     @State private var restDismissedAt: Int = 0
 
     var body: some View {
@@ -382,48 +401,59 @@ struct FocusTimerSheet: View {
         let target = planner.plannedMinutes(placement, action: action)
         NavigationStack {
             TimelineView(.periodic(from: .now, by: 1)) { tl in
-                let elapsed = Int(tl.date.timeIntervalSince(startedAt))
+                let startedAt = placement.startedAt ?? tl.date
+                let elapsed = max(0, Int(tl.date.timeIntervalSince(startedAt)))
                 let minutes = elapsed / 60
                 VStack(spacing: 18) {
                     Text(action?.title ?? "").font(.title2.bold()).multilineTextAlignment(.center)
                     Text(Duration.seconds(elapsed).formatted(.time(pattern: .minuteSecond)))
                         .font(.system(size: 56, weight: .semibold, design: .rounded).monospacedDigit())
-                        .accessibilityLabel("已專注 \(minutes) 分鐘")
+                        .accessibilityLabel(minutes == 0 ? "已專注不到 1 分鐘" : "已專注 \(minutes) 分鐘")
                     ProgressView(value: min(1, Double(elapsed) / Double(max(1, target * 60))))
                         .tint(.assetGreen)
                     Text("預計 \(formatDuration(target))").foregroundStyle(.secondary)
                     if minutes >= breakAfter && minutes - restDismissedAt >= breakAfter {
                         VStack(spacing: 8) {
                             Label("已專注 \(minutes) 分，建議休息 10 分鐘。", systemImage: "cup.and.saucer")
-                            HStack {
-                                Button("再專注一下") { restDismissedAt = minutes }.buttonStyle(.bordered)
-                            }
+                            Button("再專注一下") { restDismissedAt = minutes }.buttonStyle(.bordered)
                         }
                         .padding()
                         .background(Color.cardBackground, in: RoundedRectangle(cornerRadius: 10))
                     }
                     HStack {
                         Button {
-                            planner.logFocus(placement, minutes: max(1, minutes), markDone: true)
+                            planner.logFocus(placement, minutes: minutes, markDone: true)
                             dismiss()
-                        } label: { Label("完成，記錄 \(max(1, minutes)) 分", systemImage: "checkmark") }
+                        } label: { Label(minutes == 0 ? "完成（不足 1 分，不記時間）" : "完成，記錄 \(minutes) 分", systemImage: "checkmark") }
                             .buttonStyle(.borderedProminent).foregroundStyle(.black)
-                        Button {
-                            planner.logFocus(placement, minutes: minutes, markDone: false)
-                            dismiss()
-                        } label: { Label("先停，記錄投入", systemImage: "pause") }
-                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("focus.complete")
+                        if minutes > 0 {
+                            Button {
+                                planner.logFocus(placement, minutes: minutes, markDone: false)
+                                dismiss()
+                            } label: { Label("停止，記錄 \(minutes) 分", systemImage: "pause") }
+                                .buttonStyle(.bordered)
+                                .accessibilityIdentifier("focus.stopRecord")
+                        }
                     }
+                    HStack {
+                        Button {
+                            planner.cancelFocus(placement)
+                            dismiss()
+                        } label: { Label("停止但不記錄", systemImage: "xmark.circle") }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("focus.stopNoRecord")
+                        Button { dismiss() } label: { Label("在背景繼續", systemImage: "arrow.down.right.circle") }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("focus.background")
+                    }
+                    Text("「在背景繼續」會保留計時，今天頁會顯示正在專注。").font(.caption).foregroundStyle(.secondary)
                 }
                 .padding(24)
             }
             .navigationTitle("專注")
-            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("不記錄，關閉") { dismiss() } } }
-            .onAppear {
-                startedAt = Date()
-                planner.start(placement)
-            }
+            .onAppear { planner.start(placement) }
         }
-        .frame(minWidth: 420, minHeight: 420)
+        .frame(minWidth: 460, minHeight: 460)
     }
 }

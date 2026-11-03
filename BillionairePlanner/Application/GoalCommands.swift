@@ -2,6 +2,16 @@ import Foundation
 import SwiftData
 import PlannerCore
 
+/// UAT-01：建立目標第三步完成後的明確選擇（不自動設為焦點）
+enum SetupFinishChoice: String, CaseIterable {
+    case focusAndToday, focusOnly, todayOnly, later
+}
+
+struct SetupFinishResult: Equatable {
+    var focus: FocusRequestResult?
+    var plannedToday: Bool
+}
+
 enum FocusRequestResult: Equatable {
     case focused
     case focusedAboveRecommended(count: Int)
@@ -31,6 +41,42 @@ extension Planner {
         }
         goal.lastActivityAt = now
         save()
+    }
+
+    /// 完成建立：依使用者明確選擇加入焦點／安排今天；「稍後」不產生任何副作用
+    @discardableResult
+    func finishSetup(_ goal: Goal, choice: SetupFinishChoice) -> SetupFinishResult {
+        switch choice {
+        case .later:
+            return SetupFinishResult(focus: nil, plannedToday: false)
+        case .focusOnly:
+            return SetupFinishResult(focus: requestFocus(goal), plannedToday: false)
+        case .todayOnly:
+            return SetupFinishResult(focus: nil, plannedToday: planFirstActionToday(goal))
+        case .focusAndToday:
+            let r = requestFocus(goal)
+            switch r {
+            case .focused, .focusedAboveRecommended:
+                return SetupFinishResult(focus: r, plannedToday: planFirstActionToday(goal))
+            default:
+                return SetupFinishResult(focus: r, plannedToday: false)   // 焦點已滿或尚未可執行：什麼都不改
+            }
+        }
+    }
+
+    /// 把第一個下一步排進今天（已排過就不重複）
+    func planFirstActionToday(_ goal: Goal) -> Bool {
+        let placed = Set(placements(on: today).filter(\.isActiveToday).map(\.actionID))
+        guard let a = openActions(for: goal.id).first(where: { !placed.contains($0.id) }) else { return false }
+        plan(a, on: today)
+        return true
+    }
+
+    /// 加入某行動後今天的容量（預覽用，不寫入）
+    func capacityPreview(adding minutes: Int) -> CapacityAssessment {
+        var input = capacityInput(for: today)
+        input.items.append(CapacityItem(minutes: minutes))
+        return CapacityCalculator.assess(input, policy: settings.capacityPolicy)
     }
 
     // MARK: 期限（只增不改，AC-13）

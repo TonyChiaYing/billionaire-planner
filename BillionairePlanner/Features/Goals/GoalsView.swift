@@ -77,6 +77,7 @@ struct GoalsView: View {
             .toolbar {
                 ToolbarItemGroup {
                     Button { showWizard = true } label: { Label("新目標", systemImage: "plus") }
+                        .accessibilityIdentifier("goals.new")
                         .keyboardShortcut("n", modifiers: [.command, .shift])
                     SettingsToolbarButton()
                 }
@@ -165,6 +166,7 @@ struct GoalWizard: View {
     @State private var strategy = ""
     @State private var nextAction = ""
     @State private var estimate = 25
+    @State private var finishResult: SetupFinishResult?
 
     var body: some View {
         let planner = Planner(context)
@@ -173,9 +175,9 @@ struct GoalWizard: View {
                 switch step {
                 case 1:
                     Section {
-                        TextField("目標名稱", text: $title)
+                        TextField("目標名稱", text: $title).accessibilityIdentifier("wizard.title")
                         Picker("時間尺度", selection: $horizon) { ForEach(GoalHorizon.allCases) { Text($0.label).tag($0) } }
-                        TextField("完成時，你會看到什麼？", text: $outcome, axis: .vertical)
+                        TextField("完成時，你會看到什麼？", text: $outcome, axis: .vertical).accessibilityIdentifier("wizard.outcome")
                     } header: { Text("第 1 步（必要）") } footer: { Text("先寫下來就好，之後都能再補。") }
                 case 2:
                     Section {
@@ -183,30 +185,102 @@ struct GoalWizard: View {
                         if hasDeadline { DatePicker("期限", selection: $deadline, displayedComponents: .date) }
                         TextField("第一個里程碑（選填）", text: $milestone)
                     } header: { Text("第 2 步（建議，可略過）") }
-                default:
+                case 3:
                     Section {
-                        TextField("目前打算怎麼做？（策略）", text: $strategy, axis: .vertical)
-                        TextField("一個 5–90 分鐘能完成的下一步", text: $nextAction)
+                        TextField("目前打算怎麼做？（策略）", text: $strategy, axis: .vertical).accessibilityIdentifier("wizard.strategy")
+                        TextField("一個 5–90 分鐘能完成的下一步", text: $nextAction).accessibilityIdentifier("wizard.action")
                         Stepper("約 \(formatDuration(estimate))", value: $estimate, in: 5...90, step: 5)
-                    } header: { Text("第 3 步（開始安排前）") } footer: { Text("有策略和下一步，這個目標才會出現在今天的候選中。") }
+                    } header: { Text("第 3 步（開始安排前）") } footer: { Text("填好策略和下一步後，下一個畫面會問你要不要加入焦點、安排到今天。") }
+                default:
+                    finishSection(planner)
                 }
             }
             .formStyle(.grouped)
-            .navigationTitle("新目標 · \(step)/3")
+            .navigationTitle(step <= 3 ? "新目標 · \(step)/3" : "接下來要怎麼做？")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(goal == nil ? "取消" : "存成草稿") { dismiss() }
+                    if step <= 3 { Button(goal == nil ? "取消" : "存成草稿") { dismiss() } }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(step == 3 ? "完成" : "下一步") { advance(planner) }
-                        .disabled(step == 1 && (title.trimmed.isEmpty || outcome.trimmed.isEmpty))
+                    if step <= 3 {
+                        Button("下一步") { advance(planner) }
+                            .disabled(step == 1 && (title.trimmed.isEmpty || outcome.trimmed.isEmpty))
+                            .accessibilityIdentifier("wizard.next")
+                    } else {
+                        Button("完成") { dismiss() }.accessibilityIdentifier("wizard.done")
+                    }
                 }
                 ToolbarItem(placement: .automatic) {
-                    if step == 2 { Button("略過") { step = 3 } }
+                    if step == 2 { Button("略過") { step = 3 }.accessibilityIdentifier("wizard.skip") }
                 }
             }
         }
-        .frame(minWidth: 460, minHeight: 420)
+        .frame(minWidth: 460, minHeight: 460)
+    }
+
+    /// 第 4 步：一次明確確認（UAT-01）。「稍後」不產生任何副作用。
+    @ViewBuilder
+    private func finishSection(_ planner: Planner) -> some View {
+        if let goal {
+            let ready = planner.isExecutable(goal)
+            let next = planner.openActions(for: goal.id).first
+            Section {
+                Text("「\(goal.title)」已建立。").font(.headline)
+                if !ready {
+                    Text("還缺策略或下一步，目前存成草稿；之後在目標頁補上就能安排。").foregroundStyle(.secondary)
+                } else if let next {
+                    Text("下一步：\(next.title)（約 \(formatDuration(next.estimateMinutes ?? 30))）")
+                    let preview = planner.capacityPreview(adding: next.estimateMinutes ?? 30)
+                    Label("排進今天後：容量\(preview.state.label)（已安排 \(formatDuration(preview.loadMinutes))／可承諾 \(formatDuration(preview.committableMinutes))）",
+                          systemImage: preview.state.symbol)
+                        .font(.callout)
+                        .foregroundStyle(preview.state.color)
+                }
+            }
+            if let r = finishResult {
+                Section { resultText(r, planner: planner) }
+            } else if ready {
+                let focusCount = planner.focusGoals.count
+                Section {
+                    Button { finishResult = planner.finishSetup(goal, choice: .focusAndToday) } label: {
+                        Label("加入焦點並安排今天", systemImage: "sun.max")
+                    }
+                    .buttonStyle(.borderedProminent).foregroundStyle(.black)
+                    .accessibilityIdentifier("wizard.focusAndToday")
+                    Button { finishResult = planner.finishSetup(goal, choice: .focusOnly) } label: {
+                        Label("只加入焦點", systemImage: "scope")
+                    }
+                    .buttonStyle(.bordered)
+                    .accessibilityIdentifier("wizard.focusOnly")
+                    Button { dismiss() } label: { Label("稍後再決定", systemImage: "clock") }
+                        .buttonStyle(.bordered)
+                        .accessibilityIdentifier("wizard.later")
+                } footer: {
+                    Text(focusCount >= FocusPolicy.hardLimit ? "目前已有 \(focusCount) 個焦點（上限 5）。"
+                         : "目前有 \(focusCount) 個焦點，建議最多 3 個。")
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func resultText(_ r: SetupFinishResult, planner: Planner) -> some View {
+        switch r.focus {
+        case .some(.blocked):
+            Text("焦點已經有 5 個，沒有加入。可以只先排進今天，或到目標頁替換一個焦點。")
+            Button("只安排今天（不加入焦點）") { finishResult = planner.finishSetup(goal!, choice: .todayOnly) }
+                .buttonStyle(.bordered)
+                .accessibilityIdentifier("wizard.todayOnly")
+        case .some(.needsStrategyAndAction):
+            Text("還缺策略或下一步，先存成草稿。")
+        default:
+            let parts = [r.focus == nil ? nil : "已加入焦點", r.plannedToday ? "已排進今天" : nil].compactMap { $0 }
+            Label(parts.isEmpty ? "完成" : parts.joined(separator: "，") + "。", systemImage: "checkmark.circle")
+                .foregroundStyle(Color.assetGreen)
+            if case .some(.focusedAboveRecommended(let n)) = r.focus {
+                Text("目前有 \(n) 個焦點，超過建議的 3 個；每個目標每天分到的時間會變少。").font(.caption).foregroundStyle(.secondary)
+            }
+        }
     }
 
     private func advance(_ planner: Planner) {
@@ -227,7 +301,7 @@ struct GoalWizard: View {
                     planner.addAction(title: nextAction, kind: .personal, goal: goal, estimate: estimate)
                 }
             }
-            dismiss()
+            step = 4
         }
     }
 }

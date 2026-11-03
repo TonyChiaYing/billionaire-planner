@@ -22,6 +22,7 @@ struct SettingsView: View {
     @State private var exportDoc: JSONDocument?
     @State private var showExport = false
     @State private var report: ReportBox?
+    @State private var showTemplates = false
 
     var body: some View {
         let migration = context.all(MigrationRun.self).first { $0.completedAt != nil }
@@ -38,7 +39,9 @@ struct SettingsView: View {
                 }
 
                 Section("工作模板") {
-                    NavigationLink { TemplateEditor() } label: { Label("編輯工作模板", systemImage: "square.stack.3d.down.right") }
+                    Button { showTemplates = true } label: { Label("編輯工作模板", systemImage: "square.stack.3d.down.right") }
+                        .buttonStyle(.bordered)
+                        .accessibilityIdentifier("settings.templates")
                 }
 
                 Section {
@@ -86,6 +89,7 @@ struct SettingsView: View {
             .fileExporter(isPresented: $showExport, document: exportDoc, contentType: .json,
                           defaultFilename: "BillionairePlanner-\(LocalDay.today().description)") { _ in }
             .sheet(item: $report) { box in NavigationStack { MigrationReportView(report: box.report) } }
+            .navigationDestination(isPresented: $showTemplates) { TemplateEditor() }
             .onChange(of: notifications) { Notifier.sync(context) }
             .onChange(of: notificationDetails) { Notifier.sync(context) }
         }
@@ -129,7 +133,7 @@ struct TemplateEditor: View {
                                     .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
                             }
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.borderless)
                         .contextMenu { Button("刪除", role: .destructive) { context.delete(item); planner.save() } }
                         .swipeActions { Button("刪除", role: .destructive) { context.delete(item); planner.save() } }
                     }

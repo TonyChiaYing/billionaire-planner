@@ -60,6 +60,11 @@ struct PlannerSettings {
     }
 }
 
+/// UI 測試模式：記憶體資料庫、不遷移、不發通知（絕不碰使用者的真實資料）
+enum AppEnvironment {
+    static let isUITesting = ProcessInfo.processInfo.arguments.contains("-uiTesting")
+}
+
 enum AppInfo {
     static let shortVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
     static let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
@@ -72,6 +77,7 @@ enum AppInfo {
 @MainActor
 enum Notifier {
     static func sync(_ context: ModelContext, now: Date = Date(), calendar: Calendar = .current) {
+        guard !AppEnvironment.isUITesting else { return }
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
         let settings = PlannerSettings.load()
