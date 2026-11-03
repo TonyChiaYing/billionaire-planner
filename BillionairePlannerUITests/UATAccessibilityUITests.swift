@@ -12,6 +12,12 @@ final class UATAccessibilityUITests: XCTestCase {
         app.launchArguments = ["-uiTesting", "-fineTimeMode", "NO", "-dayStartMinute", "420", "-dayEndMinute", "1320"]
         app.launch()
         app.activate()
+        // 無頭 CI 工作階段有時不會自動開出主視窗：用標準選單「檔案 → 新增視窗」開一個（使用者環境不受影響）
+        if !app.windows.firstMatch.waitForExistence(timeout: 3) {
+            app.menuBars.menuBarItems["檔案"].click()
+            app.menuBars.menuItems["新增視窗"].click()
+        }
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 8), "主視窗沒有出現")
     }
 
     override func tearDownWithError() throws {
