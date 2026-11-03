@@ -35,7 +35,8 @@ final class UATAccessibilityUITests: XCTestCase {
                           app.staticTexts[title].firstMatch]
         _ = byID.waitForExistence(timeout: 8)
         guard let row = candidates.first(where: { $0.exists }) else {
-            XCTFail("找不到分頁 \(title)\n" + String(app.debugDescription.prefix(6000)))
+            let w = app.windows.firstMatch
+            XCTFail("找不到分頁 \(title)；windows=\(app.windows.count)\n" + String(w.debugDescription.prefix(8000)))
             return
         }
         row.click()
