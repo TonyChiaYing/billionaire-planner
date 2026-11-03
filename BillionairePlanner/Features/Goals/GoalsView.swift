@@ -105,7 +105,10 @@ struct GoalRow: View {
             HStack(spacing: 8) {
                 Text(progress.text).font(.caption)
                 if let d = goal.deadline { Text("期限 \(d.shortDay)").font(.caption) }
-                if goal.isOpen && !ready { StatusBadge(text: "需要策略與下一步", symbol: "square.dashed", color: .attention) }
+                if goal.isOpen && !ready, let missing = planner.missingSetup(goal).label {
+                    StatusBadge(text: missing, symbol: "square.dashed", color: .attention)
+                        .accessibilityIdentifier("goal.missing")
+                }
                 if goal.status == .paused, let u = goal.pausedUntil { Text("回看 \(u.shortDay)").font(.caption) }
             }
             .foregroundStyle(.secondary)
@@ -231,11 +234,13 @@ struct GoalWizard: View {
                     Text("還缺策略或下一步，目前存成草稿；之後在目標頁補上就能安排。").foregroundStyle(.secondary)
                 } else if let next {
                     Text("下一步：\(next.title)（約 \(formatDuration(next.estimateMinutes ?? 30))）")
-                    let preview = planner.capacityPreview(adding: next.estimateMinutes ?? 30)
-                    Label("排進今天後：容量\(preview.state.label)（已安排 \(formatDuration(preview.loadMinutes))／可承諾 \(formatDuration(preview.committableMinutes))）",
+                    let cap = planner.setupCapacity(for: goal)
+                    let preview = cap.assessment
+                    Label("\(cap.isEstimate ? "安排前預估" : "今天實際")：容量\(preview.state.label)（已安排 \(formatDuration(preview.loadMinutes))／可承諾 \(formatDuration(preview.committableMinutes))）",
                           systemImage: preview.state.symbol)
                         .font(.callout)
                         .foregroundStyle(preview.state.color)
+                        .accessibilityIdentifier("wizard.capacity")
                 }
             }
             if let r = finishResult {

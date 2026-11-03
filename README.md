@@ -1,4 +1,4 @@
-# 億萬計畫 Billionaire Planner v2.0.0.1
+# 億萬計畫 Billionaire Planner
 
 給自己用的目標循環 App：**目標 → 策略 → 行動 → 今日安排 → 成果 → 回顧 → 恢復**。
 目標是讓「調整」取代「放棄」：沒做到不是失敗，系統會幫你縮小、重排、調期或重新開始，而且不會抹掉過去的成果。
@@ -46,7 +46,7 @@ BillionairePlannerTests/     SwiftData 遷移與主要流程整合測試
 - 雲端：推送到 GitHub `main` 會自動跑 Domain 測試、App 測試、macOS Release（Apple 晶片＋Intel）與 iOS 編譯；成品與紀錄在 `build` 分支。
 - 本機測試（在 Planner 資料夾也穩定，產物放在系統暫存區）：
   ```bash
-  cd ~/Desktop/Planner/BillionairePlanner_v2.0.0.1
+  cd ~/Desktop/Planner/BillionairePlanner_v<版本>
   bash scripts/test.sh --core   # 只跑 PlannerCore（最快）
   bash scripts/test.sh --unit   # Domain＋App 整合
   bash scripts/test.sh          # 全部（含 macOS UI 測試，第一次會要求「輔助使用」權限）
@@ -58,8 +58,8 @@ BillionairePlannerTests/     SwiftData 遷移與主要流程整合測試
 
 ```
 Planner/
-├── BillionairePlanner_v2.0.0.1.app   ← 最新版 App
-├── BillionairePlanner_v2.0.0.1/      ← 最新版原始碼
+├── BillionairePlanner_v<版本>.app   ← 最新版 App
+├── BillionairePlanner_v<版本>/      ← 最新版原始碼
 └── _Archive/                         ← 舊版 zip（原始碼＋.app）、version.sh、build.sh
 ```
 
@@ -70,4 +70,4 @@ bash version.sh bump build|patch|minor|major "說明"   # 封存目前版 → �
 bash version.sh restore 1.0.0                        # 退回（目前版本先封存，可再 restore 回來）
 ```
 
-版號四段 `主.次.修.建置`。Apple 的顯示版本只能三段，所以 `MARKETING_VERSION = 2.0.0`，完整的 `2.0.0.0` 放在 build 號；App 內顯示 `v2.0.0.0`。GitHub 的 `v1` 分支保存 v1.0.0 原始碼。
+版號四段 `主.次.修.建置`，目前版本見 `VERSION` 與 `CHANGELOG.md`。Apple 的顯示版本只能三段，所以 `MARKETING_VERSION` 用前三段，完整四段放在 build 號（`CURRENT_PROJECT_VERSION`）；App 內顯示 `v<版本>`，與資料夾名稱 `BillionairePlanner_v<版本>` 相同。GitHub 的 `v1` 分支保存 v1.0.0 原始碼。

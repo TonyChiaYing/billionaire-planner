@@ -91,6 +91,28 @@ struct Planner {
                                  openActionCount: openActions(for: goal.id).count)
     }
 
+    /// 目標還缺什麼（V201-UAT-03）：只描述真正缺少的結構
+    enum MissingSetup: Equatable {
+        case none, strategy, action, both
+        var label: String? {
+            switch self {
+            case .none: nil
+            case .strategy: "需要策略"
+            case .action: "需要下一步"
+            case .both: "需要策略與下一步"
+            }
+        }
+    }
+
+    func missingSetup(_ goal: Goal) -> MissingSetup {
+        switch (activeStrategy(for: goal.id) == nil, openActions(for: goal.id).isEmpty) {
+        case (false, false): .none
+        case (true, false): .strategy
+        case (false, true): .action
+        case (true, true): .both
+        }
+    }
+
     // MARK: - 進度（雙重呈現）
 
     func outcomeProgress(_ goal: Goal, cycleOnly: Bool = false) -> OutcomeProgress {

@@ -72,11 +72,17 @@ extension Planner {
         return true
     }
 
-    /// 加入某行動後今天的容量（預覽用，不寫入）
-    func capacityPreview(adding minutes: Int) -> CapacityAssessment {
+    /// 建立完成畫面的容量（V201-UAT-01）：下一步尚未排進今天 → 「安排前預估」（不寫入）；
+    /// 已排進今天 → 今天的實際容量。同一個行動永遠只算一次。
+    func setupCapacity(for goal: Goal) -> (assessment: CapacityAssessment, isEstimate: Bool) {
+        let placed = Set(placements(on: today).filter(\.isActiveToday).map(\.actionID))
+        let open = openActions(for: goal.id)
+        guard let next = open.first(where: { !placed.contains($0.id) }), !open.contains(where: { placed.contains($0.id) }) else {
+            return (capacity(for: today), false)
+        }
         var input = capacityInput(for: today)
-        input.items.append(CapacityItem(minutes: minutes))
-        return CapacityCalculator.assess(input, policy: settings.capacityPolicy)
+        input.items.append(CapacityItem(minutes: next.estimateMinutes ?? settings.defaultEstimateMinutes))
+        return (CapacityCalculator.assess(input, policy: settings.capacityPolicy), true)
     }
 
     // MARK: 期限（只增不改，AC-13）

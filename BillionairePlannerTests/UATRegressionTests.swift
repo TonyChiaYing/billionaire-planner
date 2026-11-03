@@ -150,4 +150,56 @@ final class UATRegressionTests: XCTestCase {
         p.applyTemplate(p.activeTemplate!, to: p.today)
         XCTAssertFalse(p.capacity(for: p.today).missingRest)
     }
+
+    // MARK: V201-UAT-01：建立完成畫面的容量只算一次
+
+    func testV201UAT01_PreApplyEstimateEqualsPostApplyActual() {
+        let p = planner()
+        let other = p.createGoal(title: "[UT] 其他", horizon: .short, outcome: "x")
+        _ = p.addStrategy(other, title: "s")
+        p.plan(p.addAction(title: "既有行動", kind: .personal, goal: other, estimate: 80), on: p.today)
+        let g = runningGoal()
+        let before = p.setupCapacity(for: g)
+        XCTAssertTrue(before.isEstimate)
+        XCTAssertEqual(before.assessment.loadMinutes, p.capacity(for: p.today).loadMinutes + 25)
+        XCTAssertTrue(p.finishSetup(g, choice: .focusAndToday).plannedToday)
+        let after = p.setupCapacity(for: g)
+        XCTAssertFalse(after.isEstimate)
+        XCTAssertEqual(after.assessment.loadMinutes, before.assessment.loadMinutes, "25 分鐘行動被重複計算")
+        XCTAssertEqual(after.assessment.loadMinutes, p.capacity(for: p.today).loadMinutes)
+    }
+
+    func testV201UAT01_OtherBranchesDoNotChangeActualCapacity() {
+        for choice in [SetupFinishChoice.focusOnly, .later] {
+            let p = planner()
+            let g = runningGoal("[UT] \(choice)")
+            let actual = p.capacity(for: p.today).loadMinutes
+            _ = p.finishSetup(g, choice: choice)
+            XCTAssertEqual(p.capacity(for: p.today).loadMinutes, actual)
+            XCTAssertTrue(p.setupCapacity(for: g).isEstimate)
+        }
+    }
+
+    // MARK: V201-UAT-03：缺漏提示只描述真正缺少的部分
+
+    func testV201UAT03_MissingSetupLabels() {
+        let p = planner()
+        let both = p.createGoal(title: "[UT] 空", horizon: .short, outcome: "x")
+        XCTAssertEqual(p.missingSetup(both).label, "需要策略與下一步")
+        let strategyOnly = p.createGoal(title: "[UT] 有策略", horizon: .short, outcome: "x")
+        _ = p.addStrategy(strategyOnly, title: "s")
+        XCTAssertEqual(p.missingSetup(strategyOnly).label, "需要下一步")
+        let actionOnly = p.createGoal(title: "[UT] 有行動", horizon: .short, outcome: "x")
+        _ = p.addAction(title: "a", kind: .personal, goal: actionOnly, estimate: 10)
+        XCTAssertEqual(p.missingSetup(actionOnly).label, "需要策略")
+        XCTAssertNil(p.missingSetup(runningGoal()).label)
+    }
+
+    func testV201UAT03_CompletedActionLeavesOnlyActionMissing() {
+        let p = planner()
+        let g = runningGoal()
+        p.plan(p.openActions(for: g.id).first!, on: p.today)
+        p.complete(p.placements(on: p.today).first!)
+        XCTAssertEqual(p.missingSetup(g), .action)
+    }
 }

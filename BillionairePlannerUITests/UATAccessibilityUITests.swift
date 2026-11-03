@@ -9,7 +9,9 @@ final class UATAccessibilityUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
         app = XCUIApplication()
-        app.launchArguments = ["-uiTesting", "-fineTimeMode", "NO", "-dayStartMinute", "420", "-dayEndMinute", "1320"]
+        // V201-UAT-02：-uiTesting 時 App 自行把視窗置中於主螢幕；同時忽略先前保存的視窗狀態
+        app.launchArguments = ["-uiTesting", "YES", "-ApplePersistenceIgnoreState", "YES", "-NSQuitAlwaysKeepsWindows", "NO",
+                               "-fineTimeMode", "NO", "-dayStartMinute", "420", "-dayEndMinute", "1320"]
         app.launch()
         app.activate()
         // 無頭 CI 工作階段有時不會自動開出主視窗：用標準選單「檔案 → 新增視窗」開一個（使用者環境不受影響）
@@ -18,10 +20,32 @@ final class UATAccessibilityUITests: XCTestCase {
             app.menuBars.menuItems["新增視窗"].click()
         }
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 8), "主視窗沒有出現")
+        let entry = app.descendants(matching: .any)["tab.today"].firstMatch
+        let hittable = expectation(for: NSPredicate(format: "hittable == true"), evaluatedWith: entry)
+        if XCTWaiter.wait(for: [hittable], timeout: 8) != .completed {
+            saveDiagnostics("setUp")
+            XCTFail("主要入口不可點擊（視窗可能在螢幕外）：\(windowFrames())")
+        }
     }
 
     override func tearDownWithError() throws {
+        if (testRun?.failureCount ?? 0) > 0 { saveDiagnostics("failure") }
         app.terminate()
+    }
+
+    func windowFrames() -> String {
+        app.windows.allElementsBoundByIndex.map { "\($0.frame)" }.joined(separator: ", ")
+    }
+
+    /// 失敗時保存螢幕截圖、視窗 frame 與無障礙樹（V201-UAT-02）
+    func saveDiagnostics(_ tag: String) {
+        let dir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("bp-ui-diag")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let base = "\(name)-\(tag)".replacingOccurrences(of: " ", with: "_")
+        try? XCUIScreen.main.screenshot().pngRepresentation.write(to: dir.appendingPathComponent("\(base).png"))
+        let info = "windows=\(windowFrames())\nscreen=\(XCUIScreen.main.screenshot().image.size)\n\n\(app.debugDescription)"
+        try? info.write(to: dir.appendingPathComponent("\(base).txt"), atomically: true, encoding: .utf8)
+        print("diag=\(dir.path)")
     }
 
     // MARK: 工具
@@ -41,11 +65,8 @@ final class UATAccessibilityUITests: XCTestCase {
                           app.staticTexts[title].firstMatch]
         _ = byID.waitForExistence(timeout: 8)
         guard let row = candidates.first(where: { $0.exists }) else {
-            let dir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("bp-ui-diag")
-            try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-            try? XCUIScreen.main.screenshot().pngRepresentation.write(to: dir.appendingPathComponent("\(name).png"))
-            try? app.debugDescription.write(to: dir.appendingPathComponent("tree.txt"), atomically: true, encoding: .utf8)
-            XCTFail("找不到分頁 \(title)；windows=\(app.windows.count)；diag=\(dir.path)")
+            saveDiagnostics("tab-\(ids[title] ?? title)")
+            XCTFail("找不到分頁 \(title)；windows=\(windowFrames())")
             return
         }
         row.click()
@@ -100,6 +121,21 @@ final class UATAccessibilityUITests: XCTestCase {
         button("wizard.done").click()
         openTab("今天")
         XCTAssertTrue(app.staticTexts["Walk-run 25 min"].firstMatch.waitForExistence(timeout: 5))
+    }
+
+    /// V201-UAT-01：套用前後容量文字的已安排時間一致（同一行動只算一次）
+    func testV201UAT01_CapacityNotDoubleCountedAfterApply() {
+        createGoalToFinishStep()
+        let cap = element("wizard.capacity")
+        XCTAssertTrue(cap.waitForExistence(timeout: 5))
+        let before = cap.label
+        XCTAssertTrue(before.hasPrefix("安排前預估"), before)
+        button("wizard.focusAndToday").click()
+        let after = element("wizard.capacity")
+        XCTAssertTrue(after.waitForExistence(timeout: 5))
+        XCTAssertTrue(after.label.hasPrefix("今天實際"), after.label)
+        func load(_ s: String) -> String { s.components(separatedBy: "已安排 ").last?.components(separatedBy: "／").first ?? s }
+        XCTAssertEqual(load(after.label), load(before), "before=\(before) after=\(after.label)")
     }
 
     func testUAT01_LaterHasNoSideEffects() {

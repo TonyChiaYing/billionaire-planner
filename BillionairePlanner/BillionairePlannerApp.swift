@@ -1,4 +1,7 @@
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
 import SwiftData
 import PlannerCore
 
@@ -30,7 +33,8 @@ struct BillionairePlannerApp: App {
             .tint(.assetGreen)
         }
         #if os(macOS)
-        .defaultSize(width: 1180, height: 820)
+        .defaultSize(width: AppEnvironment.isUITesting ? 960 : 1180, height: AppEnvironment.isUITesting ? 680 : 820)
+        .defaultPosition(.center)
         #endif
 
         #if os(macOS)
@@ -64,6 +68,7 @@ struct LaunchGate: View {
         case .ready:
             RootView()
                 .modifier(DataObserver())
+                .modifier(UITestWindowPlacement())
                 .sheet(item: $report) { box in
                     NavigationStack { MigrationReportView(report: box.report, isFirstRun: true) }
                 }
@@ -215,4 +220,31 @@ struct SettingsToolbarButton: View {
         EmptyView()
         #endif
     }
+}
+
+/// V201-UAT-02：UI 測試模式下把主視窗放在主螢幕可見範圍內（忽略先前保存的位置）。一般使用不受影響。
+struct UITestWindowPlacement: ViewModifier {
+    func body(content: Content) -> some View {
+        #if os(macOS)
+        content.onAppear {
+            guard AppEnvironment.isUITesting else { return }
+            DispatchQueue.main.async { Self.fitWindows() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { Self.fitWindows() }
+        }
+        #else
+        content
+        #endif
+    }
+
+    #if os(macOS)
+    static func fitWindows() {
+        guard let screen = NSScreen.main?.visibleFrame else { return }
+        for w in NSApplication.shared.windows where w.isVisible && w.styleMask.contains(.titled) {
+            let size = NSSize(width: min(960, screen.width - 40), height: min(680, screen.height - 40))
+            let origin = NSPoint(x: screen.midX - size.width / 2, y: screen.midY - size.height / 2)
+            w.setFrame(NSRect(origin: origin, size: size), display: true)
+            w.makeKeyAndOrderFront(nil)
+        }
+    }
+    #endif
 }
