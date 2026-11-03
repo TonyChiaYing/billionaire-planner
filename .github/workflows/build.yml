@@ -10,27 +10,50 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+
       - name: Domain tests (PlannerCore)
         run: |
-          swift test --package-path PlannerCore 2>&1 | tee core-test.log | grep -E "error:|failed|Executed|passed after" | tail -40
-          test ${PIPESTATUS[0]} -eq 0
-      - name: Build macOS app
+          set +e
+          swift test --package-path PlannerCore > core-test.log 2>&1
+          code=$?
+          grep -E "error:|failed|Executed .* tests" core-test.log | tail -30
+          exit $code
+
+      - name: App tests (migration + application flows, macOS)
         if: always()
         run: |
+          set +e
+          xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner -destination 'platform=macOS' \
+            -derivedDataPath out-test CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= > app-test.log 2>&1
+          code=$?
+          grep -E "error:|failed|passed|Executed|TEST (SUCCEEDED|FAILED)" app-test.log | tail -60
+          exit $code
+
+      - name: Build macOS app (Release, universal)
+        if: always()
+        run: |
+          set +e
           VER=$(cat VERSION)
-          xcodebuild -version | tee build.log
-          set -o pipefail
-          xcodebuild -project BillionairePlanner.xcodeproj -target BillionairePlanner -configuration Release -sdk macosx \
-            SYMROOT=$PWD/out OBJROOT=$PWD/out/obj CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= build 2>&1 \
-            | tee -a build.log | grep -E "error:|BUILD" || true
-          test -d out/Release/BillionairePlanner.app
-          ditto -c -k --keepParent out/Release/BillionairePlanner.app "BillionairePlanner_v$VER.app.zip"
+          xcodebuild -version > build.log
+          xcodebuild build -project BillionairePlanner.xcodeproj -scheme BillionairePlanner -configuration Release \
+            -destination 'generic/platform=macOS' -derivedDataPath out \
+            CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= >> build.log 2>&1
+          code=$?
+          grep -E "error:|BUILD (SUCCEEDED|FAILED)" build.log | head -60
+          [ $code -eq 0 ] || exit $code
+          APP=out/Build/Products/Release/BillionairePlanner.app
+          lipo -info "$APP/Contents/MacOS/BillionairePlanner"
+          ditto -c -k --keepParent "$APP" "BillionairePlanner_v$VER.app.zip"
+
       - name: Check iOS compiles
         if: always()
         run: |
-          xcodebuild -project BillionairePlanner.xcodeproj -target BillionairePlanner -configuration Debug -sdk iphonesimulator \
-            SYMROOT=$PWD/out-ios OBJROOT=$PWD/out-ios/obj CODE_SIGNING_ALLOWED=NO build > ios.log 2>&1 \
+          set +e
+          xcodebuild build -project BillionairePlanner.xcodeproj -scheme BillionairePlanner -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath out-ios CODE_SIGNING_ALLOWED=NO > ios.log 2>&1 \
             && echo "iOS OK" >> ios.log || echo "iOS FAILED" >> ios.log
+          grep -E "error:|iOS (OK|FAILED)" ios.log | head -40
+
       - name: Publish to build branch
         if: always()
         run: |

@@ -1,158 +1,213 @@
 import SwiftUI
 import SwiftData
-import UserNotifications
+import PlannerCore
 
 @main
 struct BillionairePlannerApp: App {
-    /// 資料庫固定放在 Application Support/BillionairePlanner/，版本工具會一併備份
-    let container: ModelContainer = {
-        let schema = Schema([RichGoal.self, BrainDumpItem.self, TimeBlock.self, PrincipleLog.self, ThinkSession.self])
-        let dir = URL.applicationSupportDirectory.appending(path: "BillionairePlanner", directoryHint: .isDirectory)
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        let config = ModelConfiguration(schema: schema, url: dir.appending(path: "Planner.store"))
-        do { return try ModelContainer(for: schema, configurations: config) }
-        catch { fatalError("無法開啟資料庫（若剛退回舊版，請見 README「資料還原」）：\(error)") }
-    }()
+    private let container: ModelContainer?
+    private let storeError: String?
+
+    init() {
+        do {
+            container = try PlannerContainer.make()
+            storeError = nil
+        } catch {
+            container = nil
+            storeError = error.localizedDescription
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
-            RootView()
-                .preferredColorScheme(.dark)
-                .tint(.assetGreen)
+            Group {
+                if let container {
+                    LaunchGate().modelContainer(container)
+                } else {
+                    StoreErrorView(message: storeError ?? "")
+                }
+            }
+            .preferredColorScheme(.dark)
+            .tint(.assetGreen)
         }
-        .modelContainer(container)
         #if os(macOS)
-        .defaultSize(width: 1100, height: 780)
+        .defaultSize(width: 1180, height: 820)
+        #endif
+
+        #if os(macOS)
+        Settings {
+            if let container {
+                SettingsView().modelContainer(container).preferredColorScheme(.dark).tint(.assetGreen)
+                    .frame(minWidth: 520, minHeight: 600)
+            }
+        }
         #endif
     }
 }
 
-// MARK: - 導覽
+/// 啟動時先完成 v1 遷移（UI 可編輯前），再進入主畫面
+struct LaunchGate: View {
+    enum Phase: Equatable { case checking, ready, failed(String) }
 
-enum Pane: String, CaseIterable, Identifiable {
-    case buffett, musk, dalio, gates
+    @Environment(\.modelContext) private var context
+    @State private var phase: Phase = .checking
+    @State private var report: ReportBox?
+
+    var body: some View {
+        switch phase {
+        case .checking:
+            ProgressView("正在準備資料…")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black)
+                .task { migrate() }
+        case .failed(let message):
+            MigrationFailedView(message: message, retry: { phase = .checking }, skip: { phase = .ready })
+        case .ready:
+            RootView()
+                .modifier(DataObserver())
+                .sheet(item: $report) { box in
+                    NavigationStack { MigrationReportView(report: box.report, isFirstRun: true) }
+                }
+        }
+    }
+
+    private func migrate() {
+        let migrator = V1Migrator(v1Store: StoreLocation.v1Store, backupRoot: StoreLocation.backups, container: context.container)
+        switch migrator.runIfNeeded() {
+        case .noLegacyStore, .alreadyCompleted:
+            phase = .ready
+        case .migrated(let r):
+            report = ReportBox(report: r)
+            phase = .ready
+        case .failed(let message):
+            phase = .failed(message)
+        }
+        Notifier.sync(context)
+    }
+}
+
+struct ReportBox: Identifiable {
+    let id = UUID()
+    let report: MigrationReport
+}
+
+struct MigrationFailedView: View {
+    let message: String
+    let retry: () -> Void
+    let skip: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "externaldrive.badge.exclamationmark").font(.largeTitle).foregroundStyle(Color.attention)
+            Text("v1 資料暫時無法匯入").font(.title2.bold())
+            Text("你的 v1 資料完全沒有被更動，也已另外備份。可以再試一次，或先使用 v2，下次開啟時會再自動嘗試。")
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
+            Text(message).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+            HStack {
+                Button("再試一次", action: retry).buttonStyle(.borderedProminent)
+                Button("先使用 v2", action: skip).buttonStyle(.bordered)
+            }
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
+    }
+}
+
+struct StoreErrorView: View {
+    let message: String
+    var body: some View {
+        VStack(spacing: 12) {
+            Text("無法開啟資料庫").font(.title2.bold())
+            Text("資料檔位置：\(StoreLocation.directory.path)").font(.caption).textSelection(.enabled)
+            Text(message).font(.caption).foregroundStyle(.secondary)
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
+    }
+}
+
+// MARK: - 一級導覽：今天／目標／回顧／思考（PRD 5.1）
+
+enum AppTab: String, CaseIterable, Identifiable {
+    case today, goals, review, think
     var id: Self { self }
-
     var title: String {
         switch self {
-        case .buffett: "5/25 減法"
-        case .musk: "時間顆粒"
-        case .dalio: "原則復盤"
-        case .gates: "思考週"
+        case .today: "今天"
+        case .goals: "目標"
+        case .review: "回顧"
+        case .think: "思考"
         }
     }
-
-    var icon: String {
+    var symbol: String {
         switch self {
-        case .buffett: "shield.lefthalf.filled"
-        case .musk: "clock"
-        case .dalio: "doc.text.magnifyingglass"
-        case .gates: "brain.head.profile"
+        case .today: "sun.max"
+        case .goals: "target"
+        case .review: "checkmark.circle"
+        case .think: "brain.head.profile"
         }
     }
-
-    @ViewBuilder var view: some View {
+    @MainActor @ViewBuilder var view: some View {
         switch self {
-        case .buffett: BuffettView()
-        case .musk: MuskView()
-        case .dalio: DalioView()
-        case .gates: GatesView()
+        case .today: TodayView()
+        case .goals: GoalsView()
+        case .review: ReviewView()
+        case .think: ThinkView()
         }
     }
 }
 
 struct RootView: View {
-    @Environment(\.modelContext) private var context
-    @Query(filter: #Predicate<ThinkSession> { $0.endedAt == nil }) private var openSessions: [ThinkSession]
-    @State private var pane: Pane? = .buffett
+    @Query(filter: #Predicate<ThinkingSession> { $0.endedAt == nil }) private var openSessions: [ThinkingSession]
+    @State private var tab: AppTab? = .today
 
     var body: some View {
-        Group {
-            if let session = openSessions.first {
-                ThinkModeView(session: session)   // 思考模式：隱藏一切日常
-            } else {
-                #if os(iOS)
-                TabView {
-                    ForEach(Pane.allCases) { p in
-                        p.view.tabItem { Label(p.title, systemImage: p.icon) }
-                    }
+        if let session = openSessions.first {
+            ThinkModeView(session: session)
+        } else {
+            #if os(iOS)
+            TabView(selection: Binding(get: { tab ?? .today }, set: { tab = $0 })) {
+                ForEach(AppTab.allCases) { t in
+                    t.view
+                        .tabItem { Label(t.title, systemImage: t.symbol) }
+                        .tag(t)
                 }
-                #else
-                NavigationSplitView {
-                    List(Pane.allCases, selection: $pane) { p in
-                        Label(p.title, systemImage: p.icon).tag(p)
-                    }
-                    .navigationTitle("計畫控制台")
-                    .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-                    .safeAreaInset(edge: .bottom) {
-                        Text("v\(AppInfo.version) (\(AppInfo.build))")
-                            .font(.caption2).foregroundStyle(.secondary).padding(8)
-                    }
-                } detail: {
-                    (pane ?? .buffett).view
-                }
-                #endif
             }
+            #else
+            NavigationSplitView {
+                List(AppTab.allCases, selection: $tab) { t in
+                    Label(t.title, systemImage: t.symbol).tag(t)
+                }
+                .navigationSplitViewColumnWidth(min: 170, ideal: 190)
+                .safeAreaInset(edge: .bottom) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        SettingsLink { Label("設定", systemImage: "gearshape") }
+                            .buttonStyle(.borderless)
+                        Text(AppInfo.display).font(.caption2).foregroundStyle(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(12)
+                }
+            } detail: {
+                (tab ?? .today).view
+            }
+            #endif
         }
-        .background(Color.black)
-        .onAppear { Notifier.sync(context) }
     }
 }
 
-// MARK: - 設計 Token
-
-extension ShapeStyle where Self == Color {
-    static var assetGreen: Color { Color(red: 0, green: 1, blue: 0.4) }                       // #00FF66
-    static var alertRed: Color { Color(red: 1, green: 59 / 255, blue: 48 / 255) }             // #FF3B30
-    static var guardGray: Color { Color(red: 142 / 255, green: 142 / 255, blue: 147 / 255) }  // #8E8E93
-    static var legalPad: Color { Color(red: 1, green: 0.96, blue: 0.62) }
-}
-
-extension View {
-    func cyberList() -> some View {
-        scrollContentBackground(.hidden).background(Color.black)
-    }
-}
-
-enum AppInfo {
-    static let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
-    static let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
-}
-
-// MARK: - 時間塊開始提醒（附上同標籤的原則）
-
-@MainActor
-enum Notifier {
-    /// 清掉再重排：所有變更後呼叫即可。思考模式期間不排任何提醒。
-    static func sync(_ context: ModelContext) {
-        try? context.save()
-        let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests()
-
-        let open = FetchDescriptor<ThinkSession>(predicate: #Predicate { $0.endedAt == nil })
-        guard ((try? context.fetchCount(open)) ?? 0) == 0 else { return }
-
-        let now = Date()
-        let blocks = ((try? context.fetch(FetchDescriptor<TimeBlock>())) ?? [])
-            .filter { !$0.isDone && $0.startDate > now }
-            .sorted { $0.startDate < $1.startDate }
-            .prefix(60)   // ponytail: iOS 上限 64 個待發提醒
-        guard !blocks.isEmpty else { return }
-        let principles = (try? context.fetch(FetchDescriptor<PrincipleLog>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)]))) ?? []
-
-        let requests = blocks.map { b -> UNNotificationRequest in
-            let content = UNMutableNotificationContent()
-            content.title = "⏱ \(b.taskTitle)  \(b.tag)"
-            content.body = principles.first { $0.tag == b.tag }.map { "📜 原則：\($0.concretePrinciple)" }
-                ?? "開始專注 \(b.durationMinutes) 分鐘。"
-            content.sound = .default
-            let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: b.startDate)
-            return UNNotificationRequest(identifier: b.id.uuidString, content: content,
-                                         trigger: UNCalendarNotificationTrigger(dateMatching: comps, repeats: false))
-        }
-        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
-            guard granted else { return }
-            requests.forEach { center.add($0) }
-        }
+/// iOS 的設定入口（macOS 用系統「設定」視窗 ⌘,）
+struct SettingsToolbarButton: View {
+    @State private var show = false
+    var body: some View {
+        #if os(iOS)
+        Button { show = true } label: { Image(systemName: "gearshape") }
+            .accessibilityLabel("設定")
+            .sheet(isPresented: $show) { NavigationStack { SettingsView() } }
+        #else
+        EmptyView()
+        #endif
     }
 }
