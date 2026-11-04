@@ -243,7 +243,8 @@ struct TodayView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(actions[p.actionID]?.title ?? "").bold()
-                        Text([dayAgo(p.day, planner: planner), timeText(p, planner: planner, action: actions[p.actionID])]
+                        Text([dayAgo(p.day, planner: planner), planner.goal(actions[p.actionID]?.goalID)?.title,
+                              timeText(p, planner: planner, action: actions[p.actionID])]
                             .compactMap { $0 }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()

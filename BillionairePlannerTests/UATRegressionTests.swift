@@ -273,4 +273,35 @@ final class UATRegressionTests: XCTestCase {
         p.addAction(title: "下一次 30 分鐘", kind: .personal, goal: g, estimate: 30)
         XCTAssertTrue(p.goalsNeedingNextStep(after: p.today).isEmpty)
     }
+
+    // MARK: V203-REVIEW：重開回顧不重複記錄
+
+    func testV203REVIEW01_ReclosingEveningDoesNotDuplicateOutcome() {
+        let p = planner()
+        let g = runningGoal()
+        p.complete(p.plan(p.openActions(for: g.id).first!, on: p.today))
+        let c = p.outcomeCandidates(on: p.today)
+        let ev = p.eveningEvidence(candidates: c, confirmed: [c[0].id: "第一次連續慢跑 10 分鐘"], extraGoalID: nil, extraNote: "")
+        p.closeEvening(day: p.today, evidence: ev, energy: 4, blockers: "", blockedGoalIDs: [], principle: "", isRestDay: false, note: "n")
+        XCTAssertEqual(p.recordedOutcome(for: c[0].action.id)?.note, "第一次連續慢跑 10 分鐘")
+        // 再按一次完成（同樣的輸入）
+        p.closeEvening(day: p.today, evidence: ev, energy: 4, blockers: "", blockedGoalIDs: [], principle: "", isRestDay: false, note: "n")
+        XCTAssertEqual(p.evidence(for: g.id).count, 1)
+        XCTAssertEqual(p.existingReview(for: p.today)?.energy, 4)
+    }
+
+    func testV203REVIEW02_RecompletingWeeklyUpdatesSingleDecision() {
+        let p = planner()
+        let g = runningGoal()
+        g.isFocus = true
+        let s = p.activeStrategy(for: g.id)!
+        let w = p.weeklyReview(for: p.weekStart)
+        p.completeWeekly(w, decisions: [(g, s, "continue", "")], capacityNote: "", note: "")
+        p.completeWeekly(w, decisions: [(g, s, "tweak", "週四太累")], capacityNote: "出差", note: "")
+        let all = p.context.all(StrategyDecision.self).filter { $0.goalID == g.id }
+        XCTAssertEqual(all.count, 1)
+        XCTAssertEqual(p.weeklyDecision(w, goalID: g.id)?.decision, "tweak")
+        XCTAssertEqual(p.weeklyDecision(w, goalID: g.id)?.reason, "週四太累")
+        XCTAssertEqual(w.nextWeekCapacityNote, "出差")
+    }
 }

@@ -96,10 +96,17 @@ extension Planner {
         return result
     }
 
+    /// 某個行動已經記過的成果（V203-REVIEW-01：重開日結時顯示，不重複記錄）
+    func recordedOutcome(for actionID: UUID) -> OutcomeEvidence? {
+        context.all(OutcomeEvidence.self).first { $0.actionID == actionID && !$0.isReversed }
+    }
+
     func closeEvening(day: LocalDay, evidence: [EveningEvidenceInput], energy: Int?, blockers: String,
                       blockedGoalIDs: [UUID], principle: String, isRestDay: Bool, note: String) {
         for e in evidence {
             guard let g = goal(e.goalID) else { continue }
+            // 同一個行動的成果只記一次（重開日結再按完成不會重複）
+            if let a = e.actionID, recordedOutcome(for: a) != nil { continue }
             recordEvidence(g, kind: e.kind, value: e.value, note: e.note, actionID: e.actionID)
         }
         if !principle.trimmed.isEmpty {
@@ -143,13 +150,23 @@ extension Planner {
         }.count
     }
 
+    /// 這次每週回顧已做過的策略決定（V203-REVIEW-02：重開時沿用，不重複新增）
+    func weeklyDecision(_ w: WeeklyReview, goalID: UUID) -> StrategyDecision? {
+        context.all(StrategyDecision.self).first { $0.weeklyReviewID == w.id && $0.goalID == goalID }
+    }
+
     func completeWeekly(_ w: WeeklyReview, decisions: [(goal: Goal, strategy: Strategy, decision: String, reason: String)],
                         capacityNote: String, note: String) {
         for d in decisions {
-            let rec = StrategyDecision(goalID: d.goal.id, strategyID: d.strategy.id, decision: d.decision, reason: d.reason.trimmed)
+            let rec = weeklyDecision(w, goalID: d.goal.id) ?? {
+                let r = StrategyDecision(goalID: d.goal.id, strategyID: d.strategy.id, decision: d.decision, reason: "")
+                r.weeklyReviewID = w.id
+                context.insert(r)
+                return r
+            }()
+            rec.decision = d.decision
+            rec.reason = d.reason.trimmed
             rec.decidedAt = now
-            rec.weeklyReviewID = w.id
-            context.insert(rec)
             switch d.decision {
             case "pause": setStrategy(d.strategy, status: .paused, reason: d.reason)
             default: break   // tweak / replace 由使用者在目標頁完成

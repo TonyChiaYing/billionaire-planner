@@ -204,4 +204,27 @@ final class UATAccessibilityUITests: XCTestCase {
         button("review.evening").click()
         XCTAssertTrue(element("evening.done.item").waitForExistence(timeout: 5), "晚間日結沒有列出已完成的行動")
     }
+
+    // MARK: V203-REVIEW-01：重開已完成的晚間日結
+
+    func testV203REVIEW01_ReopenedEveningShowsRecordedOutcome() {
+        createGoalToFinishStep()
+        button("wizard.focusAndToday").click()
+        button("wizard.done").click()
+        openTab("今天")
+        button("today.complete").click()
+        openTab("回顧")
+        button("review.evening").click()
+        let toggle = app.descendants(matching: .any)["evening.candidate"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        toggle.click()
+        type(into: "evening.outcomeNote", "first 10 min run")
+        button("evening.done").click()
+        if app.sheets.firstMatch.waitForExistence(timeout: 3) { app.typeKey(.escape, modifierFlags: []) }
+        XCTAssertTrue(app.sheets.firstMatch.waitForNonExistence(timeout: 5))
+        button("review.evening").click()
+        XCTAssertTrue(element("evening.alreadyClosed").waitForExistence(timeout: 5))
+        XCTAssertTrue(element("evening.recorded").exists, "重開時沒有顯示已記錄的成果")
+        XCTAssertFalse(element("evening.candidate").exists, "已記錄的成果不應再出現勾選")
+    }
 }

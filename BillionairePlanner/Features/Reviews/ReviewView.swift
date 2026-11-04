@@ -210,6 +210,12 @@ struct EveningCloseSheet: View {
         let candidates = planner.outcomeCandidates(on: day)
         NavigationStack {
             Form {
+                if let closed = planner.existingReview(for: day)?.eveningClosedAt {
+                    Label("已於 \(closed.formatted(date: .omitted, time: .shortened)) 完成日結；可以補充或修改，不會重複記錄。",
+                          systemImage: "checkmark.circle")
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("evening.alreadyClosed")
+                }
                 Section {
                     // V202-DAILY-03：先列出已完成的，讓使用者看得到今天做了什麼
                     ForEach(done) { p in
@@ -232,6 +238,15 @@ struct EveningCloseSheet: View {
                         Text("今天沒有連結目標的完成行動。").font(.caption).foregroundStyle(.secondary)
                     }
                     ForEach(candidates) { c in
+                      if let rec = planner.recordedOutcome(for: c.action.id) {
+                        // V203-REVIEW-01：已記錄的成果直接顯示，不再問一次
+                        VStack(alignment: .leading) {
+                            Label("已記錄成果：\(rec.note)", systemImage: "checkmark.seal")
+                                .foregroundStyle(Color.assetGreen)
+                            Text("\(c.action.title) · \(c.goal.title)").font(.caption).foregroundStyle(.secondary)
+                        }
+                        .accessibilityIdentifier("evening.recorded")
+                      } else {
                         Toggle(isOn: Binding(get: { outcomeSelected.contains(c.id) },
                                              set: { if $0 { outcomeSelected.insert(c.id) } else { outcomeSelected.remove(c.id) } })) {
                             VStack(alignment: .leading) {
@@ -243,12 +258,14 @@ struct EveningCloseSheet: View {
                         if outcomeSelected.contains(c.id) {
                             TextField("成果是什麼？（例：第一次連續慢跑 10 分鐘）", text: Binding(get: { outcomeNotes[c.id] ?? "" },
                                                                                   set: { outcomeNotes[c.id] = $0 }))
+                                .accessibilityIdentifier("evening.outcomeNote")
                             // 保留位置，輸入時版面不跳動（按鈕不會移位）
                             let empty = (outcomeNotes[c.id] ?? "").trimmed.isEmpty
                             Text("請寫下成果內容，或取消勾選。").font(.caption).foregroundStyle(Color.attention)
                                 .opacity(empty ? 1 : 0)
                                 .accessibilityHidden(!empty)
                         }
+                      }
                     }
                     Picker("其他成果的目標", selection: $extraGoalID) {
                         Text("不記錄").tag(UUID?.none)
@@ -279,6 +296,15 @@ struct EveningCloseSheet: View {
             }
             .formStyle(.grouped)
             .navigationTitle("晚間日結")
+            .onAppear {
+                // 重開已完成的日結：帶入上次的內容，避免空白覆蓋
+                guard let r = planner.existingReview(for: day), r.eveningClosedAt != nil else { return }
+                energy = r.energy ?? 0
+                blockers = r.blockers
+                blocked = Set(r.blockedGoalIDs)
+                isRestDay = r.isRestDay
+                note = r.note
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("稍後") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -421,6 +447,12 @@ struct WeeklyReviewSheet: View {
         } ?? 0
         NavigationStack {
             Form {
+                if let done = existingWeekly(planner)?.completedAt {
+                    Label("本週已於 \(done.formatted(date: .abbreviated, time: .shortened)) 完成；可以修改，不會重複記錄。",
+                          systemImage: "checkmark.circle")
+                        .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("weekly.alreadyDone")
+                }
                 ForEach(goals) { g in
                     let o = planner.outcomeProgress(g)
                     let t = planner.actionTrend(g)
@@ -429,6 +461,11 @@ struct WeeklyReviewSheet: View {
                         LabeledContent("成果", value: o.text)
                         LabeledContent("行動（7 天）", value: "完成 \(t.done7) 項 · 投入 \(formatDuration(t.minutes7))")
                         LabeledContent("延後次數（7 天）", value: "\(planner.deferralCount(g, days: 7))")
+                        if let missing = planner.missingSetup(g).label {
+                            // V203-REVIEW-03：每週回顧是補上缺漏的時機
+                            Label(missing, systemImage: "square.dashed").foregroundStyle(Color.attention)
+                                .accessibilityIdentifier("weekly.missing")
+                        }
                         if let s {
                             Picker("策略「\(s.title)」", selection: Binding(get: { decisions[g.id] ?? "continue" }, set: { decisions[g.id] = $0 })) {
                                 ForEach(options, id: \.self) { Text(label($0)).tag($0) }
@@ -451,6 +488,14 @@ struct WeeklyReviewSheet: View {
             }
             .formStyle(.grouped)
             .navigationTitle("每週回顧")
+            .onAppear {
+                guard let w = existingWeekly(planner), w.completedAt != nil else { return }
+                capacityNote = w.nextWeekCapacityNote
+                note = w.note
+                for g in goals {
+                    if let d = planner.weeklyDecision(w, goalID: g.id) { decisions[g.id] = d.decision; reasons[g.id] = d.reason }
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("稍後") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -467,6 +512,11 @@ struct WeeklyReviewSheet: View {
             }
         }
         .frame(minWidth: 480, minHeight: 600)
+    }
+
+    private func existingWeekly(_ planner: Planner) -> WeeklyReview? {
+        let key = planner.weekStart.description
+        return context.all(WeeklyReview.self).first { $0.weekStartKey == key }
     }
 }
 
