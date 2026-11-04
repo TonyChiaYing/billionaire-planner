@@ -1,0 +1,1936 @@
+Command line invocation:
+    /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner -destination platform=macOS -derivedDataPath out-test "-only-testing:BillionairePlannerUITests" CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM=
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGN_STYLE = Manual
+    DEVELOPMENT_TEAM = 
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  PlannerCore: /Users/runner/work/billionaire-planner/billionaire-planner/PlannerCore @ local
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:3ee04172b29b98785e615c5454026b9806c1f139, name:My Mac }
+{ platform:macOS, arch:x86_64, id:3ee04172b29b98785e615c5454026b9806c1f139, name:My Mac }
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (5 targets)
+    Target 'BillionairePlannerUITests' in project 'BillionairePlanner'
+        ➜ Explicit dependency on target 'BillionairePlanner' in project 'BillionairePlanner'
+    Target 'BillionairePlannerTests' in project 'BillionairePlanner'
+        ➜ Explicit dependency on target 'BillionairePlanner' in project 'BillionairePlanner'
+    Target 'BillionairePlanner' in project 'BillionairePlanner'
+        ➜ Explicit dependency on target 'PlannerCore' in project 'PlannerCore'
+    Target 'PlannerCore' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'PlannerCore' in project 'PlannerCore'
+    Target 'PlannerCore' in project 'PlannerCore' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 48f01cf4e865af9b9069832cb6232abc
+Build description path: /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/XCBuildData/48f01cf4e865af9b9069832cb6232abc.xcbuilddata
+ClangStatCache /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache
+    cd /Users/runner/work/billionaire-planner/billionaire-planner/BillionairePlanner.xcodeproj
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftConstValuesFileList (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.LinkFileList (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.LinkFileList
+
+ProcessProductPackaging "" /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Entitlements:
+    
+    {
+    "com.apple.security.get-task-allow" = 1;
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent
+
+ProcessProductPackagingDER /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent.der (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /usr/bin/derq query -f xml -i /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent.der --raw
+
+SwiftDriver BillionairePlanner normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-SwiftDriver -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlanner -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation\ Requirements BillionairePlanner normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlanner -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation BillionairePlanner normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-Swift-Compilation -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlanner -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -emit-localized-strings -emit-localized-strings-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib normal (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -dynamiclib -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -O0 -L/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -filelist /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.LinkFileList -install_name @rpath/BillionairePlanner.debug.dylib -Xlinker -rpath -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.swiftmodule -Wl,-no_warn_duplicate_libraries -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib -Xlinker -add_ast_path -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/PlannerCore.build/Debug/PlannerCore.build/Objects-normal/arm64/PlannerCore.swiftmodule
+
+ConstructStubExecutorLinkFileList /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-ExecutorLinkFileList-normal-arm64.txt (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    construct-stub-executor-link-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'BillionairePlanner' from project 'BillionairePlanner')
+
+Ld /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner normal (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -O0 -L/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -rdynamic -Xlinker -no_deduplicate -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner-ExecutorLinkFileList-normal-arm64.txt /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner
+
+ExtractAppIntentsMetadata (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name BillionairePlanner --sdk-root /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk --xcode-version 16F6 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.chiaying.BillionairePlanner --output /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner --dependency-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner_dependency_info.dat --stringsdata-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftFileList --metadata-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/Objects-normal/arm64/BillionairePlanner.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-04 09:24:25.141 appintentsmetadataprocessor[4159:17183] Starting appintentsmetadataprocessor export
+2026-11-04 09:24:25.145 appintentsmetadataprocessor[4159:17183] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessProductPackaging "" /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Entitlements:
+    
+    {
+    "com.apple.application-identifier" = "com.chiaying.BillionairePlannerUITests.xctrunner";
+    "com.apple.security.app-sandbox" = 1;
+    "com.apple.security.get-task-allow" = 1;
+    "com.apple.security.network.client" = 1;
+    "com.apple.security.temporary-exception.files.absolute-path.read-only" =     (
+        "/"
+    );
+    "com.apple.security.temporary-exception.mach-lookup.global-name" =     (
+        "com.apple.testmanagerd",
+        "com.apple.dt.testmanagerd.runner",
+        "com.apple.coresymbolicationd",
+        "com.apple.coredevice.version",
+        "com.apple.coredevice.service",
+        "com.apple.remoted"
+    );
+    "com.apple.security.temporary-exception.mach-lookup.local-name" =     (
+        "com.apple.axserver"
+    );
+    "com.apple.security.temporary-exception.sbpl" =     (
+        "(allow hid-control)",
+        "(allow signal)"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent
+
+ProcessInfoPlistFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Info.plist /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/empty-BillionairePlanner.plist (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-infoPlistUtility /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/empty-BillionairePlanner.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PkgInfo -expandbuildsettings -platform macosx -additionalcontentfile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/assetcatalog_generated_info.plist -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Info.plist
+
+CopySwiftLibs /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Frameworks --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Library/SystemExtensions --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftConstValuesFileList (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.LinkFileList (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    write-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.LinkFileList
+
+ProcessProductPackagingDER /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent.der (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /usr/bin/derq query -f xml -i /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent.der --raw
+
+SwiftDriver BillionairePlannerTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-SwiftDriver -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlannerTests -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation\ Requirements BillionairePlannerTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlannerTests -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation BillionairePlannerTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-Swift-Compilation -- /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name BillionairePlannerTests -Onone -enforce-exclusivity\=checked @/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -target arm64-apple-macos14.0 -g -module-cache-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Index.noindex/DataStore -swift-version 5 -I /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -I /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -F /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/SDKStatCaches.noindex/macosx15.5-24F74-a403186ba963133a54a0e0cacd566b0b.sdkstatcache -output-file-map /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-generated-files.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-own-target-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner-6ffa13b5d0b85fe6570c96a593312b0e-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests-project-headers.hmap -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/include -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests-Swift.h -working-directory /Users/runner/work/billionaire-planner/billionaire-planner -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/MacOS/BillionairePlannerTests normal (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos14.0 -bundle -isysroot /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk -O0 -L/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -L/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -F/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug -iframework /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.LinkFileList -Xlinker -rpath -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -bundle_loader /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner -Xlinker -object_path_lto -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.swiftmodule -Wl,-no_warn_duplicate_libraries -framework XCTest -lXCTestSwiftSupport /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/MacOS/BillionairePlannerTests
+
+ProcessInfoPlistFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Info.plist /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/empty-BillionairePlannerTests.plist (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-infoPlistUtility /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/empty-BillionairePlannerTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Info.plist
+
+ExtractAppIntentsMetadata (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name BillionairePlannerTests --sdk-root /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk --xcode-version 16F6 --platform-family macOS --deployment-target 14.0 --bundle-identifier com.chiaying.BillionairePlannerTests --output /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Resources --target-triple arm64-apple-macos14.0 --binary-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/MacOS/BillionairePlannerTests --dependency-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests_dependency_info.dat --stringsdata-file /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftFileList --metadata-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/BillionairePlannerTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/Objects-normal/arm64/BillionairePlannerTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-04 09:24:25.938 appintentsmetadataprocessor[4163:17210] Starting appintentsmetadataprocessor export
+2026-11-04 09:24:25.940 appintentsmetadataprocessor[4163:17210] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/MacOS/BillionairePlannerTests --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Frameworks --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/PlugIns --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest (in target 'BillionairePlannerTests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/PlugIns/BillionairePlannerTests.xctest
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/BillionairePlanner.debug.dylib
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/__preview.dylib (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/__preview.dylib
+/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app/Contents/MacOS/__preview.dylib: replacing existing signature
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlanner.build/BillionairePlanner.app.xcent --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app
+
+Validate /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-validationUtility /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app -no-validate-extension -infoplist-subpath Contents/Info.plist
+
+RegisterWithLaunchServices /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app (in target 'BillionairePlanner' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlanner.app
+
+ProcessInfoPlistFile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Info.plist /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/empty-BillionairePlannerUITests.plist (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-infoPlistUtility /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/empty-BillionairePlannerUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -platform macosx -additionalcontentfile /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Info.plist
+
+CopySwiftLibs /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/MacOS/BillionairePlannerUITests --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Frameworks --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/PlugIns --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Library/SystemExtensions --scan-folder /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest
+/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app/Contents/PlugIns/BillionairePlannerUITests.xctest: replacing existing signature
+
+CodeSign /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app (in target 'BillionairePlannerUITests' from project 'BillionairePlanner')
+    cd /Users/runner/work/billionaire-planner/billionaire-planner
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Intermediates.noindex/BillionairePlanner.build/Debug/BillionairePlannerUITests.build/BillionairePlannerUITests.xctest.xcent --timestamp\=none --generate-entitlement-der /Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app
+/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Build/Products/Debug/BillionairePlannerUITests-Runner.app: replacing existing signature
+
+2026-11-04 09:24:28.797898+0000 BillionairePlannerUITests-Runner[4177:17276] [Default] Running tests...
+Test Suite 'All tests' started at 2026-11-04 09:24:29.476.
+Test Suite 'BillionairePlannerUITests.xctest' started at 2026-11-04 09:24:29.477.
+Test Suite 'UATAccessibilityUITests' started at 2026-11-04 09:24:29.477.
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT01_FocusAndTodayFromWizard]' started.
+    t =     0.00s Start Test at 2026-11-04 09:24:29.478
+    t =     1.24s Set Up
+    t =     1.27s     Open com.chiaying.BillionairePlanner
+    t =     1.27s         Launch com.chiaying.BillionairePlanner
+    t =     1.89s             Wait for accessibility to load
+    t =     2.20s             Setting up automation session
+    t =     2.25s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     3.08s     Open com.chiaying.BillionairePlanner
+    t =     3.08s         Activate com.chiaying.BillionairePlanner
+    t =     3.08s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     3.15s     Waiting 3.0s for Window (First Match) to exist
+    t =     4.16s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     4.16s             Checking existence of `Window (First Match)`
+    t =     4.19s     Waiting 8.0s for Window (First Match) to exist
+    t =     5.24s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     5.24s             Checking existence of `Window (First Match)`
+    t =     6.29s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     6.29s         Find the "tab.today" Any
+    t =     6.98s Waiting 8.0s for "tab.goals" Any to exist
+    t =     8.00s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     8.01s         Checking existence of `"tab.goals" Any`
+    t =     8.19s Checking existence of `"tab.goals" Any`
+    t =     8.31s Click "tab.goals" Any
+    t =     8.31s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.31s     Find the "tab.goals" Any
+    t =     8.45s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     8.48s     Synthesize event
+    t =     9.04s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.04s Waiting 5.0s for "goals.new" Button to exist
+    t =    10.07s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =    10.07s         Checking existence of `"goals.new" Button`
+    t =    10.09s Click "goals.new" Button
+    t =    10.09s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.10s     Find the "goals.new" Button
+    t =    10.11s     Check for interrupting elements affecting "goals.new" Button
+    t =    10.16s     Synthesize event
+    t =    10.50s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.88s Waiting 5.0s for "wizard.title" Any to exist
+    t =    11.92s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =    11.92s         Checking existence of `"wizard.title" Any`
+    t =    12.07s Click "wizard.title" Any
+    t =    12.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.07s     Find the "wizard.title" Any
+    t =    12.16s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    12.19s     Synthesize event
+    t =    12.53s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.54s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    12.54s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.55s     Find the "wizard.title" TextField
+    t =    12.66s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    12.81s     Synthesize event
+    t =    13.04s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.05s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    14.08s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    14.08s         Checking existence of `"wizard.outcome" Any`
+    t =    14.20s Click "wizard.outcome" Any
+    t =    14.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.20s     Find the "wizard.outcome" Any
+    t =    14.28s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    14.30s     Synthesize event
+    t =    14.67s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.67s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    14.67s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.68s     Find the "wizard.outcome" TextField
+    t =    14.80s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    14.83s     Synthesize event
+    t =    15.10s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.11s Waiting 5.0s for "wizard.next" Button to exist
+    t =    16.15s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    16.15s         Checking existence of `"wizard.next" Button`
+    t =    16.17s Click "wizard.next" Button
+    t =    16.17s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.17s     Find the "wizard.next" Button
+    t =    16.20s     Check for interrupting elements affecting "wizard.next" Button
+    t =    16.21s     Synthesize event
+    t =    16.82s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.84s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    17.88s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    17.88s         Checking existence of `"wizard.skip" Button`
+    t =    17.90s Click "wizard.skip" Button
+    t =    17.90s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.90s     Find the "wizard.skip" Button
+    t =    17.92s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    17.93s     Synthesize event
+    t =    18.25s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.40s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    19.43s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    19.43s         Checking existence of `"wizard.strategy" Any`
+    t =    19.54s Click "wizard.strategy" Any
+    t =    19.54s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.55s     Find the "wizard.strategy" Any
+    t =    19.64s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    19.66s     Synthesize event
+    t =    20.05s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.05s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    20.05s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.05s     Find the "wizard.strategy" TextField
+    t =    20.16s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    20.19s     Synthesize event
+    t =    20.47s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.49s Waiting 5.0s for "wizard.action" Any to exist
+    t =    21.54s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    21.54s         Checking existence of `"wizard.action" Any`
+    t =    21.68s Click "wizard.action" Any
+    t =    21.68s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.69s     Find the "wizard.action" Any
+    t =    21.81s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    21.83s     Synthesize event
+    t =    22.18s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    22.19s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    22.19s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    22.20s     Find the "wizard.action" TextField
+    t =    22.32s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    22.35s     Synthesize event
+    t =    22.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    22.66s Waiting 5.0s for "wizard.next" Button to exist
+    t =    23.70s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    23.70s         Checking existence of `"wizard.next" Button`
+    t =    23.72s Click "wizard.next" Button
+    t =    23.72s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    23.73s     Find the "wizard.next" Button
+    t =    23.74s     Check for interrupting elements affecting "wizard.next" Button
+    t =    23.75s     Synthesize event
+    t =    24.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.35s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    25.39s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    25.39s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    25.46s Checking existence of `"wizard.focusAndToday" Button`
+    t =    25.51s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    26.53s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    26.53s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    26.59s Click "wizard.focusAndToday" Button
+    t =    26.59s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    26.60s     Find the "wizard.focusAndToday" Button
+    t =    26.66s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    26.67s     Synthesize event
+    t =    27.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.11s Waiting 5.0s for "wizard.done" Button to exist
+    t =    28.14s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    28.14s         Checking existence of `"wizard.done" Button`
+    t =    28.16s Click "wizard.done" Button
+    t =    28.16s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.16s     Find the "wizard.done" Button
+    t =    28.18s     Check for interrupting elements affecting "wizard.done" Button
+    t =    28.18s     Synthesize event
+    t =    28.57s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.57s Waiting 8.0s for "tab.today" Any to exist
+    t =    29.61s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    29.61s         Checking existence of `"tab.today" Any`
+    t =    29.77s Checking existence of `"tab.today" Any`
+    t =    29.93s Click "tab.today" Any
+    t =    29.93s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.93s     Find the "tab.today" Any
+    t =    30.09s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    30.12s     Synthesize event
+    t =    30.46s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    30.99s Waiting 5.0s for "Walk-run 25 min" StaticText to exist
+    t =    32.01s     Checking `Expect predicate `existsNoRetry == 1` for object "Walk-run 25 min" StaticText`
+    t =    32.01s         Checking existence of `"Walk-run 25 min" StaticText`
+    t =    32.09s Tear Down
+    t =    32.09s     Terminate com.chiaying.BillionairePlanner:4213
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT01_FocusAndTodayFromWizard]' passed (33.192 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT01_LaterHasNoSideEffects]' started.
+    t =     0.00s Start Test at 2026-11-04 09:25:02.670
+    t =     0.10s Set Up
+    t =     0.10s     Open com.chiaying.BillionairePlanner
+    t =     0.10s         Launch com.chiaying.BillionairePlanner
+    t =     0.55s             Wait for accessibility to load
+    t =     1.51s             Setting up automation session
+    t =     1.53s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.61s     Open com.chiaying.BillionairePlanner
+    t =     1.61s         Activate com.chiaying.BillionairePlanner
+    t =     1.61s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.64s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.66s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.66s             Checking existence of `Window (First Match)`
+    t =     2.68s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.70s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.70s             Checking existence of `Window (First Match)`
+    t =     4.74s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.74s         Find the "tab.today" Any
+    t =     5.19s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.21s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.21s         Checking existence of `"tab.goals" Any`
+    t =     6.37s Checking existence of `"tab.goals" Any`
+    t =     6.52s Click "tab.goals" Any
+    t =     6.52s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.52s     Find the "tab.goals" Any
+    t =     6.68s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.71s     Synthesize event
+    t =     7.09s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.22s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.25s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.25s         Checking existence of `"goals.new" Button`
+    t =     8.27s Click "goals.new" Button
+    t =     8.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.28s     Find the "goals.new" Button
+    t =     8.29s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.31s     Synthesize event
+    t =     8.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.66s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.68s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.68s         Checking existence of `"wizard.title" Any`
+    t =     9.85s Click "wizard.title" Any
+    t =     9.85s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.85s     Find the "wizard.title" Any
+    t =     9.95s     Check for interrupting elements affecting "wizard.title" TextField
+    t =     9.97s     Synthesize event
+    t =    10.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.32s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.33s     Find the "wizard.title" TextField
+    t =    10.44s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.46s     Synthesize event
+    t =    10.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.65s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.69s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.69s         Checking existence of `"wizard.outcome" Any`
+    t =    11.82s Click "wizard.outcome" Any
+    t =    11.82s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.82s     Find the "wizard.outcome" Any
+    t =    11.93s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    11.95s     Synthesize event
+    t =    12.33s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.33s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.33s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.34s     Find the "wizard.outcome" TextField
+    t =    12.48s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.51s     Synthesize event
+    t =    12.83s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.84s Waiting 5.0s for "wizard.next" Button to exist
+    t =    13.87s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    13.87s         Checking existence of `"wizard.next" Button`
+    t =    13.89s Click "wizard.next" Button
+    t =    13.89s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.89s     Find the "wizard.next" Button
+    t =    13.92s     Check for interrupting elements affecting "wizard.next" Button
+    t =    13.93s     Synthesize event
+    t =    14.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.46s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.48s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.48s         Checking existence of `"wizard.skip" Button`
+    t =    15.51s Click "wizard.skip" Button
+    t =    15.51s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.51s     Find the "wizard.skip" Button
+    t =    15.53s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.55s     Synthesize event
+    t =    15.86s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.94s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    16.96s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    16.96s         Checking existence of `"wizard.strategy" Any`
+    t =    17.08s Click "wizard.strategy" Any
+    t =    17.08s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.08s     Find the "wizard.strategy" Any
+    t =    17.18s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.20s     Synthesize event
+    t =    17.57s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.58s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.58s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.59s     Find the "wizard.strategy" TextField
+    t =    17.71s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.84s     Synthesize event
+    t =    18.19s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.20s Waiting 5.0s for "wizard.action" Any to exist
+    t =    19.21s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    19.21s         Checking existence of `"wizard.action" Any`
+    t =    19.34s Click "wizard.action" Any
+    t =    19.34s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.35s     Find the "wizard.action" Any
+    t =    19.46s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.47s     Synthesize event
+    t =    19.84s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.84s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.84s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.84s     Find the "wizard.action" TextField
+    t =    19.97s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    20.00s     Synthesize event
+    t =    20.37s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.38s Waiting 5.0s for "wizard.next" Button to exist
+    t =    21.40s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    21.40s         Checking existence of `"wizard.next" Button`
+    t =    21.43s Click "wizard.next" Button
+    t =    21.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.43s     Find the "wizard.next" Button
+    t =    21.46s     Check for interrupting elements affecting "wizard.next" Button
+    t =    21.47s     Synthesize event
+    t =    22.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    22.04s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.06s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.06s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.13s Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.17s Waiting 5.0s for "wizard.later" Button to exist
+    t =    24.20s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.later" Button`
+    t =    24.20s         Checking existence of `"wizard.later" Button`
+    t =    24.28s Click "wizard.later" Button
+    t =    24.28s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.28s     Find the "wizard.later" Button
+    t =    24.34s     Check for interrupting elements affecting "wizard.later" Button
+    t =    24.35s     Synthesize event
+    t =    24.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.80s Waiting 5.0s for "goals.focusHeader" Any to exist
+    t =    25.82s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.focusHeader" Any`
+    t =    25.82s         Checking existence of `"goals.focusHeader" Any`
+    t =    26.01s Find the "goals.focusHeader" Any
+    t =    26.14s Find the "goals.focusHeader" Other
+    t =    26.27s Find the "goals.focusHeader" Other
+    t =    26.38s Waiting 8.0s for "tab.today" Any to exist
+    t =    27.39s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    27.39s         Checking existence of `"tab.today" Any`
+    t =    27.55s Checking existence of `"tab.today" Any`
+    t =    27.66s Click "tab.today" Any
+    t =    27.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.67s     Find the "tab.today" Any
+    t =    27.78s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    27.81s     Synthesize event
+    t =    28.16s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.43s Waiting 2.0s for "Walk-run 25 min" StaticText to exist
+    t =    29.44s     Checking `Expect predicate `existsNoRetry == 1` for object "Walk-run 25 min" StaticText`
+    t =    29.44s         Checking existence of `"Walk-run 25 min" StaticText`
+    t =    29.53s         Capturing element debug description
+    t =    30.43s     Checking `Expect predicate `existsNoRetry == 1` for object "Walk-run 25 min" StaticText`
+    t =    30.43s         Checking existence of `"Walk-run 25 min" StaticText`
+    t =    30.51s         Capturing element debug description
+    t =    30.51s     Checking existence of `"Walk-run 25 min" StaticText`
+    t =    30.60s Collecting debug information to assist test failure triage
+    t =    30.60s     Requesting snapshot of accessibility hierarchy for app with pid 5215
+    t =    30.73s Tear Down
+    t =    30.73s     Terminate com.chiaying.BillionairePlanner:5215
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT01_LaterHasNoSideEffects]' passed (31.838 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT02_EveningCloseWithoutSelectionCreatesNoOutcome]' started.
+    t =     0.00s Start Test at 2026-11-04 09:25:34.508
+    t =     0.08s Set Up
+    t =     0.09s     Open com.chiaying.BillionairePlanner
+    t =     0.09s         Launch com.chiaying.BillionairePlanner
+    t =     0.63s             Wait for accessibility to load
+    t =     1.60s             Setting up automation session
+    t =     1.62s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.69s     Open com.chiaying.BillionairePlanner
+    t =     1.69s         Activate com.chiaying.BillionairePlanner
+    t =     1.69s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.72s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.74s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.74s             Checking existence of `Window (First Match)`
+    t =     2.75s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.77s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.77s             Checking existence of `Window (First Match)`
+    t =     4.80s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.80s         Find the "tab.today" Any
+    t =     5.14s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.16s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.16s         Checking existence of `"tab.goals" Any`
+    t =     6.32s Checking existence of `"tab.goals" Any`
+    t =     6.44s Click "tab.goals" Any
+    t =     6.44s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.44s     Find the "tab.goals" Any
+    t =     6.57s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.60s     Synthesize event
+    t =     6.92s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.07s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.08s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.08s         Checking existence of `"goals.new" Button`
+    t =     8.10s Click "goals.new" Button
+    t =     8.10s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.10s     Find the "goals.new" Button
+    t =     8.12s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.14s     Synthesize event
+    t =     8.72s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.99s Waiting 5.0s for "wizard.title" Any to exist
+    t =    10.01s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =    10.01s         Checking existence of `"wizard.title" Any`
+    t =    10.17s Click "wizard.title" Any
+    t =    10.17s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.17s     Find the "wizard.title" Any
+    t =    10.29s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.32s     Synthesize event
+    t =    10.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.65s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.66s     Find the "wizard.title" TextField
+    t =    10.76s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.78s     Synthesize event
+    t =    11.00s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.01s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    12.04s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    12.04s         Checking existence of `"wizard.outcome" Any`
+    t =    12.13s Click "wizard.outcome" Any
+    t =    12.13s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.13s     Find the "wizard.outcome" Any
+    t =    12.22s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.23s     Synthesize event
+    t =    12.60s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.60s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.60s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.60s     Find the "wizard.outcome" TextField
+    t =    12.70s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.73s     Synthesize event
+    t =    13.01s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.02s Waiting 5.0s for "wizard.next" Button to exist
+    t =    14.04s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    14.04s         Checking existence of `"wizard.next" Button`
+    t =    14.07s Click "wizard.next" Button
+    t =    14.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.07s     Find the "wizard.next" Button
+    t =    14.09s     Check for interrupting elements affecting "wizard.next" Button
+    t =    14.10s     Synthesize event
+    t =    14.63s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.64s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.66s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.66s         Checking existence of `"wizard.skip" Button`
+    t =    15.68s Click "wizard.skip" Button
+    t =    15.68s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.68s     Find the "wizard.skip" Button
+    t =    15.69s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.70s     Synthesize event
+    t =    16.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.10s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    17.12s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    17.12s         Checking existence of `"wizard.strategy" Any`
+    t =    17.24s Click "wizard.strategy" Any
+    t =    17.24s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.24s     Find the "wizard.strategy" Any
+    t =    17.35s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.38s     Synthesize event
+    t =    17.77s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.77s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.77s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.78s     Find the "wizard.strategy" TextField
+    t =    17.90s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.93s     Synthesize event
+    t =    18.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.21s Waiting 5.0s for "wizard.action" Any to exist
+    t =    19.22s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    19.22s         Checking existence of `"wizard.action" Any`
+    t =    19.32s Click "wizard.action" Any
+    t =    19.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.32s     Find the "wizard.action" Any
+    t =    19.42s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.44s     Synthesize event
+    t =    19.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.80s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.80s     Find the "wizard.action" TextField
+    t =    19.89s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.92s     Synthesize event
+    t =    20.19s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.20s Waiting 5.0s for "wizard.next" Button to exist
+    t =    21.23s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    21.23s         Checking existence of `"wizard.next" Button`
+    t =    21.26s Click "wizard.next" Button
+    t =    21.26s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.26s     Find the "wizard.next" Button
+    t =    21.30s     Check for interrupting elements affecting "wizard.next" Button
+    t =    21.32s     Synthesize event
+    t =    21.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.82s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    22.83s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    22.83s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.91s Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.96s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.98s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.98s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    24.04s Click "wizard.focusAndToday" Button
+    t =    24.04s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.04s     Find the "wizard.focusAndToday" Button
+    t =    24.10s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    24.12s     Synthesize event
+    t =    24.56s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.58s Waiting 5.0s for "wizard.done" Button to exist
+    t =    25.59s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    25.59s         Checking existence of `"wizard.done" Button`
+    t =    25.62s Click "wizard.done" Button
+    t =    25.62s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.62s     Find the "wizard.done" Button
+    t =    25.65s     Check for interrupting elements affecting "wizard.done" Button
+    t =    25.66s     Synthesize event
+    t =    26.05s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    26.06s Waiting 8.0s for "tab.today" Any to exist
+    t =    27.08s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    27.09s         Checking existence of `"tab.today" Any`
+    t =    27.29s Checking existence of `"tab.today" Any`
+    t =    27.45s Click "tab.today" Any
+    t =    27.45s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.46s     Find the "tab.today" Any
+    t =    27.58s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    27.60s     Synthesize event
+    t =    27.94s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.36s Waiting 5.0s for "today.complete" Button to exist
+    t =    29.38s     Checking `Expect predicate `existsNoRetry == 1` for object "today.complete" Button`
+    t =    29.38s         Checking existence of `"today.complete" Button`
+    t =    29.48s Click "today.complete" Button
+    t =    29.48s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.48s     Find the "today.complete" Button
+    t =    29.55s     Check for interrupting elements affecting "today.complete" Button
+    t =    29.57s     Synthesize event
+    t =    29.96s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    30.05s Waiting 8.0s for "tab.review" Any to exist
+    t =    31.07s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.review" Any`
+    t =    31.07s         Checking existence of `"tab.review" Any`
+    t =    31.24s Checking existence of `"tab.review" Any`
+    t =    31.39s Click "tab.review" Any
+    t =    31.39s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    31.40s     Find the "tab.review" Any
+    t =    31.54s     Check for interrupting elements affecting "tab.review" StaticText
+    t =    31.56s     Synthesize event
+    t =    31.87s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    32.10s Waiting 5.0s for "review.evening" Button to exist
+    t =    33.13s     Checking `Expect predicate `existsNoRetry == 1` for object "review.evening" Button`
+    t =    33.13s         Checking existence of `"review.evening" Button`
+    t =    33.20s Click "review.evening" Button
+    t =    33.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    33.21s     Find the "review.evening" Button
+    t =    33.27s     Check for interrupting elements affecting "review.evening" Button
+    t =    33.28s     Synthesize event
+    t =    33.62s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    34.06s Waiting 5.0s for "evening.done" Button to exist
+    t =    35.07s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.done" Button`
+    t =    35.08s         Checking existence of `"evening.done" Button`
+    t =    35.15s Click "evening.done" Button
+    t =    35.15s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    35.15s     Find the "evening.done" Button
+    t =    35.18s     Check for interrupting elements affecting "evening.done" Button
+    t =    35.22s     Synthesize event
+    t =    35.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    36.09s Waiting 3.0s for Sheet (First Match) to exist
+    t =    37.11s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =    37.11s         Checking existence of `Sheet (First Match)`
+    t =    37.13s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    37.13s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    37.13s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =    37.21s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =    37.21s     Synthesize event
+    t =    37.35s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    37.35s Waiting 5.0s for "還沒有成果紀錄。" StaticText to exist
+    t =    38.38s     Checking `Expect predicate `existsNoRetry == 1` for object "還沒有成果紀錄。" StaticText`
+    t =    38.38s         Checking existence of `"還沒有成果紀錄。" StaticText`
+    t =    38.45s Tear Down
+    t =    38.45s     Terminate com.chiaying.BillionairePlanner:6427
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT02_EveningCloseWithoutSelectionCreatesNoOutcome]' passed (39.530 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT03_ReviewEntriesAreActivatableButtons]' started.
+    t =     0.00s Start Test at 2026-11-04 09:26:14.038
+    t =     0.08s Set Up
+    t =     0.08s     Open com.chiaying.BillionairePlanner
+    t =     0.08s         Launch com.chiaying.BillionairePlanner
+    t =     0.51s             Wait for accessibility to load
+    t =     1.36s             Setting up automation session
+    t =     1.37s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.45s     Open com.chiaying.BillionairePlanner
+    t =     1.45s         Activate com.chiaying.BillionairePlanner
+    t =     1.46s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.48s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.49s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.50s             Checking existence of `Window (First Match)`
+    t =     2.51s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.52s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.52s             Checking existence of `Window (First Match)`
+    t =     4.54s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.54s         Find the "tab.today" Any
+    t =     4.96s Waiting 8.0s for "tab.review" Any to exist
+    t =     5.99s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.review" Any`
+    t =     5.99s         Checking existence of `"tab.review" Any`
+    t =     6.15s Checking existence of `"tab.review" Any`
+    t =     6.31s Click "tab.review" Any
+    t =     6.31s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.31s     Find the "tab.review" Any
+    t =     6.43s     Check for interrupting elements affecting "tab.review" StaticText
+    t =     6.46s     Synthesize event
+    t =     6.97s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.97s Waiting 5.0s for "review.workClose" Button to exist
+    t =     7.99s     Checking `Expect predicate `existsNoRetry == 1` for object "review.workClose" Button`
+    t =     8.00s         Checking existence of `"review.workClose" Button`
+    t =     8.07s Click "review.workClose" Button
+    t =     8.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.08s     Find the "review.workClose" Button
+    t =     8.12s     Check for interrupting elements affecting "review.workClose" Button
+    t =     8.14s     Synthesize event
+    t =     8.46s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.46s Waiting 5.0s for Sheet (First Match) to exist
+    t =     9.48s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =     9.48s         Checking existence of `Sheet (First Match)`
+    t =     9.49s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =     9.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.49s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =     9.58s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =     9.58s     Synthesize event
+    t =     9.69s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.69s Waiting 5.0s for Sheet (First Match) to not exist
+    t =    10.69s     Checking `Expect predicate `existsNoRetry == 0` for object Sheet (First Match)`
+    t =    10.69s         Checking existence of `Sheet (First Match)`
+    t =    10.77s Waiting 5.0s for "review.evening" Button to exist
+    t =    11.79s     Checking `Expect predicate `existsNoRetry == 1` for object "review.evening" Button`
+    t =    11.79s         Checking existence of `"review.evening" Button`
+    t =    11.88s Click "review.evening" Button
+    t =    11.88s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.88s     Find the "review.evening" Button
+    t =    11.94s     Check for interrupting elements affecting "review.evening" Button
+    t =    11.96s     Synthesize event
+    t =    12.29s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.74s Waiting 5.0s for Sheet (First Match) to exist
+    t =    13.75s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =    13.75s         Checking existence of `Sheet (First Match)`
+    t =    13.76s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    13.76s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.76s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =    13.89s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =    13.89s     Synthesize event
+    t =    14.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.08s Waiting 5.0s for Sheet (First Match) to not exist
+    t =    15.08s     Checking `Expect predicate `existsNoRetry == 0` for object Sheet (First Match)`
+    t =    15.08s         Checking existence of `Sheet (First Match)`
+    t =    15.16s Waiting 5.0s for "review.draft" Button to exist
+    t =    16.19s     Checking `Expect predicate `existsNoRetry == 1` for object "review.draft" Button`
+    t =    16.19s         Checking existence of `"review.draft" Button`
+    t =    16.25s Click "review.draft" Button
+    t =    16.25s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.25s     Find the "review.draft" Button
+    t =    16.31s     Check for interrupting elements affecting "review.draft" Button
+    t =    16.32s     Synthesize event
+    t =    16.69s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.69s Waiting 5.0s for Sheet (First Match) to exist
+    t =    17.72s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =    17.72s         Checking existence of `Sheet (First Match)`
+    t =    17.72s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    17.73s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.73s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =    17.82s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =    17.82s     Synthesize event
+    t =    17.83s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.83s Waiting 5.0s for Sheet (First Match) to not exist
+    t =    18.84s     Checking `Expect predicate `existsNoRetry == 0` for object Sheet (First Match)`
+    t =    18.84s         Checking existence of `Sheet (First Match)`
+    t =    18.92s Waiting 5.0s for "review.weekly" Button to exist
+    t =    19.94s     Checking `Expect predicate `existsNoRetry == 1` for object "review.weekly" Button`
+    t =    19.94s         Checking existence of `"review.weekly" Button`
+    t =    20.02s Click "review.weekly" Button
+    t =    20.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.02s     Find the "review.weekly" Button
+    t =    20.09s     Check for interrupting elements affecting "review.weekly" Button
+    t =    20.12s     Synthesize event
+    t =    20.45s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.46s Waiting 5.0s for Sheet (First Match) to exist
+    t =    21.48s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =    21.48s         Checking existence of `Sheet (First Match)`
+    t =    21.49s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    21.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.49s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =    21.56s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =    21.56s     Synthesize event
+    t =    21.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.66s Waiting 5.0s for Sheet (First Match) to not exist
+    t =    22.67s     Checking `Expect predicate `existsNoRetry == 0` for object Sheet (First Match)`
+    t =    22.67s         Checking existence of `Sheet (First Match)`
+    t =    22.75s Tear Down
+    t =    22.75s     Terminate com.chiaying.BillionairePlanner:7268
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT03_ReviewEntriesAreActivatableButtons]' passed (23.835 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT03_TemplateEntryIsActivatableButton]' started.
+    t =     0.00s Start Test at 2026-11-04 09:26:37.873
+    t =     0.08s Set Up
+    t =     0.08s     Open com.chiaying.BillionairePlanner
+    t =     0.08s         Launch com.chiaying.BillionairePlanner
+    t =     0.53s             Wait for accessibility to load
+    t =     1.54s             Setting up automation session
+    t =     1.56s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.67s     Open com.chiaying.BillionairePlanner
+    t =     1.67s         Activate com.chiaying.BillionairePlanner
+    t =     1.68s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.71s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.72s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.72s             Checking existence of `Window (First Match)`
+    t =     2.74s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.76s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.76s             Checking existence of `Window (First Match)`
+    t =     4.79s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.79s         Find the "tab.today" Any
+    t =     5.14s Waiting 8.0s for "tab.today" Any to exist
+    t =     6.17s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =     6.17s         Checking existence of `"tab.today" Any`
+    t =     6.31s Checking existence of `"tab.today" Any`
+    t =     6.43s Click "tab.today" Any
+    t =     6.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.44s     Find the "tab.today" Any
+    t =     6.57s     Check for interrupting elements affecting "tab.today" StaticText
+    t =     6.59s     Synthesize event
+    t =     6.95s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.95s Waiting 5.0s for "today.skeleton" Button to exist
+    t =     7.96s     Checking `Expect predicate `existsNoRetry == 1` for object "today.skeleton" Button`
+    t =     7.96s         Checking existence of `"today.skeleton" Button`
+    t =     7.98s Click "today.skeleton" Button
+    t =     7.98s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.98s     Find the "today.skeleton" Button
+    t =     7.99s     Check for interrupting elements affecting "today.skeleton" Button
+    t =     8.00s     Synthesize event
+    t =     8.40s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.40s Waiting 5.0s for "skeleton.createTemplate" Button to exist
+    t =     9.43s     Checking `Expect predicate `existsNoRetry == 1` for object "skeleton.createTemplate" Button`
+    t =     9.43s         Checking existence of `"skeleton.createTemplate" Button`
+    t =     9.53s Click "skeleton.createTemplate" Button
+    t =     9.53s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.53s     Find the "skeleton.createTemplate" Button
+    t =     9.58s     Check for interrupting elements affecting "skeleton.createTemplate" Button
+    t =     9.60s     Synthesize event
+    t =    10.14s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.23s Waiting 5.0s for "上午工作" StaticText to exist
+    t =    11.26s     Checking `Expect predicate `existsNoRetry == 1` for object "上午工作" StaticText`
+    t =    11.26s         Checking existence of `"上午工作" StaticText`
+    t =    11.32s Waiting 5.0s for "skeleton.applyTemplate" Button to exist
+    t =    12.33s     Checking `Expect predicate `existsNoRetry == 1` for object "skeleton.applyTemplate" Button`
+    t =    12.33s         Checking existence of `"skeleton.applyTemplate" Button`
+    t =    12.41s Checking existence of `"skeleton.applyTemplate" Button`
+    t =    12.47s Tear Down
+    t =    12.47s     Terminate com.chiaying.BillionairePlanner:8477
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT03_TemplateEntryIsActivatableButton]' passed (13.548 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT04_StopWithoutRecordingClearsFocus]' started.
+    t =     0.00s Start Test at 2026-11-04 09:26:51.422
+    t =     0.07s Set Up
+    t =     0.07s     Open com.chiaying.BillionairePlanner
+    t =     0.07s         Launch com.chiaying.BillionairePlanner
+    t =     0.47s             Wait for accessibility to load
+    t =     0.72s             Setting up automation session
+    t =     0.77s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.52s     Open com.chiaying.BillionairePlanner
+    t =     1.52s         Activate com.chiaying.BillionairePlanner
+    t =     1.53s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.64s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.67s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.67s             Checking existence of `Window (First Match)`
+    t =     2.69s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.71s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.71s             Checking existence of `Window (First Match)`
+    t =     4.74s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.74s         Find the "tab.today" Any
+    t =     5.06s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.09s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.09s         Checking existence of `"tab.goals" Any`
+    t =     6.24s Checking existence of `"tab.goals" Any`
+    t =     6.36s Click "tab.goals" Any
+    t =     6.37s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.37s     Find the "tab.goals" Any
+    t =     6.49s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.51s     Synthesize event
+    t =     6.87s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.01s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.03s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.03s         Checking existence of `"goals.new" Button`
+    t =     8.06s Click "goals.new" Button
+    t =     8.06s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.06s     Find the "goals.new" Button
+    t =     8.08s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.09s     Synthesize event
+    t =     8.44s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.44s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.46s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.46s         Checking existence of `"wizard.title" Any`
+    t =     9.59s Click "wizard.title" Any
+    t =     9.59s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.59s     Find the "wizard.title" Any
+    t =     9.69s     Check for interrupting elements affecting "wizard.title" TextField
+    t =     9.71s     Synthesize event
+    t =    10.04s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.04s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.04s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.04s     Find the "wizard.title" TextField
+    t =    10.12s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.14s     Synthesize event
+    t =    10.36s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.36s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.39s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.39s         Checking existence of `"wizard.outcome" Any`
+    t =    11.49s Click "wizard.outcome" Any
+    t =    11.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.49s     Find the "wizard.outcome" Any
+    t =    11.58s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    11.60s     Synthesize event
+    t =    11.98s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.99s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    11.99s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.99s     Find the "wizard.outcome" TextField
+    t =    12.11s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.13s     Synthesize event
+    t =    12.47s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.47s Waiting 5.0s for "wizard.next" Button to exist
+    t =    13.47s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    13.48s         Checking existence of `"wizard.next" Button`
+    t =    13.52s Click "wizard.next" Button
+    t =    13.52s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.52s     Find the "wizard.next" Button
+    t =    13.56s     Check for interrupting elements affecting "wizard.next" Button
+    t =    13.57s     Synthesize event
+    t =    13.90s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.08s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.09s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.09s         Checking existence of `"wizard.skip" Button`
+    t =    15.12s Click "wizard.skip" Button
+    t =    15.12s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.12s     Find the "wizard.skip" Button
+    t =    15.14s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.15s     Synthesize event
+    t =    15.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.55s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    16.57s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    16.57s         Checking existence of `"wizard.strategy" Any`
+    t =    16.70s Click "wizard.strategy" Any
+    t =    16.70s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.70s     Find the "wizard.strategy" Any
+    t =    16.79s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    16.81s     Synthesize event
+    t =    17.16s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.17s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.17s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.17s     Find the "wizard.strategy" TextField
+    t =    17.29s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.32s     Synthesize event
+    t =    17.62s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.62s Waiting 5.0s for "wizard.action" Any to exist
+    t =    18.64s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    18.64s         Checking existence of `"wizard.action" Any`
+    t =    18.74s Click "wizard.action" Any
+    t =    18.74s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.74s     Find the "wizard.action" Any
+    t =    18.83s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    18.85s     Synthesize event
+    t =    19.22s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.22s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.22s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.22s     Find the "wizard.action" TextField
+    t =    19.32s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.34s     Synthesize event
+    t =    19.59s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.60s Waiting 5.0s for "wizard.next" Button to exist
+    t =    20.62s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    20.62s         Checking existence of `"wizard.next" Button`
+    t =    20.64s Click "wizard.next" Button
+    t =    20.64s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.64s     Find the "wizard.next" Button
+    t =    20.66s     Check for interrupting elements affecting "wizard.next" Button
+    t =    20.67s     Synthesize event
+    t =    21.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.22s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    22.24s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    22.24s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.30s Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.35s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.37s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.37s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.42s Click "wizard.focusAndToday" Button
+    t =    23.42s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    23.42s     Find the "wizard.focusAndToday" Button
+    t =    23.48s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    23.49s     Synthesize event
+    t =    23.83s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    23.95s Waiting 5.0s for "wizard.done" Button to exist
+    t =    24.97s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    24.97s         Checking existence of `"wizard.done" Button`
+    t =    24.99s Click "wizard.done" Button
+    t =    24.99s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.99s     Find the "wizard.done" Button
+    t =    25.01s     Check for interrupting elements affecting "wizard.done" Button
+    t =    25.02s     Synthesize event
+    t =    25.36s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.45s Waiting 8.0s for "tab.today" Any to exist
+    t =    26.47s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    26.47s         Checking existence of `"tab.today" Any`
+    t =    26.66s Checking existence of `"tab.today" Any`
+    t =    26.78s Click "tab.today" Any
+    t =    26.78s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    26.78s     Find the "tab.today" Any
+    t =    26.89s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    26.93s     Synthesize event
+    t =    27.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.62s Waiting 5.0s for "today.focus" Button to exist
+    t =    28.65s     Checking `Expect predicate `existsNoRetry == 1` for object "today.focus" Button`
+    t =    28.65s         Checking existence of `"today.focus" Button`
+    t =    28.72s Click "today.focus" Button
+    t =    28.72s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.72s     Find the "today.focus" Button
+    t =    28.78s     Check for interrupting elements affecting "today.focus" Button
+    t =    28.80s     Synthesize event
+    t =    29.14s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.14s Waiting 5.0s for "focus.stopNoRecord" Button to exist
+    t =    30.16s     Checking `Expect predicate `existsNoRetry == 1` for object "focus.stopNoRecord" Button`
+    t =    30.16s         Checking existence of `"focus.stopNoRecord" Button`
+    t =    30.20s Click "focus.stopNoRecord" Button
+    t =    30.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    30.20s     Find the "focus.stopNoRecord" Button
+    t =    30.23s     Check for interrupting elements affecting "focus.stopNoRecord" Button
+    t =    30.24s     Synthesize event
+    t =    30.59s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    30.69s Waiting 5.0s for "開始專注" Button to exist
+    t =    31.71s     Checking `Expect predicate `existsNoRetry == 1` for object "開始專注" Button`
+    t =    31.71s         Checking existence of `"開始專注" Button`
+    t =    31.80s Checking existence of `"today.focusing" Any`
+    t =    31.95s Tear Down
+    t =    31.96s     Terminate com.chiaying.BillionairePlanner:8904
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT04_StopWithoutRecordingClearsFocus]' passed (33.064 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT05_LowLoadShowsComfortableAndRestSeparately]' started.
+    t =     0.00s Start Test at 2026-11-04 09:27:24.486
+    t =     0.13s Set Up
+    t =     0.13s     Open com.chiaying.BillionairePlanner
+    t =     0.13s         Launch com.chiaying.BillionairePlanner
+    t =     0.76s             Wait for accessibility to load
+    t =     1.87s             Setting up automation session
+    t =     1.89s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.97s     Open com.chiaying.BillionairePlanner
+    t =     1.97s         Activate com.chiaying.BillionairePlanner
+    t =     1.97s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.98s     Waiting 3.0s for Window (First Match) to exist
+    t =     3.00s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.01s             Checking existence of `Window (First Match)`
+    t =     3.02s     Waiting 8.0s for Window (First Match) to exist
+    t =     4.03s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     4.03s             Checking existence of `Window (First Match)`
+    t =     5.06s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     5.06s         Find the "tab.today" Any
+    t =     5.45s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.47s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.47s         Checking existence of `"tab.goals" Any`
+    t =     6.61s Checking existence of `"tab.goals" Any`
+    t =     6.75s Click "tab.goals" Any
+    t =     6.75s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.76s     Find the "tab.goals" Any
+    t =     6.89s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.91s     Synthesize event
+    t =     7.26s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.39s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.41s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.41s         Checking existence of `"goals.new" Button`
+    t =     8.43s Click "goals.new" Button
+    t =     8.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.44s     Find the "goals.new" Button
+    t =     8.45s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.46s     Synthesize event
+    t =     8.81s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.81s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.84s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.84s         Checking existence of `"wizard.title" Any`
+    t =     9.96s Click "wizard.title" Any
+    t =     9.96s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.96s     Find the "wizard.title" Any
+    t =    10.08s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.11s     Synthesize event
+    t =    10.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.49s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.49s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.50s     Find the "wizard.title" TextField
+    t =    10.59s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.62s     Synthesize event
+    t =    10.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.80s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.82s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.82s         Checking existence of `"wizard.outcome" Any`
+    t =    11.93s Click "wizard.outcome" Any
+    t =    11.93s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.93s     Find the "wizard.outcome" Any
+    t =    12.02s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.03s     Synthesize event
+    t =    12.41s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.41s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.41s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.41s     Find the "wizard.outcome" TextField
+    t =    12.52s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.56s     Synthesize event
+    t =    12.85s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.86s Waiting 5.0s for "wizard.next" Button to exist
+    t =    13.88s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    13.88s         Checking existence of `"wizard.next" Button`
+    t =    13.90s Click "wizard.next" Button
+    t =    13.90s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.90s     Find the "wizard.next" Button
+    t =    13.92s     Check for interrupting elements affecting "wizard.next" Button
+    t =    13.93s     Synthesize event
+    t =    14.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.42s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.44s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.44s         Checking existence of `"wizard.skip" Button`
+    t =    15.45s Click "wizard.skip" Button
+    t =    15.45s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.46s     Find the "wizard.skip" Button
+    t =    15.48s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.49s     Synthesize event
+    t =    15.87s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.92s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    16.94s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    16.94s         Checking existence of `"wizard.strategy" Any`
+    t =    17.05s Click "wizard.strategy" Any
+    t =    17.05s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.06s     Find the "wizard.strategy" Any
+    t =    17.14s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.16s     Synthesize event
+    t =    17.53s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.54s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.54s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.54s     Find the "wizard.strategy" TextField
+    t =    17.63s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.65s     Synthesize event
+    t =    17.93s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.93s Waiting 5.0s for "wizard.action" Any to exist
+    t =    18.97s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    18.97s         Checking existence of `"wizard.action" Any`
+    t =    19.08s Click "wizard.action" Any
+    t =    19.08s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.08s     Find the "wizard.action" Any
+    t =    19.19s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.20s     Synthesize event
+    t =    19.57s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.57s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.57s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.58s     Find the "wizard.action" TextField
+    t =    19.68s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.70s     Synthesize event
+    t =    19.97s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.98s Waiting 5.0s for "wizard.next" Button to exist
+    t =    21.00s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    21.00s         Checking existence of `"wizard.next" Button`
+    t =    21.02s Click "wizard.next" Button
+    t =    21.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.02s     Find the "wizard.next" Button
+    t =    21.05s     Check for interrupting elements affecting "wizard.next" Button
+    t =    21.05s     Synthesize event
+    t =    21.46s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.62s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    22.64s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    22.64s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.69s Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.72s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.75s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.75s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.81s Click "wizard.focusAndToday" Button
+    t =    23.81s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    23.81s     Find the "wizard.focusAndToday" Button
+    t =    23.85s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    23.87s     Synthesize event
+    t =    24.22s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.29s Waiting 5.0s for "wizard.done" Button to exist
+    t =    25.31s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    25.31s         Checking existence of `"wizard.done" Button`
+    t =    25.34s Click "wizard.done" Button
+    t =    25.35s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.35s     Find the "wizard.done" Button
+    t =    25.37s     Check for interrupting elements affecting "wizard.done" Button
+    t =    25.38s     Synthesize event
+    t =    25.72s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.72s Waiting 8.0s for "tab.today" Any to exist
+    t =    26.75s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    26.75s         Checking existence of `"tab.today" Any`
+    t =    26.90s Checking existence of `"tab.today" Any`
+    t =    27.07s Click "tab.today" Any
+    t =    27.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.08s     Find the "tab.today" Any
+    t =    27.22s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    27.26s     Synthesize event
+    t =    27.61s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.96s Waiting 5.0s for "容量：寬鬆" StaticText to exist
+    t =    28.98s     Checking `Expect predicate `existsNoRetry == 1` for object "容量：寬鬆" StaticText`
+    t =    28.98s         Checking existence of `"容量：寬鬆" StaticText`
+    t =    29.07s Checking existence of `"需要補休息" StaticText`
+    t =    29.15s Tear Down
+    t =    29.15s     Terminate com.chiaying.BillionairePlanner:9600
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testUAT05_LowLoadShowsComfortableAndRestSeparately]' passed (30.206 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV201UAT01_CapacityNotDoubleCountedAfterApply]' started.
+    t =     0.00s Start Test at 2026-11-04 09:27:54.692
+    t =     0.13s Set Up
+    t =     0.13s     Open com.chiaying.BillionairePlanner
+    t =     0.13s         Launch com.chiaying.BillionairePlanner
+    t =     0.69s             Wait for accessibility to load
+    t =     1.74s             Setting up automation session
+    t =     1.76s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.82s     Open com.chiaying.BillionairePlanner
+    t =     1.82s         Activate com.chiaying.BillionairePlanner
+    t =     1.83s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.84s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.87s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.87s             Checking existence of `Window (First Match)`
+    t =     2.89s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.91s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.91s             Checking existence of `Window (First Match)`
+    t =     4.95s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.95s         Find the "tab.today" Any
+    t =     5.35s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.37s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.38s         Checking existence of `"tab.goals" Any`
+    t =     6.53s Checking existence of `"tab.goals" Any`
+    t =     6.68s Click "tab.goals" Any
+    t =     6.68s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.69s     Find the "tab.goals" Any
+    t =     6.85s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.89s     Synthesize event
+    t =     7.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.34s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.37s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.37s         Checking existence of `"goals.new" Button`
+    t =     8.38s Click "goals.new" Button
+    t =     8.38s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.39s     Find the "goals.new" Button
+    t =     8.40s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.40s     Synthesize event
+    t =     8.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.80s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.81s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.82s         Checking existence of `"wizard.title" Any`
+    t =     9.93s Click "wizard.title" Any
+    t =     9.93s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.94s     Find the "wizard.title" Any
+    t =    10.02s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.04s     Synthesize event
+    t =    10.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.43s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.43s     Find the "wizard.title" TextField
+    t =    10.53s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.55s     Synthesize event
+    t =    10.71s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.72s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.75s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.75s         Checking existence of `"wizard.outcome" Any`
+    t =    11.87s Click "wizard.outcome" Any
+    t =    11.87s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.87s     Find the "wizard.outcome" Any
+    t =    11.97s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    11.99s     Synthesize event
+    t =    12.37s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.37s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.37s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.37s     Find the "wizard.outcome" TextField
+    t =    12.46s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.49s     Synthesize event
+    t =    12.75s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.76s Waiting 5.0s for "wizard.next" Button to exist
+    t =    13.77s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    13.77s         Checking existence of `"wizard.next" Button`
+    t =    13.80s Click "wizard.next" Button
+    t =    13.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.81s     Find the "wizard.next" Button
+    t =    13.84s     Check for interrupting elements affecting "wizard.next" Button
+    t =    13.85s     Synthesize event
+    t =    14.19s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.37s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.40s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.40s         Checking existence of `"wizard.skip" Button`
+    t =    15.42s Click "wizard.skip" Button
+    t =    15.42s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.43s     Find the "wizard.skip" Button
+    t =    15.44s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.45s     Synthesize event
+    t =    15.79s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.86s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    16.88s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    16.88s         Checking existence of `"wizard.strategy" Any`
+    t =    16.99s Click "wizard.strategy" Any
+    t =    16.99s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.99s     Find the "wizard.strategy" Any
+    t =    17.06s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.08s     Synthesize event
+    t =    17.45s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.46s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.46s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.46s     Find the "wizard.strategy" TextField
+    t =    17.58s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.60s     Synthesize event
+    t =    17.87s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.87s Waiting 5.0s for "wizard.action" Any to exist
+    t =    18.89s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    18.89s         Checking existence of `"wizard.action" Any`
+    t =    18.99s Click "wizard.action" Any
+    t =    18.99s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.99s     Find the "wizard.action" Any
+    t =    19.06s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.07s     Synthesize event
+    t =    19.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.43s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.43s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.43s     Find the "wizard.action" TextField
+    t =    19.52s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.54s     Synthesize event
+    t =    19.83s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.84s Waiting 5.0s for "wizard.next" Button to exist
+    t =    20.86s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    20.86s         Checking existence of `"wizard.next" Button`
+    t =    20.88s Click "wizard.next" Button
+    t =    20.88s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.88s     Find the "wizard.next" Button
+    t =    20.91s     Check for interrupting elements affecting "wizard.next" Button
+    t =    20.92s     Synthesize event
+    t =    21.26s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.46s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    22.47s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    22.47s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.54s Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.59s Waiting 5.0s for "wizard.capacity" Any to exist
+    t =    23.61s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.capacity" Any`
+    t =    23.61s         Checking existence of `"wizard.capacity" Any`
+    t =    23.73s Find the "wizard.capacity" Any
+    t =    23.84s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    24.86s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    24.86s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    24.90s Click "wizard.focusAndToday" Button
+    t =    24.90s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.90s     Find the "wizard.focusAndToday" Button
+    t =    24.94s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    24.96s     Synthesize event
+    t =    25.34s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.43s Waiting 5.0s for "wizard.capacity" Any to exist
+    t =    26.45s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.capacity" Any`
+    t =    26.45s         Checking existence of `"wizard.capacity" Any`
+    t =    26.58s Find the "wizard.capacity" Any
+    t =    26.66s Tear Down
+    t =    26.66s     Terminate com.chiaying.BillionairePlanner:11123
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV201UAT01_CapacityNotDoubleCountedAfterApply]' passed (27.716 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV202DAILY_AllDoneShowsNextStepPromptAndEveningListsDone]' started.
+    t =     0.00s Start Test at 2026-11-04 09:28:22.409
+    t =     0.08s Set Up
+    t =     0.09s     Open com.chiaying.BillionairePlanner
+    t =     0.09s         Launch com.chiaying.BillionairePlanner
+    t =     0.67s             Wait for accessibility to load
+    t =     1.73s             Setting up automation session
+    t =     1.76s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.82s     Open com.chiaying.BillionairePlanner
+    t =     1.82s         Activate com.chiaying.BillionairePlanner
+    t =     1.82s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.84s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.86s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.86s             Checking existence of `Window (First Match)`
+    t =     2.89s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.91s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.92s             Checking existence of `Window (First Match)`
+    t =     4.94s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.94s         Find the "tab.today" Any
+    t =     5.24s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.26s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.27s         Checking existence of `"tab.goals" Any`
+    t =     6.42s Checking existence of `"tab.goals" Any`
+    t =     6.55s Click "tab.goals" Any
+    t =     6.55s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.55s     Find the "tab.goals" Any
+    t =     6.65s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.67s     Synthesize event
+    t =     7.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.14s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.16s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.16s         Checking existence of `"goals.new" Button`
+    t =     8.17s Click "goals.new" Button
+    t =     8.17s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.17s     Find the "goals.new" Button
+    t =     8.18s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.20s     Synthesize event
+    t =     8.54s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.78s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.80s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.80s         Checking existence of `"wizard.title" Any`
+    t =     9.94s Click "wizard.title" Any
+    t =     9.94s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     9.94s     Find the "wizard.title" Any
+    t =    10.04s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.05s     Synthesize event
+    t =    10.39s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.39s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.39s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.39s     Find the "wizard.title" TextField
+    t =    10.49s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.52s     Synthesize event
+    t =    10.70s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.71s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.73s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.73s         Checking existence of `"wizard.outcome" Any`
+    t =    11.84s Click "wizard.outcome" Any
+    t =    11.84s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    11.84s     Find the "wizard.outcome" Any
+    t =    11.90s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    11.91s     Synthesize event
+    t =    12.26s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.27s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.27s     Find the "wizard.outcome" TextField
+    t =    12.39s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.41s     Synthesize event
+    t =    12.68s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.68s Waiting 5.0s for "wizard.next" Button to exist
+    t =    13.70s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    13.70s         Checking existence of `"wizard.next" Button`
+    t =    13.72s Click "wizard.next" Button
+    t =    13.72s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.73s     Find the "wizard.next" Button
+    t =    13.75s     Check for interrupting elements affecting "wizard.next" Button
+    t =    13.75s     Synthesize event
+    t =    14.30s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.32s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.33s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.33s         Checking existence of `"wizard.skip" Button`
+    t =    15.35s Click "wizard.skip" Button
+    t =    15.35s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.36s     Find the "wizard.skip" Button
+    t =    15.38s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.39s     Synthesize event
+    t =    15.80s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.80s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    16.82s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    16.82s         Checking existence of `"wizard.strategy" Any`
+    t =    17.07s Click "wizard.strategy" Any
+    t =    17.07s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.17s     Find the "wizard.strategy" Any
+    t =    17.27s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.28s     Synthesize event
+    t =    17.63s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.64s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.64s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.65s     Find the "wizard.strategy" TextField
+    t =    17.74s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.76s     Synthesize event
+    t =    18.08s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.09s Waiting 5.0s for "wizard.action" Any to exist
+    t =    19.11s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    19.12s         Checking existence of `"wizard.action" Any`
+    t =    19.20s Click "wizard.action" Any
+    t =    19.20s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.20s     Find the "wizard.action" Any
+    t =    19.27s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.29s     Synthesize event
+    t =    19.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.66s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    19.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.67s     Find the "wizard.action" TextField
+    t =    19.79s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.81s     Synthesize event
+    t =    20.12s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.13s Waiting 5.0s for "wizard.next" Button to exist
+    t =    21.16s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    21.16s         Checking existence of `"wizard.next" Button`
+    t =    21.18s Click "wizard.next" Button
+    t =    21.18s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.19s     Find the "wizard.next" Button
+    t =    21.20s     Check for interrupting elements affecting "wizard.next" Button
+    t =    21.21s     Synthesize event
+    t =    21.59s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.77s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    22.79s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    22.79s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.88s Checking existence of `"wizard.focusAndToday" Button`
+    t =    22.93s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.96s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.96s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    24.01s Click "wizard.focusAndToday" Button
+    t =    24.01s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.02s     Find the "wizard.focusAndToday" Button
+    t =    24.07s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    24.08s     Synthesize event
+    t =    24.41s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.52s Waiting 5.0s for "wizard.done" Button to exist
+    t =    25.55s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    25.55s         Checking existence of `"wizard.done" Button`
+    t =    25.58s Click "wizard.done" Button
+    t =    25.58s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.58s     Find the "wizard.done" Button
+    t =    25.60s     Check for interrupting elements affecting "wizard.done" Button
+    t =    25.61s     Synthesize event
+    t =    25.93s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    25.93s Waiting 8.0s for "tab.today" Any to exist
+    t =    26.95s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    26.95s         Checking existence of `"tab.today" Any`
+    t =    27.10s Checking existence of `"tab.today" Any`
+    t =    27.19s Click "tab.today" Any
+    t =    27.19s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.19s     Find the "tab.today" Any
+    t =    27.30s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    27.32s     Synthesize event
+    t =    27.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.95s Waiting 5.0s for "today.complete" Button to exist
+    t =    28.96s     Checking `Expect predicate `existsNoRetry == 1` for object "today.complete" Button`
+    t =    28.97s         Checking existence of `"today.complete" Button`
+    t =    29.03s Click "today.complete" Button
+    t =    29.03s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.04s     Find the "today.complete" Button
+    t =    29.10s     Check for interrupting elements affecting "today.complete" Button
+    t =    29.11s     Synthesize event
+    t =    29.50s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.58s Waiting 5.0s for "today.allDone" Any to exist
+    t =    30.60s     Checking `Expect predicate `existsNoRetry == 1` for object "today.allDone" Any`
+    t =    30.60s         Checking existence of `"today.allDone" Any`
+    t =    30.72s Waiting 5.0s for "today.writeNextStep" Button to exist
+    t =    31.75s     Checking `Expect predicate `existsNoRetry == 1` for object "today.writeNextStep" Button`
+    t =    31.75s         Checking existence of `"today.writeNextStep" Button`
+    t =    31.80s Checking existence of `"today.writeNextStep" Button`
+    t =    31.85s Waiting 8.0s for "tab.review" Any to exist
+    t =    32.86s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.review" Any`
+    t =    32.86s         Checking existence of `"tab.review" Any`
+    t =    33.03s Checking existence of `"tab.review" Any`
+    t =    33.24s Click "tab.review" Any
+    t =    33.24s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    33.25s     Find the "tab.review" Any
+    t =    33.38s     Check for interrupting elements affecting "tab.review" StaticText
+    t =    33.40s     Synthesize event
+    t =    33.75s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    33.90s Waiting 5.0s for "review.evening" Button to exist
+    t =    34.91s     Checking `Expect predicate `existsNoRetry == 1` for object "review.evening" Button`
+    t =    34.92s         Checking existence of `"review.evening" Button`
+    t =    34.96s Click "review.evening" Button
+    t =    34.96s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    34.97s     Find the "review.evening" Button
+    t =    35.02s     Check for interrupting elements affecting "review.evening" Button
+    t =    35.03s     Synthesize event
+    t =    35.34s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    35.68s Waiting 5.0s for "evening.done.item" Any to exist
+    t =    36.70s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.done.item" Any`
+    t =    36.70s         Checking existence of `"evening.done.item" Any`
+    t =    36.82s Tear Down
+    t =    36.82s     Terminate com.chiaying.BillionairePlanner:11786
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV202DAILY_AllDoneShowsNextStepPromptAndEveningListsDone]' passed (37.946 seconds).
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV203REVIEW01_ReopenedEveningShowsRecordedOutcome]' started.
+    t =     0.00s Start Test at 2026-11-04 09:29:00.356
+    t =     0.08s Set Up
+    t =     0.08s     Open com.chiaying.BillionairePlanner
+    t =     0.08s         Launch com.chiaying.BillionairePlanner
+    t =     0.57s             Wait for accessibility to load
+    t =     0.83s             Setting up automation session
+    t =     0.85s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.44s     Open com.chiaying.BillionairePlanner
+    t =     1.45s         Activate com.chiaying.BillionairePlanner
+    t =     1.45s             Wait for com.chiaying.BillionairePlanner to idle
+    t =     1.46s     Waiting 3.0s for Window (First Match) to exist
+    t =     2.48s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     2.48s             Checking existence of `Window (First Match)`
+    t =     2.49s     Waiting 8.0s for Window (First Match) to exist
+    t =     3.51s         Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     3.51s             Checking existence of `Window (First Match)`
+    t =     4.55s     Checking `Expect predicate `hittable == 1` for object "tab.today" Any`
+    t =     4.55s         Find the "tab.today" Any
+    t =     5.12s Waiting 8.0s for "tab.goals" Any to exist
+    t =     6.14s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.goals" Any`
+    t =     6.14s         Checking existence of `"tab.goals" Any`
+    t =     6.35s Checking existence of `"tab.goals" Any`
+    t =     6.47s Click "tab.goals" Any
+    t =     6.47s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     6.47s     Find the "tab.goals" Any
+    t =     6.63s     Check for interrupting elements affecting "tab.goals" StaticText
+    t =     6.66s     Synthesize event
+    t =     7.01s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     7.20s Waiting 5.0s for "goals.new" Button to exist
+    t =     8.22s     Checking `Expect predicate `existsNoRetry == 1` for object "goals.new" Button`
+    t =     8.22s         Checking existence of `"goals.new" Button`
+    t =     8.24s Click "goals.new" Button
+    t =     8.24s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.25s     Find the "goals.new" Button
+    t =     8.26s     Check for interrupting elements affecting "goals.new" Button
+    t =     8.29s     Synthesize event
+    t =     8.65s     Wait for com.chiaying.BillionairePlanner to idle
+    t =     8.89s Waiting 5.0s for "wizard.title" Any to exist
+    t =     9.91s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.title" Any`
+    t =     9.91s         Checking existence of `"wizard.title" Any`
+    t =    10.06s Click "wizard.title" Any
+    t =    10.06s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.06s     Find the "wizard.title" Any
+    t =    10.18s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.20s     Synthesize event
+    t =    10.55s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.56s Type 'UT Run 5K' into "wizard.title" TextField
+    t =    10.56s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.56s     Find the "wizard.title" TextField
+    t =    10.68s     Check for interrupting elements affecting "wizard.title" TextField
+    t =    10.71s     Synthesize event
+    t =    10.94s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    10.95s Waiting 5.0s for "wizard.outcome" Any to exist
+    t =    11.97s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.outcome" Any`
+    t =    11.97s         Checking existence of `"wizard.outcome" Any`
+    t =    12.09s Click "wizard.outcome" Any
+    t =    12.09s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.09s     Find the "wizard.outcome" Any
+    t =    12.21s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.23s     Synthesize event
+    t =    12.60s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.61s Type '5K under 35 min' into "wizard.outcome" TextField
+    t =    12.61s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    12.61s     Find the "wizard.outcome" TextField
+    t =    12.72s     Check for interrupting elements affecting "wizard.outcome" TextField
+    t =    12.74s     Synthesize event
+    t =    13.06s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    13.06s Waiting 5.0s for "wizard.next" Button to exist
+    t =    14.08s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    14.09s         Checking existence of `"wizard.next" Button`
+    t =    14.12s Click "wizard.next" Button
+    t =    14.12s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.12s     Find the "wizard.next" Button
+    t =    14.15s     Check for interrupting elements affecting "wizard.next" Button
+    t =    14.16s     Synthesize event
+    t =    14.54s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    14.72s Waiting 5.0s for "wizard.skip" Button to exist
+    t =    15.80s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.skip" Button`
+    t =    15.80s         Checking existence of `"wizard.skip" Button`
+    t =    15.84s Click "wizard.skip" Button
+    t =    15.84s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    15.84s     Find the "wizard.skip" Button
+    t =    15.86s     Check for interrupting elements affecting "wizard.skip" Button
+    t =    15.87s     Synthesize event
+    t =    16.25s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    16.32s Waiting 5.0s for "wizard.strategy" Any to exist
+    t =    17.35s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.strategy" Any`
+    t =    17.35s         Checking existence of `"wizard.strategy" Any`
+    t =    17.45s Click "wizard.strategy" Any
+    t =    17.45s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.46s     Find the "wizard.strategy" Any
+    t =    17.55s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    17.57s     Synthesize event
+    t =    17.97s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.98s Type 'Run Tue and Thu' into "wizard.strategy" TextField
+    t =    17.98s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    17.99s     Find the "wizard.strategy" TextField
+    t =    18.14s     Check for interrupting elements affecting "wizard.strategy" TextField
+    t =    18.17s     Synthesize event
+    t =    18.51s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    18.51s Waiting 5.0s for "wizard.action" Any to exist
+    t =    19.53s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.action" Any`
+    t =    19.53s         Checking existence of `"wizard.action" Any`
+    t =    19.66s Click "wizard.action" Any
+    t =    19.66s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    19.66s     Find the "wizard.action" Any
+    t =    19.75s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    19.77s     Synthesize event
+    t =    20.10s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.11s Type 'Walk-run 25 min' into "wizard.action" TextField
+    t =    20.11s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.11s     Find the "wizard.action" TextField
+    t =    20.24s     Check for interrupting elements affecting "wizard.action" TextField
+    t =    20.26s     Synthesize event
+    t =    20.53s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    20.54s Waiting 5.0s for "wizard.next" Button to exist
+    t =    21.55s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.next" Button`
+    t =    21.55s         Checking existence of `"wizard.next" Button`
+    t =    21.58s Click "wizard.next" Button
+    t =    21.58s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    21.58s     Find the "wizard.next" Button
+    t =    21.60s     Check for interrupting elements affecting "wizard.next" Button
+    t =    21.61s     Synthesize event
+    t =    22.16s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    22.17s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    23.19s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    23.19s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.28s Checking existence of `"wizard.focusAndToday" Button`
+    t =    23.33s Waiting 5.0s for "wizard.focusAndToday" Button to exist
+    t =    24.35s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.focusAndToday" Button`
+    t =    24.35s         Checking existence of `"wizard.focusAndToday" Button`
+    t =    24.41s Click "wizard.focusAndToday" Button
+    t =    24.41s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.42s     Find the "wizard.focusAndToday" Button
+    t =    24.47s     Check for interrupting elements affecting "wizard.focusAndToday" Button
+    t =    24.49s     Synthesize event
+    t =    24.95s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    24.98s Waiting 5.0s for "wizard.done" Button to exist
+    t =    25.99s     Checking `Expect predicate `existsNoRetry == 1` for object "wizard.done" Button`
+    t =    25.99s         Checking existence of `"wizard.done" Button`
+    t =    26.03s Click "wizard.done" Button
+    t =    26.03s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    26.03s     Find the "wizard.done" Button
+    t =    26.06s     Check for interrupting elements affecting "wizard.done" Button
+    t =    26.07s     Synthesize event
+    t =    26.41s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    26.47s Waiting 8.0s for "tab.today" Any to exist
+    t =    27.49s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.today" Any`
+    t =    27.50s         Checking existence of `"tab.today" Any`
+    t =    27.68s Checking existence of `"tab.today" Any`
+    t =    27.82s Click "tab.today" Any
+    t =    27.82s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    27.82s     Find the "tab.today" Any
+    t =    27.94s     Check for interrupting elements affecting "tab.today" StaticText
+    t =    27.98s     Synthesize event
+    t =    28.33s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    28.67s Waiting 5.0s for "today.complete" Button to exist
+    t =    29.68s     Checking `Expect predicate `existsNoRetry == 1` for object "today.complete" Button`
+    t =    29.69s         Checking existence of `"today.complete" Button`
+    t =    29.78s Click "today.complete" Button
+    t =    29.78s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    29.78s     Find the "today.complete" Button
+    t =    29.83s     Check for interrupting elements affecting "today.complete" Button
+    t =    29.84s     Synthesize event
+    t =    30.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    30.35s Waiting 8.0s for "tab.review" Any to exist
+    t =    31.37s     Checking `Expect predicate `existsNoRetry == 1` for object "tab.review" Any`
+    t =    31.37s         Checking existence of `"tab.review" Any`
+    t =    31.55s Checking existence of `"tab.review" Any`
+    t =    31.69s Click "tab.review" Any
+    t =    31.69s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    31.69s     Find the "tab.review" Any
+    t =    31.82s     Check for interrupting elements affecting "tab.review" StaticText
+    t =    31.84s     Synthesize event
+    t =    32.22s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    32.34s Waiting 5.0s for "review.evening" Button to exist
+    t =    33.36s     Checking `Expect predicate `existsNoRetry == 1` for object "review.evening" Button`
+    t =    33.36s         Checking existence of `"review.evening" Button`
+    t =    33.42s Click "review.evening" Button
+    t =    33.42s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    33.42s     Find the "review.evening" Button
+    t =    33.48s     Check for interrupting elements affecting "review.evening" Button
+    t =    33.50s     Synthesize event
+    t =    33.85s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    34.15s Waiting 5.0s for "evening.candidate" Any to exist
+    t =    35.17s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.candidate" Any`
+    t =    35.17s         Checking existence of `"evening.candidate" Any`
+    t =    35.32s Click "evening.candidate" Any
+    t =    35.32s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    35.32s     Find the "evening.candidate" Any
+    t =    35.41s     Check for interrupting elements affecting "evening.candidate" Switch
+    t =    35.43s     Synthesize event
+    t =    35.82s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    35.89s Waiting 5.0s for "evening.outcomeNote" Any to exist
+    t =    36.91s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.outcomeNote" Any`
+    t =    36.91s         Checking existence of `"evening.outcomeNote" Any`
+    t =    37.02s Click "evening.outcomeNote" Any
+    t =    37.02s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    37.03s     Find the "evening.outcomeNote" Any
+    t =    37.11s     Check for interrupting elements affecting "evening.outcomeNote" TextField
+    t =    37.17s     Synthesize event
+    t =    37.56s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    37.57s Type 'first 10 min run' into "evening.outcomeNote" TextField
+    t =    37.57s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    37.57s     Find the "evening.outcomeNote" TextField
+    t =    37.68s     Check for interrupting elements affecting "evening.outcomeNote" TextField
+    t =    37.70s     Synthesize event
+    t =    38.40s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    38.40s Waiting 5.0s for "evening.done" Button to exist
+    t =    39.43s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.done" Button`
+    t =    39.44s         Checking existence of `"evening.done" Button`
+    t =    39.46s Click "evening.done" Button
+    t =    39.46s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    39.46s     Find the "evening.done" Button
+    t =    39.47s     Check for interrupting elements affecting "evening.done" Button
+    t =    39.48s     Synthesize event
+    t =    40.27s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    40.32s Waiting 3.0s for Sheet (First Match) to exist
+    t =    41.35s     Checking `Expect predicate `existsNoRetry == 1` for object Sheet (First Match)`
+    t =    41.35s         Checking existence of `Sheet (First Match)`
+    t =    41.37s Type '⎋' key (XCUIKeyboardKeyEscape) with no modifiers
+    t =    41.37s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    41.37s     Find the Target Application 'com.chiaying.BillionairePlanner'
+    t =    41.43s     Check for interrupting elements affecting "BillionairePlanner" Application
+    t =    41.43s     Synthesize event
+    t =    41.55s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    41.55s Waiting 5.0s for Sheet (First Match) to not exist
+    t =    42.58s     Checking `Expect predicate `existsNoRetry == 0` for object Sheet (First Match)`
+    t =    42.58s         Checking existence of `Sheet (First Match)`
+    t =    42.65s Waiting 5.0s for "review.evening" Button to exist
+    t =    43.67s     Checking `Expect predicate `existsNoRetry == 1` for object "review.evening" Button`
+    t =    43.67s         Checking existence of `"review.evening" Button`
+    t =    43.73s Click "review.evening" Button
+    t =    43.73s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    43.73s     Find the "review.evening" Button
+    t =    43.78s     Check for interrupting elements affecting "review.evening" Button
+    t =    43.79s     Synthesize event
+    t =    44.12s     Wait for com.chiaying.BillionairePlanner to idle
+    t =    44.12s Waiting 5.0s for "evening.alreadyClosed" Any to exist
+    t =    45.13s     Checking `Expect predicate `existsNoRetry == 1` for object "evening.alreadyClosed" Any`
+    t =    45.14s         Checking existence of `"evening.alreadyClosed" Any`
+    t =    45.36s Checking existence of `"evening.recorded" Any`
+    t =    45.48s Checking existence of `"evening.candidate" Any`
+    t =    45.65s Tear Down
+    t =    45.65s     Terminate com.chiaying.BillionairePlanner:13657
+Test Case '-[BillionairePlannerUITests.UATAccessibilityUITests testV203REVIEW01_ReopenedEveningShowsRecordedOutcome]' passed (46.776 seconds).
+Test Suite 'UATAccessibilityUITests' passed at 2026-11-04 09:29:47.132.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 317.651 (317.654) seconds
+Test Suite 'BillionairePlannerUITests.xctest' passed at 2026-11-04 09:29:47.133.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 317.651 (317.656) seconds
+Test Suite 'All tests' passed at 2026-11-04 09:29:47.134.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 317.651 (317.658) seconds
+2026-11-04 09:29:47.553 xcodebuild[3908:16355] [MT] IDETestOperationsObserverDebug: 321.182 elapsed -- Testing started completed.
+2026-11-04 09:29:47.553 xcodebuild[3908:16355] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 09:29:47.553 xcodebuild[3908:16355] [MT] IDETestOperationsObserverDebug: 321.182 sec, +321.182 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/billionaire-planner/billionaire-planner/out-test/Logs/Test/Test-BillionairePlanner-2026.11.04_09-24-19-+0000.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started
