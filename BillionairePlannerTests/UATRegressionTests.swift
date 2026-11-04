@@ -228,19 +228,22 @@ final class UATRegressionTests: XCTestCase {
         XCTAssertTrue(p.overduePlacements().isEmpty)
     }
 
-    func testV202DAILY01_OverdueLaterAndStartNowLandOnTodayWithoutDuplicates() {
+    func testV202DAILY01_OverdueLaterLandsOnToday() {
         let (p, _, pl) = overdueSetup()
         p.dispose(pl, .later)
         XCTAssertEqual(pl.disposition, .later)
         XCTAssertEqual(p.placements(on: p.today).count, 1)
         XCTAssertTrue(p.overduePlacements().isEmpty)
+    }
 
-        let (q, _, pl2) = overdueSetup()
-        q.plan(q.actionMap()[pl2.actionID]!, on: q.today)   // 今天已經有同一個行動
-        q.dispose(pl2, .startNow)
-        let today = q.placements(on: q.today)
+    func testV202DAILY01_OverdueStartNowReusesTodaysPlacement() {
+        let (q, _, pl) = overdueSetup()
+        q.plan(q.actionMap()[pl.actionID]!, on: q.today)   // 今天已經有同一個行動
+        q.dispose(pl, .startNow)
+        let today = q.placements(on: q.today).filter { $0.actionID == pl.actionID }
         XCTAssertEqual(today.count, 1, "不重複安排")
         XCTAssertNotNil(today.first?.startedAt)
+        XCTAssertEqual(pl.disposition, .startNow)
     }
 
     func testV202DAILY01_OverdueCancelAndNotNeededStayOnOriginalDay() {
