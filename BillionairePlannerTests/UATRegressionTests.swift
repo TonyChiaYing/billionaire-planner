@@ -202,4 +202,72 @@ final class UATRegressionTests: XCTestCase {
         p.complete(p.placements(on: p.today).first!)
         XCTAssertEqual(p.missingSetup(g), .action)
     }
+
+    // MARK: V202-DAILY：日常使用順暢度
+
+    /// 昨天排了沒做的行動 → 今天出現在「需要處置」，不會消失
+    func overdueSetup() -> (Planner, Goal, PlanPlacement) {
+        let p = planner()
+        let g = runningGoal()
+        let pl = p.plan(p.openActions(for: g.id).first!, on: p.today.adding(days: -1, calendar: calendar))
+        return (p, g, pl)
+    }
+
+    func testV202DAILY01_YesterdaysUnfinishedShowsAsOverdue() {
+        let (p, _, pl) = overdueSetup()
+        XCTAssertEqual(p.overduePlacements().map(\.id), [pl.id])
+        XCTAssertEqual(p.capacity(for: p.today).loadMinutes, 0, "不自動排進今天")
+    }
+
+    func testV202DAILY01_OverdueTomorrowMeansTodayPlusOne() {
+        let (p, _, pl) = overdueSetup()
+        p.dispose(pl, .tomorrow)
+        XCTAssertEqual(pl.disposition, .tomorrow)
+        XCTAssertTrue(p.placements(on: p.today).isEmpty)
+        XCTAssertEqual(p.placements(on: p.today.adding(days: 1, calendar: calendar)).count, 1)
+        XCTAssertTrue(p.overduePlacements().isEmpty)
+    }
+
+    func testV202DAILY01_OverdueLaterAndStartNowLandOnTodayWithoutDuplicates() {
+        let (p, _, pl) = overdueSetup()
+        p.dispose(pl, .later)
+        XCTAssertEqual(pl.disposition, .later)
+        XCTAssertEqual(p.placements(on: p.today).count, 1)
+        XCTAssertTrue(p.overduePlacements().isEmpty)
+
+        let (q, _, pl2) = overdueSetup()
+        q.plan(q.actionMap()[pl2.actionID]!, on: q.today)   // 今天已經有同一個行動
+        q.dispose(pl2, .startNow)
+        let today = q.placements(on: q.today)
+        XCTAssertEqual(today.count, 1, "不重複安排")
+        XCTAssertNotNil(today.first?.startedAt)
+    }
+
+    func testV202DAILY01_OverdueCancelAndNotNeededStayOnOriginalDay() {
+        let (p, _, pl) = overdueSetup()
+        p.dispose(pl, .cancelToday)
+        XCTAssertEqual(pl.disposition, .cancelToday)
+        XCTAssertTrue(p.placements(on: p.today).isEmpty)
+        XCTAssertTrue(p.overduePlacements().isEmpty)
+    }
+
+    func testV202DAILY01_DraftCarriesOverdueOnceWithGoalName() {
+        let (p, g, _) = overdueSetup()
+        g.isFocus = true
+        let draft = p.tomorrowDraft(from: p.today)
+        let titles = draft.included.map(\.candidate.title)
+        XCTAssertEqual(titles.filter { $0 == "今天快走與慢跑交替 25 分鐘" }.count, 1, "同一行動只出現一次：\(titles)")
+        XCTAssertEqual(draft.included.first?.candidate.goalTitle, g.title)
+    }
+
+    func testV202DAILY02_CompletedLastActionPromptsNextStep() {
+        let p = planner()
+        let g = runningGoal()
+        p.plan(p.openActions(for: g.id).first!, on: p.today)
+        XCTAssertTrue(p.goalsNeedingNextStep(after: p.today).isEmpty)
+        p.complete(p.placements(on: p.today).first!)
+        XCTAssertEqual(p.goalsNeedingNextStep(after: p.today).map(\.id), [g.id])
+        p.addAction(title: "下一次 30 分鐘", kind: .personal, goal: g, estimate: 30)
+        XCTAssertTrue(p.goalsNeedingNextStep(after: p.today).isEmpty)
+    }
 }

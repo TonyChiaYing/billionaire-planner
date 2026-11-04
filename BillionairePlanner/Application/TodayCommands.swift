@@ -210,8 +210,35 @@ extension Planner {
                                         isDisposed: p.disposition != nil, now: now, calendar: calendar)
     }
 
+    /// 之前幾天沒完成、也還沒處置的安排（V202-DAILY-01：不再隨日期換掉而消失）
+    // ponytail: 只回看 14 天，避免極舊的資料洗版；需要更久再放寬
+    func overduePlacements() -> [PlanPlacement] {
+        let earliest = today.adding(days: -14, calendar: calendar)
+        let actions = actionMap()
+        return context.all(PlanPlacement.self)
+            .filter { $0.day < today && $0.day >= earliest && needsDisposition($0) && (actions[$0.actionID]?.status.isOpen ?? false) }
+            .sorted { ($0.day, $0.order) < ($1.day, $1.order) }
+    }
+
+    /// 今天完成了行動、但之後沒有下一步的目標（V202-DAILY-02：做完就提示補下一步）
+    func goalsNeedingNextStep(after day: LocalDay) -> [Goal] {
+        let actions = actionMap()
+        var seen = Set<UUID>()
+        return placements(on: day).filter(\.isDone).compactMap { goal(actions[$0.actionID]?.goalID) }
+            .filter { $0.isOpen && openActions(for: $0.id).isEmpty && seen.insert($0.id).inserted }
+    }
+
     func dispose(_ p: PlanPlacement, _ d: Disposition) {
         guard let a = actionMap()[p.actionID] else { return }
+        // 之前的安排：「現在開始／縮小／稍後」都是在今天做，「明日」是今天的明天
+        if p.day < today, d != .cancelToday, d != .notNeeded {
+            let target = d == .tomorrow ? today.adding(days: 1, calendar: calendar) : today
+            guard let np = carry(p, to: target) else { return }
+            p.disposition = d
+            if d == .startNow || d == .shrink { dispose(np, d) }
+            save()
+            return
+        }
         p.dispositionAt = now
         switch d {
         case .startNow:
@@ -251,6 +278,11 @@ extension Planner {
         p.disposition = .tomorrow
         p.dispositionAt = now
         a.carryoverCount += 1
+        // 目標日已經有這個行動就不再重複安排
+        if let existing = placements(on: day).first(where: { $0.actionID == a.id && $0.isActiveToday && !$0.isDone }) {
+            save()
+            return existing
+        }
         let np = plan(a, on: day, period: p.period, startMinute: nil, duration: p.durationMinutes, commitment: .accepted)
         save()
         return np
@@ -445,20 +477,23 @@ extension Planner {
         }
         let committedActionIDs = Set(placements(on: target).map(\.actionID))
 
-        let carry = placements(on: day).filter { !$0.isDone && $0.disposition == nil && !committedActionIDs.contains($0.actionID) }
+        var seen = Set<UUID>()
+        let carry = (overduePlacements() + placements(on: day)).filter { !$0.isDone && $0.disposition == nil && !committedActionIDs.contains($0.actionID) }
             .compactMap { p -> DraftCandidate? in
-                guard let a = actions[p.actionID], a.status.isOpen else { return nil }
-                return DraftCandidate(id: p.id, title: a.title, minutes: plannedMinutes(p, action: a), source: .carryover, context: a.kind)
+                guard let a = actions[p.actionID], a.status.isOpen, seen.insert(a.id).inserted else { return nil }
+                return DraftCandidate(id: p.id, title: a.title, minutes: plannedMinutes(p, action: a), source: .carryover,
+                                      context: a.kind, goalTitle: goal(a.goalID)?.title)
             }
 
         var focus: [DraftCandidate] = []
         for (rank, g) in focusGoals.enumerated() where g.status == .active {
-            guard let next = openActions(for: g.id).first(where: { !committedActionIDs.contains($0.id) && $0.status != .planned })
-                    ?? openActions(for: g.id).first(where: { !committedActionIDs.contains($0.id) }) else { continue }
+            guard let next = openActions(for: g.id).first(where: { !committedActionIDs.contains($0.id) && !seen.contains($0.id) && $0.status != .planned })
+                    ?? openActions(for: g.id).first(where: { !committedActionIDs.contains($0.id) && !seen.contains($0.id) }) else { continue }
             let minutes = next.minimumMinutes ?? next.estimateMinutes
                 ?? estimateSuggestion(title: next.title, goalID: g.id, kind: next.kind, userEstimate: nil)?.minutes
                 ?? settings.defaultEstimateMinutes
-            focus.append(DraftCandidate(id: next.id, title: next.title, minutes: minutes, source: .focusAction, context: .personal, rank: rank))
+            focus.append(DraftCandidate(id: next.id, title: next.title, minutes: minutes, source: .focusAction, context: .personal,
+                                        rank: rank, goalTitle: g.title))
         }
         return TomorrowDrafter.build(availableMinutes: settings.availableMinutes, template: fixed, rest: rest,
                                      locked: committed, carryovers: carry, focusActions: focus, policy: settings.capacityPolicy)

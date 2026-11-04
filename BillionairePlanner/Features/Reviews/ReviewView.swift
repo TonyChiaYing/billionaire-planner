@@ -158,7 +158,7 @@ struct WorkCloseSheet: View {
                             }
                         }
                     }
-                } header: { Text("未完成的工作") } footer: { Text("每一項都選一個去向；預設是延續到明天。") }
+                } header: { Text("未完成的工作") } footer: { if !items.isEmpty { Text("每一項都選一個去向；預設是延續到明天。") } }
                 Section("工作有沒有擠壓到個人時間？（可略過）") {
                     TextField("例：臨時會議佔掉了晚上的閱讀", text: $squeezed, axis: .vertical)
                 }
@@ -206,18 +206,26 @@ struct EveningCloseSheet: View {
         let planner = Planner(context)
         let actions = planner.actionMap()
         let unfinished = planner.placements(on: day).filter { !$0.isDone && $0.isActiveToday }
+        let done = planner.placements(on: day).filter(\.isDone)
         let candidates = planner.outcomeCandidates(on: day)
         NavigationStack {
             Form {
                 Section {
-                    if unfinished.isEmpty { Text("今天的安排都確認過了。").foregroundStyle(.secondary) }
+                    // V202-DAILY-03：先列出已完成的，讓使用者看得到今天做了什麼
+                    ForEach(done) { p in
+                        Label("\(actions[p.actionID]?.title ?? "") · \(formatDuration(planner.plannedMinutes(p, action: actions[p.actionID])))",
+                              systemImage: "checkmark.circle.fill")
+                            .foregroundStyle(Color.assetGreen)
+                            .accessibilityIdentifier("evening.done.item")
+                    }
+                    if unfinished.isEmpty && done.isEmpty { Text("今天沒有安排；休息日也可以完成日結。").foregroundStyle(.secondary) }
                     ForEach(unfinished) { p in
                         Toggle(isOn: Binding(get: { confirmedDone.contains(p.id) },
                                              set: { if $0 { confirmedDone.insert(p.id) } else { confirmedDone.remove(p.id) } })) {
                             Text(actions[p.actionID]?.title ?? "")
                         }
                     }
-                } header: { Text("1. 今天實際做完了哪些？") } footer: { Text("沒勾的會成為明日草案的延續候選。") }
+                } header: { Text("1. 今天實際做完了哪些？") } footer: { if !unfinished.isEmpty { Text("還沒做完的：做完了就勾起來；沒勾的會成為明日草案的延續候選。") } }
 
                 Section {
                     if candidates.isEmpty {
@@ -235,9 +243,11 @@ struct EveningCloseSheet: View {
                         if outcomeSelected.contains(c.id) {
                             TextField("成果是什麼？（例：第一次連續慢跑 10 分鐘）", text: Binding(get: { outcomeNotes[c.id] ?? "" },
                                                                                   set: { outcomeNotes[c.id] = $0 }))
-                            if (outcomeNotes[c.id] ?? "").trimmed.isEmpty {
-                                Text("請寫下成果內容，或取消勾選。").font(.caption).foregroundStyle(Color.attention)
-                            }
+                            // 保留位置，輸入時版面不跳動（按鈕不會移位）
+                            let empty = (outcomeNotes[c.id] ?? "").trimmed.isEmpty
+                            Text("請寫下成果內容，或取消勾選。").font(.caption).foregroundStyle(Color.attention)
+                                .opacity(empty ? 1 : 0)
+                                .accessibilityHidden(!empty)
                         }
                     }
                     Picker("其他成果的目標", selection: $extraGoalID) {
@@ -379,7 +389,7 @@ struct TomorrowDraftSheet: View {
                                  set: { if $0 { selected.insert(e.id) } else { selected.remove(e.id) } })) {
                 VStack(alignment: .leading) {
                     Text(e.candidate.title)
-                    Text("\(e.reason) · \(formatDuration(e.candidate.minutes))").font(.caption).foregroundStyle(.secondary)
+                    Text([e.reason, e.candidate.goalTitle, formatDuration(e.candidate.minutes)].compactMap { $0 }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                 }
             }
         }

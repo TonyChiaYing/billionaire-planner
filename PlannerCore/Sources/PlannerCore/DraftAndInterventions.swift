@@ -26,9 +26,12 @@ public struct DraftCandidate: Sendable, Equatable, Identifiable {
     public var source: DraftSource
     public var context: ItemContext
     public var rank: Int
+    /// 所屬目標名稱（同名行動時讓使用者分得出來）
+    public var goalTitle: String?
 
     public init(id: UUID = UUID(), title: String, minutes: Int, source: DraftSource,
-                context: ItemContext = .personal, rank: Int = 0) {
+                context: ItemContext = .personal, rank: Int = 0, goalTitle: String? = nil) {
+        self.goalTitle = goalTitle
         self.id = id
         self.title = title
         self.minutes = max(0, minutes)

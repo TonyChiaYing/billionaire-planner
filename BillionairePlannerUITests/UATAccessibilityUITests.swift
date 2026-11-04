@@ -189,4 +189,19 @@ final class UATAccessibilityUITests: XCTestCase {
         if app.sheets.firstMatch.waitForExistence(timeout: 3) { app.typeKey(.escape, modifierFlags: []) }
         XCTAssertTrue(app.staticTexts["還沒有成果紀錄。"].firstMatch.waitForExistence(timeout: 5))
     }
+
+    // MARK: V202-DAILY-02／03：做完之後的今天頁與晚間日結
+
+    func testV202DAILY_AllDoneShowsNextStepPromptAndEveningListsDone() {
+        createGoalToFinishStep()
+        button("wizard.focusAndToday").click()
+        button("wizard.done").click()
+        openTab("今天")
+        button("today.complete").click()
+        XCTAssertTrue(element("today.allDone").waitForExistence(timeout: 5), "做完後不應顯示「還沒有安排」")
+        XCTAssertTrue(button("today.writeNextStep").exists)
+        openTab("回顧")
+        button("review.evening").click()
+        XCTAssertTrue(element("evening.done.item").waitForExistence(timeout: 5), "晚間日結沒有列出已完成的行動")
+    }
 }

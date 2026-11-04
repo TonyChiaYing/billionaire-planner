@@ -17,6 +17,7 @@ struct TodayView: View {
     @State private var proposalToConfirm: OverloadProposal?
     @State private var recoveryTarget: RecoveryEpisode?
     @State private var showWeekly = false
+    @State private var nextStepGoal: Goal?
     @State private var evaluated = false
 
     var body: some View {
@@ -33,7 +34,7 @@ struct TodayView: View {
         let all = planner.placements(on: day)
         let actions = planner.actionMap()
         let active = all.filter(\.isActiveToday)
-        let pending = active.filter { planner.needsDisposition($0) }
+        let pending = planner.overduePlacements() + active.filter { planner.needsDisposition($0) }
         let next = active.first { !$0.isDone && !pending.contains($0) && ($0.startedAt != nil || $0.isLocked) }
             ?? active.first { !$0.isDone && !pending.contains($0) }
         let cap = planner.capacity(for: day)
@@ -76,6 +77,7 @@ struct TodayView: View {
             .sheet(item: $focusTarget) { FocusTimerSheet(placement: $0) }
             .sheet(item: $editTarget) { PlacementEditSheet(placement: $0) }
             .sheet(item: $recoveryTarget) { RecoverySheet(episode: $0) }
+            .sheet(item: $nextStepGoal) { GoalEditSheets(goal: $0, kind: .action) }
             .sheet(isPresented: $showWeekly) { WeeklyReviewSheet() }
             .confirmationDialog("確認調整", isPresented: Binding(get: { proposalToConfirm != nil }, set: { if !$0 { proposalToConfirm = nil } }),
                                 presenting: proposalToConfirm) { p in
@@ -134,6 +136,20 @@ struct TodayView: View {
                         Button { planner.complete(p) } label: { Label("完成", systemImage: "checkmark") }
                             .buttonStyle(.bordered)
                             .accessibilityIdentifier("today.complete")
+                    }
+                }
+            } else if planner.placements(on: planner.today).contains(where: \.isDone) {
+                // V202-DAILY-02：做完了不是「還沒有安排」
+                Label("今天安排的都完成了。", systemImage: "checkmark.circle")
+                    .foregroundStyle(Color.assetGreen)
+                    .accessibilityIdentifier("today.allDone")
+                ForEach(planner.goalsNeedingNextStep(after: planner.today)) { g in
+                    HStack {
+                        Text("「\(g.title)」還沒有下一步").font(.callout)
+                        Spacer()
+                        Button("寫下一步") { nextStepGoal = g }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("today.writeNextStep")
                     }
                 }
             } else {
@@ -227,7 +243,8 @@ struct TodayView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(actions[p.actionID]?.title ?? "").bold()
-                        Text(timeText(p, planner: planner, action: actions[p.actionID])).font(.caption).foregroundStyle(.secondary)
+                        Text([dayAgo(p.day, planner: planner), timeText(p, planner: planner, action: actions[p.actionID])]
+                            .compactMap { $0 }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                     }
                     Spacer()
                     Menu {
@@ -324,6 +341,13 @@ struct TodayView: View {
             .accessibilityLabel("更多動作")
         }
         .padding(.vertical, 2)
+    }
+
+    /// 之前幾天的安排標出是哪天的（今天的不標）
+    private func dayAgo(_ day: LocalDay, planner: Planner) -> String? {
+        guard day < planner.today else { return nil }
+        let n = (1...14).first { day.adding(days: $0, calendar: planner.calendar) >= planner.today } ?? 14
+        return n == 1 ? "昨天" : "\(n) 天前"
     }
 
     private func timeText(_ p: PlanPlacement, planner: Planner, action: ActionItem?) -> String {
