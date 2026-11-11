@@ -24,7 +24,7 @@ struct ReviewView: View {
             // UAT-03：不用 List 承載入口（macOS 的 List 會把按鈕變成不可按的列），改用真正的按鈕
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
-                    Card(title: "今天", symbol: "sun.max.fill")   // 細線太陽圖示對比不足（稽核），改實心 {
+                    Card(title: "今天", symbol: "sun.max.fill") {   // 細線太陽圖示對比不足（稽核），改實心
                         stepButton("下班整理", detail: "工作收尾，約 1–2 分鐘", done: r?.workClosedAt, symbol: "briefcase",
                                    id: "review.workClose") { sheet = .workClose }
                         stepButton("晚間日結", detail: "確認今天、看看有沒有值得保存的成果，約 2–4 分鐘", done: r?.eveningClosedAt,
