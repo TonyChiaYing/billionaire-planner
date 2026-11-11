@@ -63,10 +63,8 @@ struct PlannerZoom: ViewModifier {
                 .frame(minWidth: minWidth.map { $0 * z }, minHeight: minHeight.map { $0 * z })
         }
         #else
-        Group {
-            if z == 1.0 { content } else { content.dynamicTypeSize(UIZoom.typeSize(z)) }   // 100% 時尊重系統字級
-        }
-        .frame(minWidth: minWidth, minHeight: minHeight)
+        // V205-IOS-01：最小尺寸是 Mac 視窗用的；iPhone 螢幕比它窄，套用會把表單切掉，所以 iOS 不設
+        if z == 1.0 { content } else { content.dynamicTypeSize(UIZoom.typeSize(z)) }   // 100% 時尊重系統字級
         #endif
     }
 }

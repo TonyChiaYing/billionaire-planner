@@ -59,6 +59,21 @@ jobs:
           lipo -info "$APP/Contents/MacOS/BillionairePlanner"
           ditto -c -k --keepParent "$APP" "BillionairePlanner_v$VER.app.zip"
 
+      - name: iOS tests (iPhone simulator)
+        if: always()
+        run: |
+          set +e
+          SIM=$(xcrun simctl list devices available | grep -m1 -oE "iPhone 1[5-7]( Pro)? \(" | sed 's/ ($//')
+          echo "simulator: $SIM"
+          xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner \
+            -destination "platform=iOS Simulator,name=$SIM" -derivedDataPath out-ios-test \
+            CODE_SIGNING_ALLOWED=NO > ios-test.log 2>&1
+          code=$?
+          grep -E "error:|failed|Executed|TEST (SUCCEEDED|FAILED)" ios-test.log | tail -40
+          mkdir -p ios-diag; D=$(grep -oE "ios-diag=[^ ]+" ios-test.log | head -1 | cut -d= -f2); [ -n "$D" ] && cp -R "$D"/. ios-diag/ 2>/dev/null
+          ls ios-diag || true
+          exit $code
+
       - name: Check iOS compiles
         if: always()
         run: |
@@ -74,6 +89,6 @@ jobs:
           git config user.name github-actions; git config user.email actions@github.com
           git checkout --orphan build
           git rm -rf --cached . > /dev/null
-          for f in core-test.log app-test.log ui-test.log build.log ios.log ui-diag BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
+          for f in core-test.log app-test.log ui-test.log build.log ios.log ios-test.log ios-diag ui-diag BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
           git commit -m "build $(cat VERSION) ${GITHUB_SHA::7}"
           git push -f origin build

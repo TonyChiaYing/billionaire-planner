@@ -1,3 +1,4 @@
+#if os(macOS)
 import XCTest
 
 /// UAT-01／02／03／04／05 的畫面層回歸測試（macOS）。
@@ -289,3 +290,4 @@ final class UATAccessibilityUITests: XCTestCase {
 }
 
 private let Tutorial_exampleGoal = "[範例] 完成 20 分鐘晨間閱讀"
+#endif
