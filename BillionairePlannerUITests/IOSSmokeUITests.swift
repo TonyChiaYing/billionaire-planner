@@ -133,31 +133,34 @@ final class IOSSmokeUITests: XCTestCase {
 
     // MARK: V206-A11Y：Apple 無障礙稽核（缺標籤、對比、點擊範圍、文字被裁切、動態字級）
 
-    func audit(_ screen: String, _ log: inout [String]) {
+    final class Log { var lines: [String] = [] }
+
+    func audit(_ screen: String, _ out: Log) {
         do {
             try app.performAccessibilityAudit { issue in
                 let e = issue.element
-                log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "")")
+                out.lines.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "") type=\(e?.elementType.rawValue ?? 0) frame=\(e?.frame ?? .zero) value=\(String(describing: e?.value ?? ""))")
                 return true   // 先全部記錄；只在 strict 清單內的類型才算失敗（見 a11yStrict）
             }
         } catch {
-            log.append("[\(screen)] audit error \(error)")
+            out.lines.append("[\(screen)] audit error \(error)")
         }
     }
 
     func testA11yAudit_iOS() {
-        var log: [String] = []
+        let out = Log()
         for t in ["今天", "目標", "回顧", "思考"] {
             tab(t)
             _ = app.navigationBars[t].waitForExistence(timeout: 5)
-            audit(t, &log)
+            audit(t, out)
+            shot("a11y-\(t)")
         }
         tab("回顧")
         el("review.evening").tap()
         _ = el("evening.done")
-        audit("晚間日結", &log)
-        let out = diag.appendingPathComponent("a11y-ios.txt")
-        try? log.joined(separator: "\n").write(to: out, atomically: true, encoding: .utf8)
+        audit("晚間日結", out)
+        let log = out.lines
+        try? log.joined(separator: "\n").write(to: diag.appendingPathComponent("a11y-ios.txt"), atomically: true, encoding: .utf8)
         print("a11y-issues=\(log.count)")
     }
 }

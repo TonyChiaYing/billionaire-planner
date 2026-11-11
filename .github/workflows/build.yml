@@ -63,10 +63,10 @@ jobs:
         if: always()
         run: |
           set +e
-          SIM=$(xcrun simctl list devices available | grep -m1 -oE "iPhone 1[5-7]( Pro)? \(" | sed 's/ ($//')
-          echo "simulator: $SIM"
+          SIM=$(xcrun simctl list devices available | grep -m1 -E "iPhone 1[5-7]" | grep -oE "[0-9A-F]{8}-[0-9A-F-]{27}")
+          echo "simulator: $SIM $(xcrun simctl list devices available | grep $SIM)"
           xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner \
-            -destination "platform=iOS Simulator,name=$SIM" -derivedDataPath out-ios-test \
+            -destination "platform=iOS Simulator,id=$SIM" -derivedDataPath out-ios-test \
             CODE_SIGNING_ALLOWED=NO > ios-test.log 2>&1
           code=$?
           grep -E "error:|failed|Executed|TEST (SUCCEEDED|FAILED)" ios-test.log | tail -40
@@ -78,10 +78,10 @@ jobs:
         if: always()
         run: |
           set +e
-          PAD=$(xcrun simctl list devices available | grep -m1 -oE "iPad (Air|Pro)[^(]*\(" | sed 's/ ($//')
-          echo "simulator: $PAD"
+          PAD=$(xcrun simctl list devices available | grep -m1 -E "iPad (Air|Pro)" | grep -oE "[0-9A-F]{8}-[0-9A-F-]{27}")
+          echo "simulator: $PAD $(xcrun simctl list devices available | grep $PAD)"
           xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner \
-            -destination "platform=iOS Simulator,name=$PAD" -derivedDataPath out-ios-test \
+            -destination "platform=iOS Simulator,id=$PAD" -derivedDataPath out-ios-test \
             -only-testing:BillionairePlannerUITests/IOSSmokeUITests CODE_SIGNING_ALLOWED=NO > ipad-test.log 2>&1
           code=$?
           grep -E "simulator|error:|failed|Executed|TEST (SUCCEEDED|FAILED)" ipad-test.log | tail -30

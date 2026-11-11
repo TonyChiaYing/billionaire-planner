@@ -298,7 +298,7 @@ final class UATAccessibilityUITests: XCTestCase {
             do {
                 try app.performAccessibilityAudit { issue in
                     let e = issue.element
-                    log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "")")
+                    log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "") type=\(e?.elementType.rawValue ?? 0) frame=\(e?.frame ?? .zero) value=\(String(describing: e?.value ?? ""))")
                     return true
                 }
             } catch { log.append("[\(screen)] audit error \(error)") }
