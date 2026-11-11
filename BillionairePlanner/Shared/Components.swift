@@ -11,6 +11,9 @@ extension ShapeStyle where Self == Color {
     static var guardGray: Color { Color(red: 142 / 255, green: 142 / 255, blue: 147 / 255) }  // #8E8E93
     static var legalPad: Color { Color(red: 1, green: 0.96, blue: 0.62) }
     static var cardBackground: Color { Color.white.opacity(0.06) }
+    /// V206-A11Y：次要文字。系統的 .secondary 在深色卡片上的小字對比不足（稽核失敗），
+    /// App 固定深色模式，用 72% 白：在卡片底色上對比約 9:1。
+    static var subtleText: Color { Color(white: 0.72) }
 }
 
 extension LoadState {
@@ -57,7 +60,7 @@ struct Card<Content: View>: View {
             if let title {
                 Label(title, systemImage: symbol ?? "circle")
                     .font(.z(.subheadline).bold())
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.subtleText)
             }
             content
         }
@@ -129,7 +132,7 @@ struct EmptyHint: View {
     var body: some View {
         Label(text, systemImage: symbol)
             .font(.z(.callout))
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.subtleText)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

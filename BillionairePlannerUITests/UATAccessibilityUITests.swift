@@ -294,10 +294,16 @@ final class UATAccessibilityUITests: XCTestCase {
         var log: [String] = []
         let dir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("bp-ui-diag")
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        func audit(_ screen: String) {
+        var strict: [String] = []
+        func audit(_ screen: String, strictContrast: Bool = false) {
             do {
                 try app.performAccessibilityAudit { issue in
                     let e = issue.element
+                    // V206-A11Y：主要畫面（沒有表單遮住）不允許 App 自己的文字對比不足；
+                    // 側邊欄選取列的配色由系統決定，不列入
+                    if strictContrast, issue.auditType == .contrast, !(e?.identifier.hasPrefix("tab.") ?? false) {
+                        strict.append("[\(screen)] \(issue.compactDescription) \(e?.value ?? "") \(e?.frame ?? .zero)")
+                    }
                     log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "") type=\(e?.elementType.rawValue ?? 0) frame=\(e?.frame ?? .zero) value=\(String(describing: e?.value ?? ""))")
                     return true
                 }
@@ -305,7 +311,7 @@ final class UATAccessibilityUITests: XCTestCase {
         }
         for t in ["今天", "目標", "回顧", "思考"] {
             openTab(t)
-            audit(t)
+            audit(t, strictContrast: true)
         }
         openTab("回顧")
         button("review.evening").click()
@@ -318,6 +324,7 @@ final class UATAccessibilityUITests: XCTestCase {
         try? log.joined(separator: "\n").write(to: dir.appendingPathComponent("a11y-macos.txt"), atomically: true, encoding: .utf8)
         print("diag=\(dir.path)")
         print("a11y-issues=\(log.count)")
+        XCTAssertTrue(strict.isEmpty, "文字對比不足：\n" + strict.joined(separator: "\n"))
     }
 }
 

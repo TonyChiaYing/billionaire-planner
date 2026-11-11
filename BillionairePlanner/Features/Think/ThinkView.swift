@@ -47,7 +47,7 @@ struct ThinkView: View {
                 } header: { Text("思考週") } footer: { Text("畫面會變成全黑，只留主題與黃色便箋；非必要提醒暫停，結束後恢復。") }
 
                 Section("思考紀錄") {
-                    if finished.isEmpty { Text("尚無紀錄").foregroundStyle(.secondary) }
+                    if finished.isEmpty { Text("尚無紀錄").foregroundStyle(Color.subtleText) }
                     ForEach(finished) { s in
                         NavigationLink {
                             ScrollView {
@@ -65,7 +65,7 @@ struct ThinkView: View {
                                     Text(s.startedAt.formatted(date: .abbreviated, time: .shortened))
                                     if let g = planner.goal(s.goalID) { Text("· \(g.title)") }
                                 }
-                                .font(.z(.caption)).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(Color.subtleText)
                             }
                         }
                     }
@@ -87,7 +87,7 @@ struct ThinkModeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Label("THINK WEEK", systemImage: "moon.fill").font(.z(.caption).bold()).foregroundStyle(.secondary)
+                Label("THINK WEEK", systemImage: "moon.fill").font(.z(.caption).bold()).foregroundStyle(Color.subtleText)
                 Spacer()
                 TimelineView(.periodic(from: .now, by: 1)) { ctx in
                     let left = session.plannedEnd.timeIntervalSince(ctx.date)
@@ -98,11 +98,11 @@ struct ThinkModeView: View {
                 Button("結束") { confirmEnd = true }.buttonStyle(.bordered)
             }
             VStack(alignment: .leading, spacing: 6) {
-                Text("當前閱讀／研究主題").font(.z(.caption)).foregroundStyle(.secondary)
+                Text("當前閱讀／研究主題").font(.z(.caption)).foregroundStyle(Color.subtleText)
                 TextField("主題", text: $session.topic, axis: .vertical).font(.z(.title2).bold()).textFieldStyle(.plain)
             }
             VStack(alignment: .leading, spacing: 6) {
-                Text("黃色法律便箋 · 跨領域合成思考").font(.z(.caption)).foregroundStyle(.secondary)
+                Text("黃色法律便箋 · 跨領域合成思考").font(.z(.caption)).foregroundStyle(Color.subtleText)
                 TextEditor(text: $session.notes)
                     .font(.z(.body))
                     .foregroundColor(.black)

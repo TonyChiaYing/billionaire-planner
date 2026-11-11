@@ -100,7 +100,7 @@ struct TodayView: View {
             Text(day.start(in: planner.calendar).formatted(.dateTime.month().day().weekday(.wide)))
                 .font(.z(.title2).bold())
             if let r = planner.existingReview(for: day), r.isRestDay {
-                Text("今天是休息日，安排可以很少。").foregroundStyle(.secondary)
+                Text("今天是休息日，安排可以很少。").foregroundStyle(Color.subtleText)
             }
         }
     }
@@ -116,12 +116,12 @@ struct TodayView: View {
                     HStack(spacing: 8) {
                         StatusBadge(text: a.kind.label, symbol: a.kind.symbol, color: a.kind.color)
                         if let g = planner.goal(a.goalID) {
-                            Text(g.title).font(.z(.caption)).foregroundStyle(.secondary).lineLimit(1)
+                            Text(g.title).font(.z(.caption)).foregroundStyle(Color.subtleText).lineLimit(1)
                         }
-                        Text(timeText(p, planner: planner, action: a)).font(.z(.caption).monospacedDigit()).foregroundStyle(.secondary)
+                        Text(timeText(p, planner: planner, action: a)).font(.z(.caption).monospacedDigit()).foregroundStyle(Color.subtleText)
                     }
                     if !a.minimumVersion.isEmpty {
-                        Text("縮小版本：\(a.minimumVersion)").font(.z(.caption)).foregroundStyle(.secondary)
+                        Text("縮小版本：\(a.minimumVersion)").font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
                     if planner.isFocusing(p) {
                         Label("專注中 · 已 \(planner.focusElapsedMinutes(p)) 分", systemImage: "timer")
@@ -184,16 +184,16 @@ struct TodayView: View {
                 .tint(c.state.color)
                 .accessibilityLabel("負荷 \(c.state.label)")
             Text("固定工作 \(formatDuration(c.fixedWorkMinutes)) · 休息／生活 \(formatDuration(c.restMinutes)) · 緩衝 \(formatDuration(c.bufferMinutes))")
-                .font(.z(.caption)).foregroundStyle(.secondary)
+                .font(.z(.caption)).foregroundStyle(Color.subtleText)
             ForEach(Array(c.reasons.enumerated()), id: \.offset) { _, r in
-                Text("· \(r.text)").font(.z(.caption)).foregroundStyle(.secondary)
+                Text("· \(r.text)").font(.z(.caption)).foregroundStyle(Color.subtleText)
             }
             if c.needsAdjustment {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(c.missingRest ? "不是事情太多，而是還沒保護休息時間。" : "時間夠，但安排方式可能讓你很累。")
                         .font(.z(.callout).bold())
                     ForEach(Array(c.structuralRisks.enumerated()), id: \.offset) { _, r in
-                        Text("· \(r.text)").font(.z(.caption)).foregroundStyle(.secondary)
+                        Text("· \(r.text)").font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
                     if c.missingRest {
                         Button { showSkeleton = true } label: { Label("加入休息", systemImage: "plus") }
@@ -242,14 +242,14 @@ struct TodayView: View {
 
     private func dispositionCard(_ items: [PlanPlacement], actions: [UUID: ActionItem], planner: Planner) -> some View {
         Card(title: "需要處置（\(items.count)）", symbol: "clock.badge.questionmark") {
-            Text("時間過了沒關係，選一個新的去向就好。").font(.z(.caption)).foregroundStyle(.secondary)
+            Text("時間過了沒關係，選一個新的去向就好。").font(.z(.caption)).foregroundStyle(Color.subtleText)
             ForEach(items) { p in
                 HStack {
                     VStack(alignment: .leading) {
                         Text(actions[p.actionID]?.title ?? "").bold()
                         Text([dayAgo(p.day, planner: planner), planner.goal(actions[p.actionID]?.goalID)?.title,
                               timeText(p, planner: planner, action: actions[p.actionID])]
-                            .compactMap { $0 }.joined(separator: " · ")).font(.z(.caption)).foregroundStyle(.secondary)
+                            .compactMap { $0 }.joined(separator: " · ")).font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
                     Spacer()
                     Menu {
@@ -292,7 +292,7 @@ struct TodayView: View {
                         Image(systemName: b.kind.symbol).foregroundStyle(b.kind.isProtected ? Color.assetGreen : .cyan).frame(width: 22)
                         Text(b.title)
                         Spacer()
-                        Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.z(.caption).monospacedDigit()).foregroundStyle(.secondary)
+                        Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.z(.caption).monospacedDigit()).foregroundStyle(Color.subtleText)
                     }
                     .accessibilityElement(children: .combine)
                 }
@@ -301,7 +301,7 @@ struct TodayView: View {
     }
 
     private func groupHeader(_ t: String, symbol: String) -> some View {
-        Label(t, systemImage: symbol).font(.z(.caption).bold()).foregroundStyle(.secondary).padding(.top, 4)
+        Label(t, systemImage: symbol).font(.z(.caption).bold()).foregroundStyle(Color.subtleText).padding(.top, 4)
     }
 
     private func row(_ p: PlanPlacement, action a: ActionItem?, planner: Planner) -> some View {
@@ -324,7 +324,7 @@ struct TodayView: View {
                     if let g = planner.goal(a?.goalID) { Text("· \(g.title)").font(.z(.caption)).lineLimit(1) }
                     if (a?.carryoverCount ?? 0) > 0 { Text("· 延續 \(a?.carryoverCount ?? 0) 次").font(.z(.caption)) }
                 }
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.subtleText)
             }
             Spacer()
             Menu {
@@ -376,7 +376,7 @@ struct TodayView: View {
                     let g = planner.goal(e.goalID)
                     VStack(alignment: .leading, spacing: 6) {
                         Text("「\(g?.title ?? "")」可能需要更小的路徑").bold()
-                        ForEach(e.signals, id: \.evidence) { s in Text("· \(s.evidence)").font(.z(.caption)).foregroundStyle(.secondary) }
+                        ForEach(e.signals, id: \.evidence) { s in Text("· \(s.evidence)").font(.z(.caption)).foregroundStyle(Color.subtleText) }
                         HStack {
                             Button("看看恢復方案") { recoveryTarget = e }.buttonStyle(.borderedProminent).foregroundStyle(.black)
                             Button("過幾天再說") { planner.snooze(e, days: 3) }.buttonStyle(.bordered)
@@ -389,7 +389,7 @@ struct TodayView: View {
                     let risk = prompt.risk
                     VStack(alignment: .leading, spacing: 6) {
                         Text("「\(g.title)」\(risk.label)").bold()
-                        if let d = g.deadline { Text("期限 \(d.shortDay)").font(.z(.caption)).foregroundStyle(.secondary) }
+                        if let d = g.deadline { Text("期限 \(d.shortDay)").font(.z(.caption)).foregroundStyle(Color.subtleText) }
                         HStack {
                             NavigationLink("檢視目標") { GoalDetailView(goal: g) }.buttonStyle(.bordered)
                             Button("稍後提醒") {
@@ -428,10 +428,10 @@ struct TodayView: View {
             }
             ForEach(Array(recent)) { e in
                 HStack {
-                    Text(planner.goal(e.goalID)?.title ?? "").font(.z(.caption)).foregroundStyle(.secondary)
+                    Text(planner.goal(e.goalID)?.title ?? "").font(.z(.caption)).foregroundStyle(Color.subtleText)
                     Text(e.note.isEmpty ? (e.value.map { "\($0.formatted()) \(e.unit)" } ?? e.kind.label) : e.note)
                     Spacer()
-                    Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(.secondary)
+                    Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(Color.subtleText)
                 }
             }
         }

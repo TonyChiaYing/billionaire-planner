@@ -143,7 +143,7 @@ struct TemplateEditor: View {
                                 Text(item.title)
                                 Spacer()
                                 Text("\(formatMinute(item.startMinute))–\(formatMinute(item.startMinute + item.durationMinutes))")
-                                    .font(.z(.caption).monospacedDigit()).foregroundStyle(.secondary)
+                                    .font(.z(.caption).monospacedDigit()).foregroundStyle(Color.subtleText)
                             }
                         }
                         .buttonStyle(.borderless)

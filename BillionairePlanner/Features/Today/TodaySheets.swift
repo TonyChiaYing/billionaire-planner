@@ -44,17 +44,17 @@ struct QuickInsertSheet: View {
                 if timed, let preview {
                     Section {
                         if !preview.hasConflicts {
-                            Text("不會影響其他安排。").foregroundStyle(.secondary)
+                            Text("不會影響其他安排。").foregroundStyle(Color.subtleText)
                         }
                         ForEach(preview.immovableConflicts, id: \.self) { _ in
                             Label("和已完成／進行中／鎖定的項目重疊，那些不會移動。", systemImage: "lock")
-                                .font(.z(.caption)).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(Color.subtleText)
                         }
                         ForEach(Array(preview.changes.enumerated()), id: \.element.id) { i, change in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(change.title).bold()
                                 Text("原本 \(formatMinute(change.originalStart))–\(formatMinute(change.originalStart + change.originalDuration))")
-                                    .font(.z(.caption)).foregroundStyle(.secondary)
+                                    .font(.z(.caption)).foregroundStyle(Color.subtleText)
                                 Picker("改成", selection: Binding(get: { self.preview?.changes[i].selected ?? change.selected },
                                                                 set: { self.preview?.changes[i].selected = $0 })) {
                                     ForEach(change.options, id: \.choice) { o in
@@ -133,7 +133,7 @@ struct AddToTodaySheet: View {
                     Section("焦點：\(g.title)") {
                         if candidates.isEmpty {
                             Text(planner.activeStrategy(for: g.id) == nil ? "先到「目標」補上策略與下一步" : "下一步都安排好了")
-                                .font(.z(.caption)).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(Color.subtleText)
                         }
                         ForEach(candidates) { a in addRow(a, planner: planner) }
                     }
@@ -168,7 +168,7 @@ struct AddToTodaySheet: View {
                     if newEstimate == nil, let s = planner.estimateSuggestion(title: newTitle, goalID: newGoalID, kind: newKind, userEstimate: nil) {
                         HStack {
                             Text("建議 \(s.minutes) 分").bold()
-                            Text(s.basis).font(.z(.caption)).foregroundStyle(.secondary)
+                            Text(s.basis).font(.z(.caption)).foregroundStyle(Color.subtleText)
                             Spacer()
                             Button("採用") { newEstimate = s.minutes }
                         }
@@ -194,9 +194,9 @@ struct AddToTodaySheet: View {
             VStack(alignment: .leading) {
                 Text(a.title)
                 if let m = a.estimateMinutes {
-                    Text("約 \(formatDuration(m))").font(.z(.caption)).foregroundStyle(.secondary)
+                    Text("約 \(formatDuration(m))").font(.z(.caption)).foregroundStyle(Color.subtleText)
                 } else if let s = planner.estimateSuggestion(title: a.title, goalID: a.goalID, kind: a.kind, userEstimate: nil) {
-                    Text("建議約 \(s.minutes) 分（\(s.sampleCount) 筆紀錄）").font(.z(.caption)).foregroundStyle(.secondary)
+                    Text("建議約 \(s.minutes) 分（\(s.sampleCount) 筆紀錄）").font(.z(.caption)).foregroundStyle(Color.subtleText)
                 }
             }
             Spacer()
@@ -230,13 +230,13 @@ struct DaySkeletonSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     Card(title: "今天的固定區段", symbol: "rectangle.split.3x1") {
-                        if blocks.isEmpty { Text("今天沒有固定區段。").foregroundStyle(.secondary) }
+                        if blocks.isEmpty { Text("今天沒有固定區段。").foregroundStyle(Color.subtleText) }
                         ForEach(blocks) { b in
                             HStack {
                                 Image(systemName: b.kind.symbol).frame(width: 22).accessibilityHidden(true)
                                 VStack(alignment: .leading) {
                                     Text(b.title)
-                                    Text(b.kind.label + (b.isOverride ? " · 今天已修改" : "")).font(.z(.caption)).foregroundStyle(.secondary)
+                                    Text(b.kind.label + (b.isOverride ? " · 今天已修改" : "")).font(.z(.caption)).foregroundStyle(Color.subtleText)
                                 }
                                 Spacer()
                                 Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.z(.caption).monospacedDigit())
@@ -249,7 +249,7 @@ struct DaySkeletonSheet: View {
                             }
                         }
                         Text("這裡的修改只影響今天。想讓以後也一樣，請在編輯時選「同時更新模板」。")
-                            .font(.z(.caption)).foregroundStyle(.secondary)
+                            .font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
                     Card {
                         Button { adding = true } label: { Label("新增區段（休息、用餐、工作…）", systemImage: "plus") }
@@ -411,7 +411,7 @@ struct FocusTimerSheet: View {
                         .accessibilityLabel(minutes == 0 ? "已專注不到 1 分鐘" : "已專注 \(minutes) 分鐘")
                     ProgressView(value: min(1, Double(elapsed) / Double(max(1, target * 60))))
                         .tint(.assetGreen)
-                    Text("預計 \(formatDuration(target))").foregroundStyle(.secondary)
+                    Text("預計 \(formatDuration(target))").foregroundStyle(Color.subtleText)
                     if minutes >= breakAfter && minutes - restDismissedAt >= breakAfter {
                         VStack(spacing: 8) {
                             Label("已專注 \(minutes) 分，建議休息 10 分鐘。", systemImage: "cup.and.saucer")
@@ -447,7 +447,7 @@ struct FocusTimerSheet: View {
                             .buttonStyle(.bordered)
                             .accessibilityIdentifier("focus.background")
                     }
-                    Text("「在背景繼續」會保留計時，今天頁會顯示正在專注。").font(.z(.caption)).foregroundStyle(.secondary)
+                    Text("「在背景繼續」會保留計時，今天頁會顯示正在專注。").font(.z(.caption)).foregroundStyle(Color.subtleText)
                 }
                 .padding(24)
             }

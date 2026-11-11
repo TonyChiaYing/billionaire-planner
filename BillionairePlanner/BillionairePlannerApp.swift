@@ -114,8 +114,8 @@ struct MigrationFailedView: View {
             Text("v1 資料暫時無法匯入").font(.z(.title2).bold())
             Text("你的 v1 資料完全沒有被更動，也已另外備份。可以再試一次，或先使用 v2，下次開啟時會再自動嘗試。")
                 .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-            Text(message).font(.z(.caption)).foregroundStyle(.secondary).textSelection(.enabled)
+                .foregroundStyle(Color.subtleText)
+            Text(message).font(.z(.caption)).foregroundStyle(Color.subtleText).textSelection(.enabled)
             HStack {
                 Button("再試一次", action: retry).buttonStyle(.borderedProminent)
                 Button("先使用 v2", action: skip).buttonStyle(.bordered)
@@ -133,7 +133,7 @@ struct StoreErrorView: View {
         VStack(spacing: 12) {
             Text("無法開啟資料庫").font(.z(.title2).bold())
             Text("資料檔位置：\(StoreLocation.directory.path)").font(.z(.caption)).textSelection(.enabled)
-            Text(message).font(.z(.caption)).foregroundStyle(.secondary)
+            Text(message).font(.z(.caption)).foregroundStyle(Color.subtleText)
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -218,6 +218,7 @@ struct RootView: View {
                         .accessibilityIdentifier("tab.\(t.rawValue)")
                 }
                 .modifier(SidebarZoom())
+                .accessibilityLabel("主要分頁")
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
                 .safeAreaInset(edge: .bottom) {
                     VStack(alignment: .leading, spacing: 6) {
@@ -226,7 +227,7 @@ struct RootView: View {
                             .accessibilityIdentifier("sidebar.tutorial")
                         SettingsLink { Label("設定", systemImage: "gearshape") }
                             .buttonStyle(.borderless)
-                        Text(AppInfo.display).font(.z(.caption2)).foregroundStyle(.secondary)
+                        Text(AppInfo.display).font(.z(.caption2)).foregroundStyle(Color.subtleText)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)

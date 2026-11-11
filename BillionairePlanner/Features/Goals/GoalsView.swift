@@ -74,6 +74,7 @@ struct GoalsView: View {
                 }
             }
             .darkCanvas()
+            .accessibilityLabel("目標清單")
             .navigationTitle("目標")
             .toolbar {
                 ToolbarItemGroup {
@@ -100,7 +101,7 @@ struct GoalRow: View {
                 if goal.isFocus { Image(systemName: "scope").foregroundStyle(Color.assetGreen).accessibilityLabel("焦點") }
                 Text(goal.title).bold()
                 Spacer()
-                Text(goal.horizon.shortLabel).font(.z(.caption)).foregroundStyle(.secondary)
+                Text(goal.horizon.shortLabel).font(.z(.caption)).foregroundStyle(Color.subtleText)
             }
             HStack(spacing: 8) {
                 Text(progress.text).font(.z(.caption))
@@ -111,7 +112,7 @@ struct GoalRow: View {
                 }
                 if goal.status == .paused, let u = goal.pausedUntil { Text("回看 \(u.shortDay)").font(.z(.caption)) }
             }
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color.subtleText)
         }
         .accessibilityElement(children: .combine)
     }
@@ -241,7 +242,7 @@ struct GoalWizard: View {
             Section {
                 Text("「\(goal.title)」已建立。").font(.z(.headline))
                 if !ready {
-                    Text("還缺策略或下一步，目前存成草稿；之後在目標頁補上就能安排。").foregroundStyle(.secondary)
+                    Text("還缺策略或下一步，目前存成草稿；之後在目標頁補上就能安排。").foregroundStyle(Color.subtleText)
                 } else if let next {
                     Text("下一步：\(next.title)（約 \(formatDuration(next.estimateMinutes ?? 30))）")
                     let cap = planner.setupCapacity(for: goal)
@@ -294,7 +295,7 @@ struct GoalWizard: View {
             Label(parts.isEmpty ? "完成" : parts.joined(separator: "，") + "。", systemImage: "checkmark.circle")
                 .foregroundStyle(Color.assetGreen)
             if case .some(.focusedAboveRecommended(let n)) = r.focus {
-                Text("目前有 \(n) 個焦點，超過建議的 3 個；每個目標每天分到的時間會變少。").font(.z(.caption)).foregroundStyle(.secondary)
+                Text("目前有 \(n) 個焦點，超過建議的 3 個；每個目標每天分到的時間會變少。").font(.z(.caption)).foregroundStyle(Color.subtleText)
             }
         }
     }

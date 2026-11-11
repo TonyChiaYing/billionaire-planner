@@ -124,8 +124,8 @@ struct TutorialView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(page.steps.enumerated()), id: \.offset) { i, s in
                             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                                Text("\(i + 1)").font(.z(.caption).bold()).frame(width: 20, height: 20)
-                                    .background(Circle().fill(Color.assetGreen.opacity(0.25)))
+                                Text("\(i + 1)").font(.z(.caption).bold()).foregroundStyle(.black).frame(width: 20, height: 20)
+                                    .background(Circle().fill(Color.assetGreen))   // 黑字＋實心綠：對比足夠
                                 Text(s)
                             }
                         }

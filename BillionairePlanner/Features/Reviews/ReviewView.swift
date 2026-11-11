@@ -31,7 +31,7 @@ struct ReviewView: View {
                                    symbol: "moon.stars", id: "review.evening") { sheet = .evening }
                         stepButton("明日草案", detail: r?.draftAcceptedAt == nil ? "根據今天的紀錄產生，可逐項接受" : "已接受部分草案",
                                    done: r?.draftAcceptedAt, symbol: "sunrise", id: "review.draft") { sheet = .draft }
-                        Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。").font(.z(.caption)).foregroundStyle(.secondary)
+                        Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。").font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
 
                     let w = planner.context.all(WeeklyReview.self).first { $0.weekStartKey == planner.weekStart.description }
@@ -46,13 +46,13 @@ struct ReviewView: View {
                         ForEach(principles.prefix(20)) { p in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(p.text).bold()
-                                if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.z(.caption)).foregroundStyle(.secondary) }
+                                if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.z(.caption)).foregroundStyle(Color.subtleText) }
                                 HStack(spacing: 6) {
                                     if !p.rootCause.isEmpty { Text("[\(p.causeType)] \(p.rootCause)") }
                                     if let g = planner.goal(p.goalID) { Text("· \(g.title)") }
                                     if !p.contextTag.isEmpty { Text("· \(p.contextTag)") }
                                 }
-                                .font(.z(.caption)).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(Color.subtleText)
                             }
                             .accessibilityElement(children: .combine)
                         }
@@ -68,11 +68,11 @@ struct ReviewView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(e.note.isEmpty ? e.kind.label : e.note)
-                                    Text(planner.goal(e.goalID)?.title ?? "").font(.z(.caption)).foregroundStyle(.secondary)
+                                    Text(planner.goal(e.goalID)?.title ?? "").font(.z(.caption)).foregroundStyle(Color.subtleText)
                                 }
                                 Spacer()
                                 if let v = e.value { Text("\(v.formatted()) \(e.unit)").font(.z(.callout).monospacedDigit()) }
-                                Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(.secondary)
+                                Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(Color.subtleText)
                             }
                             .accessibilityElement(children: .combine)
                         }
@@ -113,10 +113,10 @@ struct ReviewView: View {
                 VStack(alignment: .leading) {
                     Text(title).bold()
                     Text(done.map { "完成於 \($0.formatted(date: .omitted, time: .shortened))" } ?? detail)
-                        .font(.z(.caption)).foregroundStyle(.secondary)
+                        .font(.z(.caption)).foregroundStyle(Color.subtleText)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").font(.z(.caption)).foregroundStyle(.secondary)
+                Image(systemName: "chevron.right").font(.z(.caption)).foregroundStyle(Color.subtleText)
             }
             .padding(.vertical, 6)
             .contentShape(Rectangle())
@@ -145,7 +145,7 @@ struct WorkCloseSheet: View {
         NavigationStack {
             Form {
                 Section {
-                    if items.isEmpty { Text("今天的工作都有去向了。").foregroundStyle(.secondary) }
+                    if items.isEmpty { Text("今天的工作都有去向了。").foregroundStyle(Color.subtleText) }
                     ForEach(items) { p in
                         VStack(alignment: .leading) {
                             Text(actions[p.actionID]?.title ?? "").bold()
@@ -213,7 +213,7 @@ struct EveningCloseSheet: View {
                 if let closed = planner.existingReview(for: day)?.eveningClosedAt {
                     Label("已於 \(closed.formatted(date: .omitted, time: .shortened)) 完成日結；可以補充或修改，不會重複記錄。",
                           systemImage: "checkmark.circle")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.subtleText)
                         .accessibilityIdentifier("evening.alreadyClosed")
                 }
                 Section {
@@ -224,7 +224,7 @@ struct EveningCloseSheet: View {
                             .foregroundStyle(Color.assetGreen)
                             .accessibilityIdentifier("evening.done.item")
                     }
-                    if unfinished.isEmpty && done.isEmpty { Text("今天沒有安排；休息日也可以完成日結。").foregroundStyle(.secondary) }
+                    if unfinished.isEmpty && done.isEmpty { Text("今天沒有安排；休息日也可以完成日結。").foregroundStyle(Color.subtleText) }
                     ForEach(unfinished) { p in
                         Toggle(isOn: Binding(get: { confirmedDone.contains(p.id) },
                                              set: { if $0 { confirmedDone.insert(p.id) } else { confirmedDone.remove(p.id) } })) {
@@ -235,7 +235,7 @@ struct EveningCloseSheet: View {
 
                 Section {
                     if candidates.isEmpty {
-                        Text("今天沒有連結目標的完成行動。").font(.z(.caption)).foregroundStyle(.secondary)
+                        Text("今天沒有連結目標的完成行動。").font(.z(.caption)).foregroundStyle(Color.subtleText)
                     }
                     ForEach(candidates) { c in
                       if let rec = planner.recordedOutcome(for: c.action.id) {
@@ -243,7 +243,7 @@ struct EveningCloseSheet: View {
                         VStack(alignment: .leading) {
                             Label("已記錄成果：\(rec.note)", systemImage: "checkmark.seal")
                                 .foregroundStyle(Color.assetGreen)
-                            Text("\(c.action.title) · \(c.goal.title)").font(.z(.caption)).foregroundStyle(.secondary)
+                            Text("\(c.action.title) · \(c.goal.title)").font(.z(.caption)).foregroundStyle(Color.subtleText)
                         }
                         .accessibilityIdentifier("evening.recorded")
                       } else {
@@ -251,7 +251,7 @@ struct EveningCloseSheet: View {
                                              set: { if $0 { outcomeSelected.insert(c.id) } else { outcomeSelected.remove(c.id) } })) {
                             VStack(alignment: .leading) {
                                 Text("「\(c.action.title)」有帶來成果嗎？")
-                                Text(c.goal.title).font(.z(.caption)).foregroundStyle(.secondary)
+                                Text(c.goal.title).font(.z(.caption)).foregroundStyle(Color.subtleText)
                             }
                         }
                         .accessibilityIdentifier("evening.candidate")
@@ -363,15 +363,15 @@ struct TomorrowDraftSheet: View {
                         HStack {
                             Text(e.candidate.title)
                             Spacer()
-                            Text("\(e.candidate.source.label) · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(.secondary)
+                            Text("\(e.candidate.source.label) · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(Color.subtleText)
                         }
                     }
-                    if draft.fixed.isEmpty { Text("明天沒有工作模板區段。").foregroundStyle(.secondary) }
+                    if draft.fixed.isEmpty { Text("明天沒有工作模板區段。").foregroundStyle(Color.subtleText) }
                 }
 
                 Section {
                     ForEach(draft.included) { e in entryRow(e) }
-                    if draft.included.isEmpty { Text("沒有需要承諾的項目。").foregroundStyle(.secondary) }
+                    if draft.included.isEmpty { Text("沒有需要承諾的項目。").foregroundStyle(Color.subtleText) }
                 } header: { Text("建議承諾") }
 
                 if !draft.excluded.isEmpty {
@@ -408,14 +408,14 @@ struct TomorrowDraftSheet: View {
                 Image(systemName: "lock.fill").font(.z(.caption))
                 Text(e.candidate.title)
                 Spacer()
-                Text("已承諾 · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(.secondary)
+                Text("已承諾 · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(Color.subtleText)
             }
         } else {
             Toggle(isOn: Binding(get: { selected.contains(e.id) },
                                  set: { if $0 { selected.insert(e.id) } else { selected.remove(e.id) } })) {
                 VStack(alignment: .leading) {
                     Text(e.candidate.title)
-                    Text([e.reason, e.candidate.goalTitle, formatDuration(e.candidate.minutes)].compactMap { $0 }.joined(separator: " · ")).font(.z(.caption)).foregroundStyle(.secondary)
+                    Text([e.reason, e.candidate.goalTitle, formatDuration(e.candidate.minutes)].compactMap { $0 }.joined(separator: " · ")).font(.z(.caption)).foregroundStyle(Color.subtleText)
                 }
             }
         }
@@ -450,7 +450,7 @@ struct WeeklyReviewSheet: View {
                 if let done = existingWeekly(planner)?.completedAt {
                     Label("本週已於 \(done.formatted(date: .abbreviated, time: .shortened)) 完成；可以修改，不會重複記錄。",
                           systemImage: "checkmark.circle")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.subtleText)
                         .accessibilityIdentifier("weekly.alreadyDone")
                 }
                 ForEach(goals) { g in
@@ -472,14 +472,14 @@ struct WeeklyReviewSheet: View {
                             }
                             TextField("簡短原因（選填）", text: Binding(get: { reasons[g.id] ?? "" }, set: { reasons[g.id] = $0 }))
                             if decisions[g.id] == "replace" || decisions[g.id] == "tweak" {
-                                Text("完成後到目標頁調整策略；舊策略的紀錄會保留。").font(.z(.caption)).foregroundStyle(.secondary)
+                                Text("完成後到目標頁調整策略；舊策略的紀錄會保留。").font(.z(.caption)).foregroundStyle(Color.subtleText)
                             }
                         } else {
-                            Text("還沒有策略，可以到目標頁補上。").font(.z(.caption)).foregroundStyle(.secondary)
+                            Text("還沒有策略，可以到目標頁補上。").font(.z(.caption)).foregroundStyle(Color.subtleText)
                         }
                     }
                 }
-                if goals.isEmpty { Text("目前沒有焦點目標。").foregroundStyle(.secondary) }
+                if goals.isEmpty { Text("目前沒有焦點目標。").foregroundStyle(Color.subtleText) }
                 Section("下週容量") {
                     LabeledContent("工作模板固定工作", value: formatDuration(templateMinutes))
                     TextField("下週有什麼已知的忙碌或休假？", text: $capacityNote, axis: .vertical)
