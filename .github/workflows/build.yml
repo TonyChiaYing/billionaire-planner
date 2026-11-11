@@ -60,7 +60,7 @@ jobs:
           ditto -c -k --keepParent "$APP" "BillionairePlanner_v$VER.app.zip"
 
       - name: iOS tests (iPhone simulator)
-        if: always()
+        if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}   # 使用者決定：先專注 macOS；手機版要用時再手動執行
         run: |
           set +e
           SIM=$(xcrun simctl list devices available | grep -m1 -E "iPhone 1[5-7]" | grep -oE "[0-9A-F]{8}-[0-9A-F-]{27}")
@@ -75,7 +75,7 @@ jobs:
           exit $code
 
       - name: iPad tests (screens)
-        if: always()
+        if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}   # 使用者決定：先專注 macOS；手機版要用時再手動執行
         run: |
           set +e
           PAD=$(xcrun simctl list devices available | grep -m1 -E "iPad (Air|Pro)" | grep -oE "[0-9A-F]{8}-[0-9A-F-]{27}")
