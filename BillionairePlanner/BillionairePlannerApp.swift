@@ -71,7 +71,6 @@ struct LaunchGate: View {
             MigrationFailedView(message: message, retry: { phase = .checking }, skip: { phase = .ready })
         case .ready:
             RootView()
-                .plannerZoom()
                 .modifier(DataObserver())
                 .modifier(UITestWindowPlacement())
                 .sheet(item: $report) { box in
@@ -111,12 +110,12 @@ struct MigrationFailedView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Image(systemName: "externaldrive.badge.exclamationmark").font(.largeTitle).foregroundStyle(Color.attention)
-            Text("v1 資料暫時無法匯入").font(.title2.bold())
+            Image(systemName: "externaldrive.badge.exclamationmark").font(.z(.largeTitle)).foregroundStyle(Color.attention)
+            Text("v1 資料暫時無法匯入").font(.z(.title2).bold())
             Text("你的 v1 資料完全沒有被更動，也已另外備份。可以再試一次，或先使用 v2，下次開啟時會再自動嘗試。")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
-            Text(message).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+            Text(message).font(.z(.caption)).foregroundStyle(.secondary).textSelection(.enabled)
             HStack {
                 Button("再試一次", action: retry).buttonStyle(.borderedProminent)
                 Button("先使用 v2", action: skip).buttonStyle(.bordered)
@@ -132,9 +131,9 @@ struct StoreErrorView: View {
     let message: String
     var body: some View {
         VStack(spacing: 12) {
-            Text("無法開啟資料庫").font(.title2.bold())
-            Text("資料檔位置：\(StoreLocation.directory.path)").font(.caption).textSelection(.enabled)
-            Text(message).font(.caption).foregroundStyle(.secondary)
+            Text("無法開啟資料庫").font(.z(.title2).bold())
+            Text("資料檔位置：\(StoreLocation.directory.path)").font(.z(.caption)).textSelection(.enabled)
+            Text(message).font(.z(.caption)).foregroundStyle(.secondary)
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -183,6 +182,7 @@ struct RootView: View {
 
     var body: some View {
         content
+            .plannerZoom()   // 在 RootView 裡套用：縮放時保留目前分頁
             .sheet(isPresented: $showTutorial, onDismiss: { tutorialSeen = true }) {
                 TutorialView(go: { tab = $0 }, startExample: {
                     tab = .goals
@@ -225,7 +225,7 @@ struct RootView: View {
                             .accessibilityIdentifier("sidebar.tutorial")
                         SettingsLink { Label("設定", systemImage: "gearshape") }
                             .buttonStyle(.borderless)
-                        Text(AppInfo.display).font(.caption2).foregroundStyle(.secondary)
+                        Text(AppInfo.display).font(.z(.caption2)).foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)

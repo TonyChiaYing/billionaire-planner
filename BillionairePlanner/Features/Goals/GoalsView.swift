@@ -100,16 +100,16 @@ struct GoalRow: View {
                 if goal.isFocus { Image(systemName: "scope").foregroundStyle(Color.assetGreen).accessibilityLabel("焦點") }
                 Text(goal.title).bold()
                 Spacer()
-                Text(goal.horizon.shortLabel).font(.caption).foregroundStyle(.secondary)
+                Text(goal.horizon.shortLabel).font(.z(.caption)).foregroundStyle(.secondary)
             }
             HStack(spacing: 8) {
-                Text(progress.text).font(.caption)
-                if let d = goal.deadline { Text("期限 \(d.shortDay)").font(.caption) }
+                Text(progress.text).font(.z(.caption))
+                if let d = goal.deadline { Text("期限 \(d.shortDay)").font(.z(.caption)) }
                 if goal.isOpen && !ready, let missing = planner.missingSetup(goal).label {
                     StatusBadge(text: missing, symbol: "square.dashed", color: .attention)
                         .accessibilityIdentifier("goal.missing")
                 }
-                if goal.status == .paused, let u = goal.pausedUntil { Text("回看 \(u.shortDay)").font(.caption) }
+                if goal.status == .paused, let u = goal.pausedUntil { Text("回看 \(u.shortDay)").font(.z(.caption)) }
             }
             .foregroundStyle(.secondary)
         }
@@ -239,7 +239,7 @@ struct GoalWizard: View {
             let ready = planner.isExecutable(goal)
             let next = planner.openActions(for: goal.id).first
             Section {
-                Text("「\(goal.title)」已建立。").font(.headline)
+                Text("「\(goal.title)」已建立。").font(.z(.headline))
                 if !ready {
                     Text("還缺策略或下一步，目前存成草稿；之後在目標頁補上就能安排。").foregroundStyle(.secondary)
                 } else if let next {
@@ -248,7 +248,7 @@ struct GoalWizard: View {
                     let preview = cap.assessment
                     Label("\(cap.isEstimate ? "安排前預估" : "今天實際")：容量\(preview.state.label)（已安排 \(formatDuration(preview.loadMinutes))／可承諾 \(formatDuration(preview.committableMinutes))）",
                           systemImage: preview.state.symbol)
-                        .font(.callout)
+                        .font(.z(.callout))
                         .foregroundStyle(preview.state.color)
                         .accessibilityIdentifier("wizard.capacity")
                 }
@@ -294,7 +294,7 @@ struct GoalWizard: View {
             Label(parts.isEmpty ? "完成" : parts.joined(separator: "，") + "。", systemImage: "checkmark.circle")
                 .foregroundStyle(Color.assetGreen)
             if case .some(.focusedAboveRecommended(let n)) = r.focus {
-                Text("目前有 \(n) 個焦點，超過建議的 3 個；每個目標每天分到的時間會變少。").font(.caption).foregroundStyle(.secondary)
+                Text("目前有 \(n) 個焦點，超過建議的 3 個；每個目標每天分到的時間會變少。").font(.z(.caption)).foregroundStyle(.secondary)
             }
         }
     }

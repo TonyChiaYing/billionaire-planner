@@ -31,7 +31,7 @@ struct ReviewView: View {
                                    symbol: "moon.stars", id: "review.evening") { sheet = .evening }
                         stepButton("明日草案", detail: r?.draftAcceptedAt == nil ? "根據今天的紀錄產生，可逐項接受" : "已接受部分草案",
                                    done: r?.draftAcceptedAt, symbol: "sunrise", id: "review.draft") { sheet = .draft }
-                        Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。").font(.caption).foregroundStyle(.secondary)
+                        Text("沒有進度或休息日也可以完成日結，不會中斷任何紀錄。").font(.z(.caption)).foregroundStyle(.secondary)
                     }
 
                     let w = planner.context.all(WeeklyReview.self).first { $0.weekStartKey == planner.weekStart.description }
@@ -46,13 +46,13 @@ struct ReviewView: View {
                         ForEach(principles.prefix(20)) { p in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(p.text).bold()
-                                if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.caption).foregroundStyle(.secondary) }
+                                if !p.painPoint.isEmpty { Text("起因：\(p.painPoint)").font(.z(.caption)).foregroundStyle(.secondary) }
                                 HStack(spacing: 6) {
                                     if !p.rootCause.isEmpty { Text("[\(p.causeType)] \(p.rootCause)") }
                                     if let g = planner.goal(p.goalID) { Text("· \(g.title)") }
                                     if !p.contextTag.isEmpty { Text("· \(p.contextTag)") }
                                 }
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(.secondary)
                             }
                             .accessibilityElement(children: .combine)
                         }
@@ -68,11 +68,11 @@ struct ReviewView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(e.note.isEmpty ? e.kind.label : e.note)
-                                    Text(planner.goal(e.goalID)?.title ?? "").font(.caption).foregroundStyle(.secondary)
+                                    Text(planner.goal(e.goalID)?.title ?? "").font(.z(.caption)).foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                if let v = e.value { Text("\(v.formatted()) \(e.unit)").font(.callout.monospacedDigit()) }
-                                Text(e.recordedAt.shortDay).font(.caption).foregroundStyle(.secondary)
+                                if let v = e.value { Text("\(v.formatted()) \(e.unit)").font(.z(.callout).monospacedDigit()) }
+                                Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(.secondary)
                             }
                             .accessibilityElement(children: .combine)
                         }
@@ -113,10 +113,10 @@ struct ReviewView: View {
                 VStack(alignment: .leading) {
                     Text(title).bold()
                     Text(done.map { "完成於 \($0.formatted(date: .omitted, time: .shortened))" } ?? detail)
-                        .font(.caption).foregroundStyle(.secondary)
+                        .font(.z(.caption)).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
+                Image(systemName: "chevron.right").font(.z(.caption)).foregroundStyle(.secondary)
             }
             .padding(.vertical, 6)
             .contentShape(Rectangle())
@@ -235,7 +235,7 @@ struct EveningCloseSheet: View {
 
                 Section {
                     if candidates.isEmpty {
-                        Text("今天沒有連結目標的完成行動。").font(.caption).foregroundStyle(.secondary)
+                        Text("今天沒有連結目標的完成行動。").font(.z(.caption)).foregroundStyle(.secondary)
                     }
                     ForEach(candidates) { c in
                       if let rec = planner.recordedOutcome(for: c.action.id) {
@@ -243,7 +243,7 @@ struct EveningCloseSheet: View {
                         VStack(alignment: .leading) {
                             Label("已記錄成果：\(rec.note)", systemImage: "checkmark.seal")
                                 .foregroundStyle(Color.assetGreen)
-                            Text("\(c.action.title) · \(c.goal.title)").font(.caption).foregroundStyle(.secondary)
+                            Text("\(c.action.title) · \(c.goal.title)").font(.z(.caption)).foregroundStyle(.secondary)
                         }
                         .accessibilityIdentifier("evening.recorded")
                       } else {
@@ -251,7 +251,7 @@ struct EveningCloseSheet: View {
                                              set: { if $0 { outcomeSelected.insert(c.id) } else { outcomeSelected.remove(c.id) } })) {
                             VStack(alignment: .leading) {
                                 Text("「\(c.action.title)」有帶來成果嗎？")
-                                Text(c.goal.title).font(.caption).foregroundStyle(.secondary)
+                                Text(c.goal.title).font(.z(.caption)).foregroundStyle(.secondary)
                             }
                         }
                         .accessibilityIdentifier("evening.candidate")
@@ -261,7 +261,7 @@ struct EveningCloseSheet: View {
                                 .accessibilityIdentifier("evening.outcomeNote")
                             // 保留位置，輸入時版面不跳動（按鈕不會移位）
                             let empty = (outcomeNotes[c.id] ?? "").trimmed.isEmpty
-                            Text("請寫下成果內容，或取消勾選。").font(.caption).foregroundStyle(Color.attention)
+                            Text("請寫下成果內容，或取消勾選。").font(.z(.caption)).foregroundStyle(Color.attention)
                                 .opacity(empty ? 1 : 0)
                                 .accessibilityHidden(!empty)
                         }
@@ -350,7 +350,7 @@ struct TomorrowDraftSheet: View {
                         CapacityBadge(state: draft.capacity.state)
                         Spacer()
                         Text("可承諾 \(formatDuration(draft.capacity.committableMinutes)) · 已選 \(formatDuration(chosenMinutes + lockedMinutes))")
-                            .font(.callout.monospacedDigit())
+                            .font(.z(.callout).monospacedDigit())
                     }
                     if over > 0 {
                         Label("勾選的項目比可承諾容量多 \(formatDuration(over))，建議縮小或少選幾項。", systemImage: "exclamationmark.circle")
@@ -363,7 +363,7 @@ struct TomorrowDraftSheet: View {
                         HStack {
                             Text(e.candidate.title)
                             Spacer()
-                            Text("\(e.candidate.source.label) · \(formatDuration(e.candidate.minutes))").font(.caption).foregroundStyle(.secondary)
+                            Text("\(e.candidate.source.label) · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(.secondary)
                         }
                     }
                     if draft.fixed.isEmpty { Text("明天沒有工作模板區段。").foregroundStyle(.secondary) }
@@ -405,17 +405,17 @@ struct TomorrowDraftSheet: View {
     private func entryRow(_ e: DraftEntry) -> some View {
         if e.candidate.source == .lockedCommitment {
             HStack {
-                Image(systemName: "lock.fill").font(.caption)
+                Image(systemName: "lock.fill").font(.z(.caption))
                 Text(e.candidate.title)
                 Spacer()
-                Text("已承諾 · \(formatDuration(e.candidate.minutes))").font(.caption).foregroundStyle(.secondary)
+                Text("已承諾 · \(formatDuration(e.candidate.minutes))").font(.z(.caption)).foregroundStyle(.secondary)
             }
         } else {
             Toggle(isOn: Binding(get: { selected.contains(e.id) },
                                  set: { if $0 { selected.insert(e.id) } else { selected.remove(e.id) } })) {
                 VStack(alignment: .leading) {
                     Text(e.candidate.title)
-                    Text([e.reason, e.candidate.goalTitle, formatDuration(e.candidate.minutes)].compactMap { $0 }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
+                    Text([e.reason, e.candidate.goalTitle, formatDuration(e.candidate.minutes)].compactMap { $0 }.joined(separator: " · ")).font(.z(.caption)).foregroundStyle(.secondary)
                 }
             }
         }
@@ -472,10 +472,10 @@ struct WeeklyReviewSheet: View {
                             }
                             TextField("簡短原因（選填）", text: Binding(get: { reasons[g.id] ?? "" }, set: { reasons[g.id] = $0 }))
                             if decisions[g.id] == "replace" || decisions[g.id] == "tweak" {
-                                Text("完成後到目標頁調整策略；舊策略的紀錄會保留。").font(.caption).foregroundStyle(.secondary)
+                                Text("完成後到目標頁調整策略；舊策略的紀錄會保留。").font(.z(.caption)).foregroundStyle(.secondary)
                             }
                         } else {
-                            Text("還沒有策略，可以到目標頁補上。").font(.caption).foregroundStyle(.secondary)
+                            Text("還沒有策略，可以到目標頁補上。").font(.z(.caption)).foregroundStyle(.secondary)
                         }
                     }
                 }

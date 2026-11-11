@@ -111,12 +111,12 @@ struct TutorialView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     Label(page.title, systemImage: page.symbol)
-                        .font(.title2.bold())
+                        .font(.z(.title2).bold())
                         .accessibilityIdentifier("tutorial.title")
                     Text(page.why)
                     Card {
                         VStack(alignment: .leading, spacing: 6) {
-                            Label("範例", systemImage: "lightbulb").font(.caption.bold()).foregroundStyle(Color.assetGreen)
+                            Label("範例", systemImage: "lightbulb").font(.z(.caption).bold()).foregroundStyle(Color.assetGreen)
                             Text(page.example)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -124,7 +124,7 @@ struct TutorialView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(Array(page.steps.enumerated()), id: \.offset) { i, s in
                             HStack(alignment: .firstTextBaseline, spacing: 8) {
-                                Text("\(i + 1)").font(.caption.bold()).frame(width: 20, height: 20)
+                                Text("\(i + 1)").font(.z(.caption).bold()).frame(width: 20, height: 20)
                                     .background(Circle().fill(Color.assetGreen.opacity(0.25)))
                                 Text(s)
                             }

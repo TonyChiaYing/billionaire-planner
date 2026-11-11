@@ -81,7 +81,7 @@ struct GoalEditSheets: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text("建議 \(s.minutes) 分").bold()
-                        Text(s.basis).font(.caption).foregroundStyle(.secondary)
+                        Text(s.basis).font(.z(.caption)).foregroundStyle(.secondary)
                     }
                     Spacer()
                     Button("採用") { minutes = s.minutes }
@@ -94,7 +94,7 @@ struct GoalEditSheets: View {
         case .switchStrategy:
             TextField("新策略", text: $text1, axis: .vertical)
             TextField("換掉的原因（選填）", text: $text2, axis: .vertical)
-            Text("舊策略的行動與成果都會保留，目標的累積進度不會歸零。").font(.caption).foregroundStyle(.secondary)
+            Text("舊策略的行動與成果都會保留，目標的累積進度不會歸零。").font(.z(.caption)).foregroundStyle(.secondary)
         case .milestone:
             TextField("里程碑", text: $text1)
             Toggle("目標日期", isOn: $hasDate)
@@ -104,23 +104,23 @@ struct GoalEditSheets: View {
                 .pickerStyle(.segmented)
             if evidenceKind == .numeric {
                 TextField("數值", value: $number, format: .number)
-                if !goal.outcomeUnit.isEmpty { Text("單位：\(goal.outcomeUnit)").font(.caption) }
+                if !goal.outcomeUnit.isEmpty { Text("單位：\(goal.outcomeUnit)").font(.z(.caption)) }
             }
             TextField(evidenceKind == .checkpoint ? "達成了哪個檢查點？" : "發生了什麼成果？", text: $text1, axis: .vertical)
         case .deadline:
             Toggle("有期限", isOn: $hasDate)
             if hasDate { DatePicker("新期限", selection: $date, displayedComponents: .date) }
             TextField("原因（選填）", text: $text1)
-            Text("原本的期限與這次調整都會留在期限歷史中。").font(.caption).foregroundStyle(.secondary)
+            Text("原本的期限與這次調整都會留在期限歷史中。").font(.z(.caption)).foregroundStyle(.secondary)
         case .pause:
             Toggle("設定回看日期", isOn: $hasDate)
             if hasDate { DatePicker("回看日", selection: $date, displayedComponents: .date) }
             TextField("原因（選填）", text: $text1)
-            Text("暫停期間不會因為沒進度而提醒你。").font(.caption).foregroundStyle(.secondary)
+            Text("暫停期間不會因為沒進度而提醒你。").font(.z(.caption)).foregroundStyle(.secondary)
         case .restart:
             TextField("想重新開始的原因（選填）", text: $text1, axis: .vertical)
             Text("會從今天起算新週期。過去的成果、里程碑、策略和回顧全部保留，累積成果不歸零。")
-                .font(.callout).foregroundStyle(.secondary)
+                .font(.z(.callout)).foregroundStyle(.secondary)
         }
     }
 
@@ -204,7 +204,7 @@ struct RecoverySheet: View {
                                 Image(systemName: o.symbol).frame(width: 24)
                                 VStack(alignment: .leading) {
                                     Text(o.title).bold()
-                                    Text(o.explanation).font(.caption).foregroundStyle(.secondary)
+                                    Text(o.explanation).font(.z(.caption)).foregroundStyle(.secondary)
                                 }
                                 Spacer()
                                 if option == o { Image(systemName: "checkmark").foregroundStyle(Color.assetGreen) }
@@ -257,11 +257,11 @@ struct RecoverySheet: View {
         case .moveMilestoneOrDeadline:
             Toggle("有期限", isOn: $hasDate)
             if hasDate { DatePicker("新期限", selection: $date, displayedComponents: .date) }
-            Text("原期限 \(goal.deadline?.shortDay ?? "無") 會保留在歷史中。").font(.caption).foregroundStyle(.secondary)
+            Text("原期限 \(goal.deadline?.shortDay ?? "無") 會保留在歷史中。").font(.z(.caption)).foregroundStyle(.secondary)
         case .pauseWithReviewDate:
             DatePicker("回看日", selection: $date, displayedComponents: .date)
         case .restartCycle:
-            Text("從今天起算新週期，累積成果保留。").font(.caption).foregroundStyle(.secondary)
+            Text("從今天起算新週期，累積成果保留。").font(.z(.caption)).foregroundStyle(.secondary)
         }
     }
 
@@ -304,7 +304,7 @@ struct MigrationReportView: View {
                 }
             }
             Section("匯入結果") {
-                ForEach(report.summaryLines, id: \.self) { Text($0).font(.callout) }
+                ForEach(report.summaryLines, id: \.self) { Text($0).font(.z(.callout)) }
             }
             if !report.warnings.isEmpty {
                 Section("需要留意") { ForEach(report.warnings, id: \.self) { Text($0) } }
@@ -314,13 +314,13 @@ struct MigrationReportView: View {
                     ForEach(report.unlinked, id: \.sourceID) { u in
                         VStack(alignment: .leading) {
                             Text(u.itemTitle)
-                            Text("原本連結「\(u.goalTitle)」：\(u.reason)").font(.caption).foregroundStyle(.secondary)
+                            Text("原本連結「\(u.goalTitle)」：\(u.reason)").font(.z(.caption)).foregroundStyle(.secondary)
                         }
                     }
                 } header: { Text("待連結") } footer: { Text("可以在「目標」頁最下方逐一連結。") }
             }
             Section("備份位置") {
-                Text(StoreLocation.backups.path).font(.caption).textSelection(.enabled)
+                Text(StoreLocation.backups.path).font(.z(.caption)).textSelection(.enabled)
             }
         }
         .navigationTitle("v1 遷移報告")

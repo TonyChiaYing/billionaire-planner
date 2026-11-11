@@ -65,7 +65,7 @@ struct ThinkView: View {
                                     Text(s.startedAt.formatted(date: .abbreviated, time: .shortened))
                                     if let g = planner.goal(s.goalID) { Text("· \(g.title)") }
                                 }
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(.secondary)
                             }
                         }
                     }
@@ -87,24 +87,24 @@ struct ThinkModeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                Label("THINK WEEK", systemImage: "moon.fill").font(.caption.bold()).foregroundStyle(.secondary)
+                Label("THINK WEEK", systemImage: "moon.fill").font(.z(.caption).bold()).foregroundStyle(.secondary)
                 Spacer()
                 TimelineView(.periodic(from: .now, by: 1)) { ctx in
                     let left = session.plannedEnd.timeIntervalSince(ctx.date)
                     Text(left > 0 ? Duration.seconds(left).formatted(.time(pattern: .hourMinuteSecond)) : "時間到")
-                        .font(.title3.monospacedDigit())
+                        .font(.z(.title3).monospacedDigit())
                         .foregroundStyle(left > 0 ? Color.white : Color.assetGreen)
                 }
                 Button("結束") { confirmEnd = true }.buttonStyle(.bordered)
             }
             VStack(alignment: .leading, spacing: 6) {
-                Text("當前閱讀／研究主題").font(.caption).foregroundStyle(.secondary)
-                TextField("主題", text: $session.topic, axis: .vertical).font(.title2.bold()).textFieldStyle(.plain)
+                Text("當前閱讀／研究主題").font(.z(.caption)).foregroundStyle(.secondary)
+                TextField("主題", text: $session.topic, axis: .vertical).font(.z(.title2).bold()).textFieldStyle(.plain)
             }
             VStack(alignment: .leading, spacing: 6) {
-                Text("黃色法律便箋 · 跨領域合成思考").font(.caption).foregroundStyle(.secondary)
+                Text("黃色法律便箋 · 跨領域合成思考").font(.z(.caption)).foregroundStyle(.secondary)
                 TextEditor(text: $session.notes)
-                    .font(.body)
+                    .font(.z(.body))
                     .foregroundColor(.black)
                     .tint(.black)
                     .scrollContentBackground(.hidden)

@@ -245,7 +245,7 @@ final class UATAccessibilityUITests: XCTestCase {
         menu("顯示方式", "放大")
         menu("顯示方式", "放大")
         let zoomed = app.descendants(matching: .any)["tab.today"].firstMatch
-        let grew = expectation(for: NSPredicate { _, _ in zoomed.frame.height > base * 1.2 }, evaluatedWith: nil)
+        let grew = expectation(for: NSPredicate { _, _ in zoomed.frame.height > base * 1.15 }, evaluatedWith: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [grew], timeout: 5), .completed, "放大後版面沒有變大：\(base) → \(zoomed.frame.height)")
         // 放大後仍可操作
         openTab("目標")

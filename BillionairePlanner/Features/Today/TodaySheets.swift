@@ -48,13 +48,13 @@ struct QuickInsertSheet: View {
                         }
                         ForEach(preview.immovableConflicts, id: \.self) { _ in
                             Label("和已完成／進行中／鎖定的項目重疊，那些不會移動。", systemImage: "lock")
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(.secondary)
                         }
                         ForEach(Array(preview.changes.enumerated()), id: \.element.id) { i, change in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(change.title).bold()
                                 Text("原本 \(formatMinute(change.originalStart))–\(formatMinute(change.originalStart + change.originalDuration))")
-                                    .font(.caption).foregroundStyle(.secondary)
+                                    .font(.z(.caption)).foregroundStyle(.secondary)
                                 Picker("改成", selection: Binding(get: { self.preview?.changes[i].selected ?? change.selected },
                                                                 set: { self.preview?.changes[i].selected = $0 })) {
                                     ForEach(change.options, id: \.choice) { o in
@@ -133,7 +133,7 @@ struct AddToTodaySheet: View {
                     Section("焦點：\(g.title)") {
                         if candidates.isEmpty {
                             Text(planner.activeStrategy(for: g.id) == nil ? "先到「目標」補上策略與下一步" : "下一步都安排好了")
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(.secondary)
                         }
                         ForEach(candidates) { a in addRow(a, planner: planner) }
                     }
@@ -168,7 +168,7 @@ struct AddToTodaySheet: View {
                     if newEstimate == nil, let s = planner.estimateSuggestion(title: newTitle, goalID: newGoalID, kind: newKind, userEstimate: nil) {
                         HStack {
                             Text("建議 \(s.minutes) 分").bold()
-                            Text(s.basis).font(.caption).foregroundStyle(.secondary)
+                            Text(s.basis).font(.z(.caption)).foregroundStyle(.secondary)
                             Spacer()
                             Button("採用") { newEstimate = s.minutes }
                         }
@@ -194,9 +194,9 @@ struct AddToTodaySheet: View {
             VStack(alignment: .leading) {
                 Text(a.title)
                 if let m = a.estimateMinutes {
-                    Text("約 \(formatDuration(m))").font(.caption).foregroundStyle(.secondary)
+                    Text("約 \(formatDuration(m))").font(.z(.caption)).foregroundStyle(.secondary)
                 } else if let s = planner.estimateSuggestion(title: a.title, goalID: a.goalID, kind: a.kind, userEstimate: nil) {
-                    Text("建議約 \(s.minutes) 分（\(s.sampleCount) 筆紀錄）").font(.caption).foregroundStyle(.secondary)
+                    Text("建議約 \(s.minutes) 分（\(s.sampleCount) 筆紀錄）").font(.z(.caption)).foregroundStyle(.secondary)
                 }
             }
             Spacer()
@@ -236,10 +236,10 @@ struct DaySkeletonSheet: View {
                                 Image(systemName: b.kind.symbol).frame(width: 22).accessibilityHidden(true)
                                 VStack(alignment: .leading) {
                                     Text(b.title)
-                                    Text(b.kind.label + (b.isOverride ? " · 今天已修改" : "")).font(.caption).foregroundStyle(.secondary)
+                                    Text(b.kind.label + (b.isOverride ? " · 今天已修改" : "")).font(.z(.caption)).foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.caption.monospacedDigit())
+                                Text("\(formatMinute(b.startMinute))–\(formatMinute(b.endMinute))").font(.z(.caption).monospacedDigit())
                                 Button("編輯") { editing = b }
                                     .buttonStyle(.bordered)
                                     .accessibilityLabel("編輯 \(b.title)")
@@ -249,7 +249,7 @@ struct DaySkeletonSheet: View {
                             }
                         }
                         Text("這裡的修改只影響今天。想讓以後也一樣，請在編輯時選「同時更新模板」。")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.z(.caption)).foregroundStyle(.secondary)
                     }
                     Card {
                         Button { adding = true } label: { Label("新增區段（休息、用餐、工作…）", systemImage: "plus") }
@@ -405,9 +405,9 @@ struct FocusTimerSheet: View {
                 let elapsed = max(0, Int(tl.date.timeIntervalSince(startedAt)))
                 let minutes = elapsed / 60
                 VStack(spacing: 18) {
-                    Text(action?.title ?? "").font(.title2.bold()).multilineTextAlignment(.center)
+                    Text(action?.title ?? "").font(.z(.title2).bold()).multilineTextAlignment(.center)
                     Text(Duration.seconds(elapsed).formatted(.time(pattern: .minuteSecond)))
-                        .font(.system(size: 56, weight: .semibold, design: .rounded).monospacedDigit())
+                        .font(.system(size: 56 * UIZoom.current, weight: .semibold, design: .rounded).monospacedDigit())
                         .accessibilityLabel(minutes == 0 ? "已專注不到 1 分鐘" : "已專注 \(minutes) 分鐘")
                     ProgressView(value: min(1, Double(elapsed) / Double(max(1, target * 60))))
                         .tint(.assetGreen)
@@ -447,7 +447,7 @@ struct FocusTimerSheet: View {
                             .buttonStyle(.bordered)
                             .accessibilityIdentifier("focus.background")
                     }
-                    Text("「在背景繼續」會保留計時，今天頁會顯示正在專注。").font(.caption).foregroundStyle(.secondary)
+                    Text("「在背景繼續」會保留計時，今天頁會顯示正在專注。").font(.z(.caption)).foregroundStyle(.secondary)
                 }
                 .padding(24)
             }

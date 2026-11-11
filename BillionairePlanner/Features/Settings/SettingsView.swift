@@ -81,7 +81,7 @@ struct SettingsView: View {
                         Button { report = ReportBox(report: r) } label: { Label("v1 遷移報告", systemImage: "doc.text") }
                     }
                     LabeledContent("資料位置") {
-                        Text(StoreLocation.directory.path).font(.caption).textSelection(.enabled)
+                        Text(StoreLocation.directory.path).font(.z(.caption)).textSelection(.enabled)
                     }
                 } header: { Text("資料") } footer: { Text("所有資料只存在這台裝置，不需要網路或帳號。") }
 
@@ -143,7 +143,7 @@ struct TemplateEditor: View {
                                 Text(item.title)
                                 Spacer()
                                 Text("\(formatMinute(item.startMinute))–\(formatMinute(item.startMinute + item.durationMinutes))")
-                                    .font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                                    .font(.z(.caption).monospacedDigit()).foregroundStyle(.secondary)
                             }
                         }
                         .buttonStyle(.borderless)

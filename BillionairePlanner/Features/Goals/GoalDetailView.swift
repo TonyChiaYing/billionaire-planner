@@ -85,8 +85,8 @@ struct GoalDetailView: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 StatusBadge(text: goal.status.label, symbol: "circle.fill", color: goal.status == .active ? .assetGreen : .guardGray)
-                Text(goal.horizon.label).font(.caption).foregroundStyle(.secondary)
-                if goal.cycleNumber > 1 { Text("第 \(goal.cycleNumber) 個週期").font(.caption).foregroundStyle(.secondary) }
+                Text(goal.horizon.label).font(.z(.caption)).foregroundStyle(.secondary)
+                if goal.cycleNumber > 1 { Text("第 \(goal.cycleNumber) 個週期").font(.z(.caption)).foregroundStyle(.secondary) }
                 Spacer()
                 if goal.isOpen {
                     Button {
@@ -101,14 +101,14 @@ struct GoalDetailView: View {
             Text(goal.outcomeDescription.isEmpty ? "尚未寫下「完成時會看到什麼」" : goal.outcomeDescription)
                 .foregroundStyle(goal.outcomeDescription.isEmpty ? Color.secondary : Color.primary)
             if goal.migratedFromV1 && goal.outcomeDescription.isEmpty {
-                Text("這是從 v1 匯入的目標，可以按「編輯」補上成果描述。").font(.caption).foregroundStyle(.secondary)
+                Text("這是從 v1 匯入的目標，可以按「編輯」補上成果描述。").font(.z(.caption)).foregroundStyle(.secondary)
             }
         }
     }
 
     private func recoveryCard(_ e: RecoveryEpisode, planner: Planner) -> some View {
         Card(title: "這個目標可能需要更小的路徑", symbol: "lightbulb") {
-            ForEach(e.signals, id: \.evidence) { s in Text("· \(s.evidence)").font(.callout) }
+            ForEach(e.signals, id: \.evidence) { s in Text("· \(s.evidence)").font(.z(.callout)) }
             HStack {
                 Button("看看恢復方案") { recovery = e }.buttonStyle(.borderedProminent).foregroundStyle(.black)
                 Button("過幾天再說") { planner.snooze(e, days: 3) }.buttonStyle(.bordered)
@@ -132,21 +132,21 @@ struct GoalDetailView: View {
             }
             HStack(alignment: .top, spacing: 16) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Label("成果", systemImage: "flag.checkered").font(.caption.bold()).foregroundStyle(.secondary)
-                    Text(outcome.text).font(.title3.bold())
+                    Label("成果", systemImage: "flag.checkered").font(.z(.caption).bold()).foregroundStyle(.secondary)
+                    Text(outcome.text).font(.z(.title3).bold())
                     if let f = outcome.fraction {
                         ProgressView(value: f).tint(.assetGreen).accessibilityLabel("成果進度 \(Int(f * 100))%")
                     }
-                    Text("真正達成了什麼").font(.caption2).foregroundStyle(.secondary)
+                    Text("真正達成了什麼").font(.z(.caption2)).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 Divider()
                 VStack(alignment: .leading, spacing: 6) {
-                    Label("行動證據", systemImage: "figure.walk").font(.caption.bold()).foregroundStyle(.secondary)
-                    Text("近 7 天完成 \(trend.done7) 項").font(.callout)
-                    Text("近 30 天完成 \(trend.done30) 項 · 投入 \(formatDuration(trend.minutes30))").font(.caption)
-                    Text("近 7 天安排 \(trend.planned7) 次").font(.caption).foregroundStyle(.secondary)
-                    Text("做了多少，不等於達成多少").font(.caption2).foregroundStyle(.secondary)
+                    Label("行動證據", systemImage: "figure.walk").font(.z(.caption).bold()).foregroundStyle(.secondary)
+                    Text("近 7 天完成 \(trend.done7) 項").font(.z(.callout))
+                    Text("近 30 天完成 \(trend.done30) 項 · 投入 \(formatDuration(trend.minutes30))").font(.z(.caption))
+                    Text("近 7 天安排 \(trend.planned7) 次").font(.z(.caption)).foregroundStyle(.secondary)
+                    Text("做了多少，不等於達成多少").font(.z(.caption2)).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -170,11 +170,11 @@ struct GoalDetailView: View {
                             if !a.minimumVersion.isEmpty { Text("縮小版：\(a.minimumVersion)") }
                             if a.carryoverCount > 0 { Text("延續 \(a.carryoverCount) 次") }
                         }
-                        .font(.caption).foregroundStyle(.secondary)
+                        .font(.z(.caption)).foregroundStyle(.secondary)
                     }
                     Spacer()
                     if placed.contains(a.id) {
-                        Text("今天已安排").font(.caption).foregroundStyle(.secondary)
+                        Text("今天已安排").font(.z(.caption)).foregroundStyle(.secondary)
                     } else {
                         Button("加入今天") { planner.plan(a, on: today) }.buttonStyle(.bordered)
                     }
@@ -192,9 +192,9 @@ struct GoalDetailView: View {
         let history = all.filter { $0.id != active?.id }.reversed()
         return Card(title: "策略", symbol: "arrow.triangle.branch") {
             if let active {
-                Text(active.title).font(.headline)
-                if !active.hypothesis.isEmpty { Text(active.hypothesis).font(.caption).foregroundStyle(.secondary) }
-                Text("從 \(active.startedAt.shortDay) 開始").font(.caption).foregroundStyle(.secondary)
+                Text(active.title).font(.z(.headline))
+                if !active.hypothesis.isEmpty { Text(active.hypothesis).font(.z(.caption)).foregroundStyle(.secondary) }
+                Text("從 \(active.startedAt.shortDay) 開始").font(.z(.caption)).foregroundStyle(.secondary)
                 HStack {
                     Button("換一個策略") { sheet = .switchStrategy }.buttonStyle(.bordered)
                     Button("暫停這個策略") { planner.setStrategy(active, status: .paused, reason: "") }.buttonStyle(.borderless)
@@ -210,7 +210,7 @@ struct GoalDetailView: View {
                             VStack(alignment: .leading) {
                                 Text(s.title)
                                 Text("\(s.status.label) · \(s.startedAt.shortDay)\(s.endedAt.map { "–\($0.shortDay)" } ?? "")\(s.decisionReason.isEmpty ? "" : " · \(s.decisionReason)")")
-                                    .font(.caption).foregroundStyle(.secondary)
+                                    .font(.z(.caption)).foregroundStyle(.secondary)
                             }
                             Spacer()
                             if s.status == .paused || s.status == .proposed {
@@ -236,7 +236,7 @@ struct GoalDetailView: View {
                             .foregroundStyle(m.completedAt == nil ? Color.secondary : Color.assetGreen)
                         Text(m.title)
                         Spacer()
-                        if let d = m.targetDate { Text(d.shortDay).font(.caption).foregroundStyle(.secondary) }
+                        if let d = m.targetDate { Text(d.shortDay).font(.z(.caption)).foregroundStyle(.secondary) }
                     }
                 }
                 .buttonStyle(.borderless)
@@ -257,7 +257,7 @@ struct GoalDetailView: View {
                     Text(e.value.map { "\($0.formatted()) \(e.unit)" } ?? e.kind.label).bold()
                     Text(e.note).lineLimit(2)
                     Spacer()
-                    Text(e.recordedAt.shortDay).font(.caption).foregroundStyle(.secondary)
+                    Text(e.recordedAt.shortDay).font(.z(.caption)).foregroundStyle(.secondary)
                 }
                 .contextMenu { Button("標為記錯（保留紀錄）") { planner.reverse(e) } }
             }
@@ -274,7 +274,7 @@ struct GoalDetailView: View {
             HStack {
                 Text(goal.deadline.map { $0.formatted(date: .long, time: .omitted) } ?? "沒有固定期限")
                 Spacer()
-                if risk != .none { Text(risk.label).font(.caption).foregroundStyle(.secondary) }
+                if risk != .none { Text(risk.label).font(.z(.caption)).foregroundStyle(.secondary) }
             }
             Button("調整期限") { sheet = .deadline }.buttonStyle(.bordered)
             if !history.isEmpty {
@@ -283,7 +283,7 @@ struct GoalDetailView: View {
                         VStack(alignment: .leading) {
                             Text("\(r.oldDeadline?.shortDay ?? "無") → \(r.newDeadline?.shortDay ?? "無")")
                             Text("\(r.changedAt.formatted(date: .abbreviated, time: .shortened))\(r.reason.isEmpty ? "" : " · \(r.reason)")")
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.z(.caption)).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -308,7 +308,7 @@ struct GoalDetailView: View {
                 Button("開始新週期") { sheet = .restart }.buttonStyle(.bordered)
                 if goal.status != .archived { Button("封存") { planner.archive(goal) }.buttonStyle(.borderless) }
             }
-            Text("任何調整都會保留過去的成果與歷史。").font(.caption).foregroundStyle(.secondary)
+            Text("任何調整都會保留過去的成果與歷史。").font(.z(.caption)).foregroundStyle(.secondary)
         }
     }
 }
@@ -330,7 +330,7 @@ struct FocusReplaceSheet: View {
                             HStack {
                                 Text(g.title)
                                 Spacer()
-                                Text("改為一般目標").font(.caption).foregroundStyle(.secondary)
+                                Text("改為一般目標").font(.z(.caption)).foregroundStyle(.secondary)
                             }
                         }
                     }

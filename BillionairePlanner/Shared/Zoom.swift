@@ -51,23 +51,47 @@ struct PlannerZoom: ViewModifier {
     func body(content: Content) -> some View {
         let z = UIZoom.clamp(zoom)
         #if os(macOS)
-        Group {
-            if z == 1.0 {
-                content
-            } else {
-                GeometryReader { g in
-                    content
-                        .frame(width: g.size.width / z, height: g.size.height / z)
-                        .scaleEffect(z, anchor: .topLeading)
-                }
-            }
+        // macOS 沒有 Dynamic Type：字級直接依縮放計算（Font.z），重新排版而不是放大圖像，
+        // 所以 VoiceOver 與點擊位置都正確。縮放改變時以 id 重建畫面，讓所有字級套用新值。
+        // ponytail: 重建會重置該畫面內的暫存狀態（例如捲動位置）；縮放很少調整，可接受
+        if z == 1.0 {
+            content.frame(minWidth: minWidth, minHeight: minHeight)
+        } else {
+            content
+                .font(.z(.body))
+                .id(z)
+                .frame(minWidth: minWidth.map { $0 * z }, minHeight: minHeight.map { $0 * z })
         }
-        .frame(minWidth: minWidth.map { $0 * z }, minHeight: minHeight.map { $0 * z })
         #else
         Group {
             if z == 1.0 { content } else { content.dynamicTypeSize(UIZoom.typeSize(z)) }   // 100% 時尊重系統字級
         }
         .frame(minWidth: minWidth, minHeight: minHeight)
+        #endif
+    }
+}
+
+extension Font {
+    /// 依版面縮放的文字樣式。100% 或 iOS 時就是原本的系統樣式（iOS 由 dynamicTypeSize 處理）。
+    static func z(_ style: Font.TextStyle) -> Font {
+        #if os(macOS)
+        let z = UIZoom.current
+        guard z != 1.0 else { return .system(style) }
+        // macOS 各文字樣式的預設點數
+        let base: CGFloat = switch style {
+        case .largeTitle: 26
+        case .title: 22
+        case .title2: 17
+        case .title3: 15
+        case .headline, .body: 13
+        case .callout: 12
+        case .subheadline: 11
+        case .footnote, .caption, .caption2: 10
+        @unknown default: 13
+        }
+        return .system(size: base * z, weight: style == .headline ? .bold : .regular)
+        #else
+        return .system(style)
         #endif
     }
 }

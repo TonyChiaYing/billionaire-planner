@@ -56,7 +56,7 @@ struct Card<Content: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             if let title {
                 Label(title, systemImage: symbol ?? "circle")
-                    .font(.subheadline.bold())
+                    .font(.z(.subheadline).bold())
                     .foregroundStyle(.secondary)
             }
             content
@@ -75,7 +75,7 @@ struct StatusBadge: View {
 
     var body: some View {
         Label(text, systemImage: symbol)
-            .font(.caption.bold())
+            .font(.z(.caption).bold())
             .padding(.horizontal, 8)
             .padding(.vertical, 3)
             .background(color.opacity(0.18), in: Capsule())
@@ -128,7 +128,7 @@ struct EmptyHint: View {
     var symbol: String = "sparkles"
     var body: some View {
         Label(text, systemImage: symbol)
-            .font(.callout)
+            .font(.z(.callout))
             .foregroundStyle(.secondary)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
