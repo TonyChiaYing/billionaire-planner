@@ -162,7 +162,8 @@ struct TodayView: View {
 
     private func capacityCard(_ c: CapacityAssessment, planner: Planner, day: LocalDay) -> some View {
         Card(title: "今天裝得下嗎", symbol: "gauge.with.dots.needle.33percent") {
-            HStack(spacing: 8) {
+            // V205-IOS-03：放不下一行時（iPhone、放大時），數字換到自己一行，不在中間斷開
+            let badges = HStack(spacing: 8) {
                 StatusBadge(text: "容量：\(c.state.label)", symbol: c.state.symbol, color: c.state.color)
                     .accessibilityIdentifier("capacity.load")
                 if c.missingRest {
@@ -172,9 +173,12 @@ struct TodayView: View {
                     StatusBadge(text: "計畫需調整", symbol: "slider.horizontal.3", color: .attention)
                         .accessibilityIdentifier("capacity.structure")
                 }
-                Spacer()
-                Text("已安排 \(formatDuration(c.loadMinutes)) ／ 可承諾 \(formatDuration(c.committableMinutes))")
-                    .font(.z(.callout).monospacedDigit())
+            }
+            let numbers = Text("已安排 \(formatDuration(c.loadMinutes)) ／ 可承諾 \(formatDuration(c.committableMinutes))")
+                .font(.z(.callout).monospacedDigit())
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 8) { badges; Spacer(); numbers.fixedSize() }
+                VStack(alignment: .leading, spacing: 6) { badges; numbers }
             }
             ProgressView(value: min(1, c.committableMinutes > 0 ? Double(c.loadMinutes) / Double(c.committableMinutes) : 0))
                 .tint(c.state.color)

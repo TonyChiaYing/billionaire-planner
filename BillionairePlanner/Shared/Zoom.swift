@@ -64,7 +64,8 @@ struct PlannerZoom: ViewModifier {
         }
         #else
         // V205-IOS-01：最小尺寸是 Mac 視窗用的；iPhone 螢幕比它窄，套用會把表單切掉，所以 iOS 不設
-        if z == 1.0 { content } else { content.dynamicTypeSize(UIZoom.typeSize(z)) }   // 100% 時尊重系統字級
+        // V205-IOS-02：只改環境值、不切換 view 分支，調整縮放時打開的設定或教學不會被關掉；100% 時沿用系統字級
+        content.transformEnvironment(\.dynamicTypeSize) { if z != 1.0 { $0 = UIZoom.typeSize(z) } }
         #endif
     }
 }

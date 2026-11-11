@@ -88,6 +88,7 @@ final class IOSSmokeUITests: XCTestCase {
         assertFits(done, "完成按鈕")
         done.tap()
         XCTAssertTrue(el("today.allDone").exists)
+        assertFits(el("capacity.load"), "容量標籤")
         shot("today-done")
     }
 
@@ -107,7 +108,7 @@ final class IOSSmokeUITests: XCTestCase {
         let zoomIn = el("zoom.in")
         assertFits(zoomIn, "放大按鈕")
         zoomIn.tap()
-        XCTAssertEqual(el("zoom.value").label, "110%")
+        XCTAssertEqual(el("zoom.value").label, "110%", "調整縮放後設定應該還開著")
         shot("settings-zoom")
         el("settings.tutorial").tap()
         let title = el("tutorial.title")
