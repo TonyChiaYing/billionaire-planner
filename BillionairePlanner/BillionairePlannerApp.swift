@@ -227,7 +227,7 @@ struct RootView: View {
                             .accessibilityIdentifier("sidebar.tutorial")
                         SettingsLink { Label("設定", systemImage: "gearshape") }
                             .buttonStyle(.borderless)
-                        Text(AppInfo.display).font(.z(.caption2)).foregroundStyle(Color.subtleText)
+                        Text(AppInfo.display).font(.z(.caption2)).foregroundStyle(Color(white: 0.85))
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(12)
