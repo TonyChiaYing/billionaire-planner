@@ -312,6 +312,7 @@ final class UATAccessibilityUITests: XCTestCase {
         for t in ["今天", "目標", "回顧", "思考"] {
             openTab(t)
             audit(t, strictContrast: true)
+            try? XCUIScreen.main.screenshot().pngRepresentation.write(to: dir.appendingPathComponent("a11y-\(t).png"))
         }
         openTab("回顧")
         button("review.evening").click()

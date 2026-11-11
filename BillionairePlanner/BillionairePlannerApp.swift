@@ -219,6 +219,9 @@ struct RootView: View {
                 }
                 .modifier(SidebarZoom())
                 .accessibilityLabel("主要分頁")
+                // V206-A11Y：側邊欄預設是半透明，會透出桌布顏色，淺色桌布時文字對比不足 → 固定深色底
+                .scrollContentBackground(.hidden)
+                .background(Color(white: 0.11))
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
                 .safeAreaInset(edge: .bottom) {
                     VStack(alignment: .leading, spacing: 6) {
