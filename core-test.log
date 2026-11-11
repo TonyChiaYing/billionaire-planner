@@ -1,0 +1,136 @@
+▶ PlannerCore（scratch：/var/folders/2s/vty41l455yv698g4xkgfv7z00000gn/T//BillionairePlannerTests/core-build）
+Building for debugging...
+[0/7] Write sources
+[0/7] /var/folders/2s/vty41l455yv698g4xkgfv7z00000gn/T/BillionairePlannerTests/core-build/arm64-apple-macosx/debug/PlannerCorePackageTests.derived/runner.swift
+[1/7] Write sources
+[4/7] Write swift-version--79AA4F9932D1E87A.txt
+[6/13] Emitting module PlannerCore
+[7/13] Compiling PlannerCore Capacity.swift
+[8/13] Compiling PlannerCore DraftAndInterventions.swift
+[9/13] Compiling PlannerCore Estimates.swift
+[10/13] Compiling PlannerCore LagAndRecovery.swift
+[11/13] Compiling PlannerCore LegacyMigration.swift
+[12/15] Compiling PlannerCore LocalDay.swift
+[13/15] Compiling PlannerCore Replan.swift
+[14/18] Compiling PlannerCoreTests MigrationMapperTests.swift
+[15/18] Compiling PlannerCoreTests CapacityAndDraftTests.swift
+[16/18] Emitting module PlannerCoreTests
+[17/19] Compiling PlannerCoreTests RuleTests.swift
+[18/21] Compiling PlannerCorePackageTests runner.swift
+[19/21] Emitting module PlannerCorePackageTests
+[19/21] Write Objects.LinkFileList
+[20/21] Linking PlannerCorePackageTests
+Build complete! (26.00s)
+Test Suite 'All tests' started at 2026-11-11 07:05:20.618.
+Test Suite 'PlannerCorePackageTests.xctest' started at 2026-11-11 07:05:20.620.
+Test Suite 'CapacityPolicyTests' started at 2026-11-11 07:05:20.620.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testAC06OverloadProposalsNeverMutate]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testAC06OverloadProposalsNeverMutate]' passed (0.003 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testBoundaryBandsAreDeterministic]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testBoundaryBandsAreDeterministic]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testEmptyDayHasNoStructuralNag]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testEmptyDayHasNoStructuralNag]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testExcessiveSwitchesAreStructuralRisk]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testExcessiveSwitchesAreStructuralRisk]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testFixedRestAndBufferExcludedBeforeFlexible]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testFixedRestAndBufferExcludedBeforeFlexible]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testLockedItemsNeverProposedForChange]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testLockedItemsNeverProposedForChange]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testMissingRestIsSeparateFromLoadState]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testMissingRestIsSeparateFromLoadState]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testZeroAvailabilityIsSafe]' started.
+Test Case '-[PlannerCoreTests.CapacityPolicyTests testZeroAvailabilityIsSafe]' passed (0.000 seconds).
+Test Suite 'CapacityPolicyTests' passed at 2026-11-11 07:05:20.625.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'EstimateSuggestionTests' started at 2026-11-11 07:05:20.625.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testCancelledAndInferredExcluded]' started.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testCancelledAndInferredExcluded]' passed (0.001 seconds).
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testFewerThanThreeSamplesNoSuggestion]' started.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testFewerThanThreeSamplesNoSuggestion]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testMedianResistsOutlierAndExplainsBasis]' started.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testMedianResistsOutlierAndExplainsBasis]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testSimilarTitlesWithoutGoalMatch]' started.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testSimilarTitlesWithoutGoalMatch]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testUserEstimateNeverOverwritten]' started.
+Test Case '-[PlannerCoreTests.EstimateSuggestionTests testUserEstimateNeverOverwritten]' passed (0.000 seconds).
+Test Suite 'EstimateSuggestionTests' passed at 2026-11-11 07:05:20.627.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'InterventionAndFocusTests' started at 2026-11-11 07:05:20.627.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testDualProgressSeparate]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testDualProgressSeparate]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testFocusLimit]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testFocusLimit]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testGoalOrdering]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testGoalOrdering]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testLocalDayAcrossDST]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testLocalDayAcrossDST]' passed (0.001 seconds).
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testMissedNeedsDisposition]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testMissedNeedsDisposition]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testSuppressionAndEscalation]' started.
+Test Case '-[PlannerCoreTests.InterventionAndFocusTests testSuppressionAndEscalation]' passed (0.000 seconds).
+Test Suite 'InterventionAndFocusTests' passed at 2026-11-11 07:05:20.629.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.002) seconds
+Test Suite 'LagDetectionTests' started at 2026-11-11 07:05:20.629.
+Test Case '-[PlannerCoreTests.LagDetectionTests testPauseWaitingAndNoDataExcluded]' started.
+Test Case '-[PlannerCoreTests.LagDetectionTests testPauseWaitingAndNoDataExcluded]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.LagDetectionTests testRestPeriodsDoNotCount]' started.
+Test Case '-[PlannerCoreTests.LagDetectionTests testRestPeriodsDoNotCount]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.LagDetectionTests testSingleMissOrIdleDayDoesNotTrigger]' started.
+Test Case '-[PlannerCoreTests.LagDetectionTests testSingleMissOrIdleDayDoesNotTrigger]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.LagDetectionTests testTwoIndependentSignalsTriggerWithReadableEvidence]' started.
+Test Case '-[PlannerCoreTests.LagDetectionTests testTwoIndependentSignalsTriggerWithReadableEvidence]' passed (0.001 seconds).
+Test Case '-[PlannerCoreTests.LagDetectionTests testUserDeclarationIsEnough]' started.
+Test Case '-[PlannerCoreTests.LagDetectionTests testUserDeclarationIsEnough]' passed (0.000 seconds).
+Test Suite 'LagDetectionTests' passed at 2026-11-11 07:05:20.631.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.002 (0.002) seconds
+Test Suite 'MigrationMapperTests' started at 2026-11-11 07:05:20.631.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testCompletedGoalAndBlockKeepCompletion]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testCompletedGoalAndBlockKeepCompletion]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testDuplicateAndMissingTitlesStayUnlinked]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testDuplicateAndMissingTitlesStayUnlinked]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testEmptyStore]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testEmptyStore]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testIdempotentRetry]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testIdempotentRetry]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testLargeStore]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testLargeStore]' passed (0.026 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testMoreThanFiveTopFiveKeepsAllGoals]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testMoreThanFiveTopFiveKeepsAllGoals]' passed (0.001 seconds).
+Test Case '-[PlannerCoreTests.MigrationMapperTests testOneOfEachPreservesIDsAndLinks]' started.
+Test Case '-[PlannerCoreTests.MigrationMapperTests testOneOfEachPreservesIDsAndLinks]' passed (0.006 seconds).
+Test Suite 'MigrationMapperTests' passed at 2026-11-11 07:05:20.665.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.034 (0.035) seconds
+Test Suite 'RecoveryTests' started at 2026-11-11 07:05:20.665.
+Test Case '-[PlannerCoreTests.RecoveryTests testDeadlineHistoryAppends]' started.
+Test Case '-[PlannerCoreTests.RecoveryTests testDeadlineHistoryAppends]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.RecoveryTests testDeadlineRisk]' started.
+Test Case '-[PlannerCoreTests.RecoveryTests testDeadlineRisk]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.RecoveryTests testRestartPreservesAccumulatedEvidence]' started.
+Test Case '-[PlannerCoreTests.RecoveryTests testRestartPreservesAccumulatedEvidence]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.RecoveryTests testSmallestChangeFirst]' started.
+Test Case '-[PlannerCoreTests.RecoveryTests testSmallestChangeFirst]' passed (0.000 seconds).
+Test Suite 'RecoveryTests' passed at 2026-11-11 07:05:20.666.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'ReplanTests' started at 2026-11-11 07:05:20.666.
+Test Case '-[PlannerCoreTests.ReplanTests testNoRoomProposesTradeoffNotDeletion]' started.
+Test Case '-[PlannerCoreTests.ReplanTests testNoRoomProposesTradeoffNotDeletion]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.ReplanTests testOnlyConflictWindowChanges]' started.
+Test Case '-[PlannerCoreTests.ReplanTests testOnlyConflictWindowChanges]' passed (0.000 seconds).
+Test Case '-[PlannerCoreTests.ReplanTests testPreviewEqualsCommittedAndUndoRestores]' started.
+Test Case '-[PlannerCoreTests.ReplanTests testPreviewEqualsCommittedAndUndoRestores]' passed (0.000 seconds).
+Test Suite 'ReplanTests' passed at 2026-11-11 07:05:20.667.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'TomorrowDraftTests' started at 2026-11-11 07:05:20.667.
+Test Case '-[PlannerCoreTests.TomorrowDraftTests testLockedAndTemplatePrecedeFlexibleAndNeverOverfill]' started.
+Test Case '-[PlannerCoreTests.TomorrowDraftTests testLockedAndTemplatePrecedeFlexibleAndNeverOverfill]' passed (0.000 seconds).
+Test Suite 'TomorrowDraftTests' passed at 2026-11-11 07:05:20.667.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'PlannerCorePackageTests.xctest' passed at 2026-11-11 07:05:20.667.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.045 (0.047) seconds
+Test Suite 'All tests' passed at 2026-11-11 07:05:20.667.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.045 (0.049) seconds
+◇ Test run started.
+↳ Testing Library Version: 124.4
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests passed after 0.001 seconds.
+✅ 測試完成（產物在 /var/folders/2s/vty41l455yv698g4xkgfv7z00000gn/T//BillionairePlannerTests，可隨時刪除）

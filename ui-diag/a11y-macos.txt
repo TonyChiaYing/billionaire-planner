@@ -1,0 +1,71 @@
+[今天] 8589934592 | Parent/Child mismatch | id= label= type=0 frame=(0.0, 0.0, 0.0, 0.0) value=
+[今天] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 960.0, 644.0) value=
+[今天] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 190.0, 644.0) value=
+[今天] 1 | Contrast failed | id=tab.today label= type=48 frame=(51.0, 103.0399169921875, 47.0, 16.0) value=今天
+[今天] 8 | Element has no description | id= label= type=3 frame=(223.0, 45.0, 769.0, 644.0) value=
+[今天] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 63.0, 14.0, 16.0) value=
+[今天] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
+[目標] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(239.0, 97.0, 737.0, 28.0) value=
+[目標] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 960.0, 644.0) value=
+[目標] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 190.0, 644.0) value=
+[目標] 1 | Contrast nearly passed | id=tab.today label= type=48 frame=(51.0, 103.0399169921875, 47.0, 16.0) value=今天
+[目標] 1 | Contrast failed | id=tab.goals label= type=48 frame=(52.0, 131.0, 46.0, 16.0) value=目標
+[目標] 8 | Element has no description | id= label= type=3 frame=(223.0, 45.0, 769.0, 644.0) value=
+[目標] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(239.0, 97.0, 737.0, 28.0) value=
+[目標] 8 | Element has no description | id= label= type=3 frame=(239.0, 97.0, 737.0, 28.0) value=
+[目標] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 63.0, 14.0, 16.0) value=
+[目標] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
+[回顧] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 960.0, 644.0) value=
+[回顧] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 190.0, 644.0) value=
+[回顧] 1 | Contrast nearly passed | id=tab.today label= type=48 frame=(51.0, 103.0399169921875, 47.0, 16.0) value=今天
+[回顧] 1 | Contrast failed | id=tab.review label= type=48 frame=(52.0, 159.0, 46.0, 16.0) value=回顧
+[回顧] 8 | Element has no description | id= label= type=3 frame=(223.0, 45.0, 769.0, 644.0) value=
+[回顧] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 63.0, 14.0, 16.0) value=
+[回顧] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
+[思考] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 960.0, 644.0) value=
+[思考] 8 | Element has no description | id= label= type=3 frame=(32.0, 45.0, 190.0, 644.0) value=
+[思考] 1 | Contrast nearly passed | id=tab.today label= type=48 frame=(51.0, 103.0399169921875, 47.0, 16.0) value=今天
+[思考] 1 | Contrast failed | id=tab.think label= type=48 frame=(52.0, 187.0, 46.0, 16.079833984375) value=思考
+[思考] 8 | Element has no description | id= label= type=3 frame=(223.0, 45.0, 769.0, 644.0) value=
+[思考] 4294967296 | Action is missing | id= label= type=14 frame=(826.0, 188.0, 73.0, 22.0) value=不連結
+[思考] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 63.0, 14.0, 16.0) value=
+[思考] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
+[晚間日結] 8589934592 | Parent/Child mismatch | id= label= type=0 frame=(0.0, 0.0, 0.0, 0.0) value=
+[晚間日結] 8 | Element has no description | id= label= type=3 frame=(32.0, 25.0, 960.0, 644.0) value=
+[晚間日結] 8 | Element has no description | id= label= type=3 frame=(32.0, 25.0, 190.0, 644.0) value=
+[晚間日結] 1 | Contrast failed | id=tab.today label= type=48 frame=(51.0, 83.0399169921875, 47.0, 16.0) value=今天
+[晚間日結] 1 | Contrast failed | id=tab.goals label= type=48 frame=(52.0, 111.0, 46.0, 16.0) value=目標
+[晚間日結] 1 | Contrast failed | id=tab.review label= type=48 frame=(52.0, 139.0, 46.0, 16.0) value=回顧
+[晚間日結] 1 | Contrast failed | id=tab.think label= type=48 frame=(52.0, 167.0, 46.0, 16.079833984375) value=思考
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(44.0, 644.0, 39.0, 13.0) value=v2.0.0.7
+[晚間日結] 8 | Element has no description | id= label= type=3 frame=(223.0, 25.0, 769.0, 644.0) value=
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 107.875244140625, 44.0, 14.0) value=今天
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(253.0, 291.0, 247.0, 13.0) value=沒有進度或休息日也可以完成日結，不會中斷任何紀錄。
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 346.0, 43.0, 14.0) value=每週
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 455.0, 151.0, 14.0) value=原則（痛苦＋反思＝進步）
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 480.0, 235.0, 15.352294921875) value=從回顧中提煉的做事原則會累積在這裡。
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 568.0, 77.0, 14.2275390625) value=最近的成果
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(254.0, 593.0, 116.0, 15.579833984375) value=還沒有成果紀錄。
+[晚間日結] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 43.0, 14.0, 16.0) value=
+[晚間日結] 1 | Contrast failed | id= label= type=48 frame=(231.0, 25.0, 753.0, 52.0) value=回顧
+[晚間日結] 8 | Element has no description | id= label= type=3 frame=(277.0, 77.0, 470.0, 661.0) value=
+[晚間日結] 4294967296 | Action is missing | id= label= type=14 frame=(645.0, 298.0, 73.0, 22.0) value=不記錄
+[晚間日結] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
+[晚間日結] 8 | Element has no description | id= label=表情符號和其他符號 type=14 frame=(79.0, -1.0, 74.0, 32.0) value=
+[晚間日結] 4294967296 | Action is missing | id= label=表情符號和其他符號 type=14 frame=(79.0, -1.0, 74.0, 32.0) value=
+[使用教學] 8 | Element has no description | id= label= type=3 frame=(32.0, 74.0, 960.0, 644.0) value=
+[使用教學] 8 | Element has no description | id= label= type=3 frame=(32.0, 74.0, 190.0, 644.0) value=
+[使用教學] 1 | Contrast failed | id=tab.today label= type=48 frame=(51.0, 132.0399169921875, 47.0, 16.0) value=今天
+[使用教學] 1 | Contrast failed | id=tab.goals label= type=48 frame=(52.0, 160.0, 46.0, 16.0) value=目標
+[使用教學] 1 | Contrast failed | id=tab.review label= type=48 frame=(52.0, 188.0, 46.0, 16.0) value=回顧
+[使用教學] 1 | Contrast failed | id=tab.think label= type=48 frame=(52.0, 216.0, 46.0, 16.079833984375) value=思考
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(44.0, 693.0, 39.0, 13.0) value=v2.0.0.7
+[使用教學] 8 | Element has no description | id= label= type=3 frame=(223.0, 74.0, 769.0, 644.0) value=
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(254.0, 156.875244140625, 44.0, 14.0) value=今天
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(254.0, 617.0, 77.0, 14.2275390625) value=最近的成果
+[使用教學] 8589934592 | Parent/Child mismatch | id= label= type=3 frame=(91.0, 92.0, 14.0, 16.0) value=
+[使用教學] 8 | Element has no description | id= label= type=3 frame=(232.0, 136.0, 560.0, 520.0) value=
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(263.5, 368.5059814453125, 5.0, 13.0) value=1
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(262.5, 424.5059814453125, 7.0, 13.0) value=3
+[使用教學] 1 | Contrast failed | id= label= type=48 frame=(262.5, 452.5059814453125, 7.0, 13.0) value=4
+[使用教學] 8 | Element has no description | id= label= type=81 frame=(80.0, 0.0, 685.0, 30.0) value=
