@@ -227,4 +227,61 @@ final class UATAccessibilityUITests: XCTestCase {
         XCTAssertTrue(element("evening.recorded").exists, "重開時沒有顯示已記錄的成果")
         XCTAssertFalse(element("evening.candidate").exists, "已記錄的成果不應再出現勾選")
     }
+
+    // MARK: V204-ZOOM：版面放大縮小
+
+    func menu(_ top: String, _ item: String) {
+        app.menuBars.menuBarItems[top].click()
+        let mi = app.menuBars.menuItems[item].firstMatch
+        XCTAssertTrue(mi.waitForExistence(timeout: 3), "找不到選單 \(top) > \(item)")
+        mi.click()
+    }
+
+    func testV204ZOOM_MenuZoomInScalesLayoutAndResetRestores() {
+        let tab = app.descendants(matching: .any)["tab.today"].firstMatch
+        XCTAssertTrue(tab.waitForExistence(timeout: 5))
+        let base = tab.frame.height
+        menu("顯示方式", "放大")
+        menu("顯示方式", "放大")
+        menu("顯示方式", "放大")
+        let zoomed = app.descendants(matching: .any)["tab.today"].firstMatch
+        let grew = expectation(for: NSPredicate { _, _ in zoomed.frame.height > base * 1.2 }, evaluatedWith: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [grew], timeout: 5), .completed, "放大後版面沒有變大：\(base) → \(zoomed.frame.height)")
+        // 放大後仍可操作
+        openTab("目標")
+        XCTAssertTrue(button("goals.new").isHittable)
+        menu("顯示方式", "實際大小")
+        let back = expectation(for: NSPredicate { _, _ in abs(zoomed.frame.height - base) < 2 }, evaluatedWith: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [back], timeout: 5), .completed, "實際大小沒有回到原本：\(zoomed.frame.height)")
+    }
+
+    // MARK: V204-TUTORIAL：使用教學
+
+    func testV204TUTORIAL_OpensFromSidebarAndWalksAllPages() {
+        button("sidebar.tutorial").click()
+        XCTAssertTrue(element("tutorial.title").waitForExistence(timeout: 5))
+        var pages = 1
+        while app.buttons["tutorial.next"].exists && pages < 20 {
+            app.buttons["tutorial.next"].click()
+            pages += 1
+        }
+        XCTAssertEqual(pages, 10)
+        button("tutorial.finish").click()
+        XCTAssertTrue(app.sheets.firstMatch.waitForNonExistence(timeout: 5))
+    }
+
+    func testV204TUTORIAL_ExampleOpensPrefilledWizardWithoutSaving() {
+        button("sidebar.tutorial").click()
+        button("tutorial.next").click()
+        button("tutorial.example").click()
+        let title = element("wizard.title")
+        XCTAssertTrue(title.waitForExistence(timeout: 8), "沒有打開建立目標流程")
+        XCTAssertTrue((title.value as? String ?? "").hasPrefix("[範例]"), "範例沒有預先填好：\(String(describing: title.value))")
+        // 直接取消：不應留下任何目標
+        app.typeKey(.escape, modifierFlags: [])
+        XCTAssertTrue(app.sheets.firstMatch.waitForNonExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts[Tutorial_exampleGoal].exists)
+    }
 }
+
+private let Tutorial_exampleGoal = "[範例] 完成 20 分鐘晨間閱讀"

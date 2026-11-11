@@ -35,13 +35,17 @@ struct BillionairePlannerApp: App {
         #if os(macOS)
         .defaultSize(width: AppEnvironment.isUITesting ? 960 : 1180, height: AppEnvironment.isUITesting ? 680 : 820)
         .defaultPosition(.center)
+        .commands {
+            ZoomCommands()
+            HelpCommands()
+        }
         #endif
 
         #if os(macOS)
         Settings {
             if let container {
                 SettingsView().modelContainer(container).preferredColorScheme(.dark).tint(.assetGreen)
-                    .frame(minWidth: 520, minHeight: 600)
+                    .plannerZoom(minWidth: 520, minHeight: 600)
             }
         }
         #endif
@@ -67,6 +71,7 @@ struct LaunchGate: View {
             MigrationFailedView(message: message, retry: { phase = .checking }, skip: { phase = .ready })
         case .ready:
             RootView()
+                .plannerZoom()
                 .modifier(DataObserver())
                 .modifier(UITestWindowPlacement())
                 .sheet(item: $report) { box in
@@ -171,8 +176,30 @@ enum AppTab: String, CaseIterable, Identifiable {
 struct RootView: View {
     @Query(filter: #Predicate<ThinkingSession> { $0.endedAt == nil }) private var openSessions: [ThinkingSession]
     @State private var tab: AppTab? = .today
+    @State private var showTutorial = false
+    @State private var showExampleWizard = false
+    /// V204-TUTORIAL：第一次開啟時自動顯示一次教學（UI 測試不顯示）
+    @AppStorage("tutorialSeenV1", store: UIZoom.store) private var tutorialSeen = false
 
     var body: some View {
+        content
+            .sheet(isPresented: $showTutorial, onDismiss: { tutorialSeen = true }) {
+                TutorialView(go: { tab = $0 }, startExample: {
+                    tab = .goals
+                    // 等教學表單關閉後再打開建立流程
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { showExampleWizard = true }
+                })
+            }
+            .sheet(isPresented: $showExampleWizard) { GoalWizard(example: true) }
+            .onReceive(NotificationCenter.default.publisher(for: .showTutorial)) { _ in showTutorial = true }
+            .onAppear {
+                if !tutorialSeen && (!AppEnvironment.isUITesting || ProcessInfo.processInfo.arguments.contains("-showTutorialOnLaunch")) {
+                    showTutorial = true
+                }
+            }
+    }
+
+    @ViewBuilder private var content: some View {
         if let session = openSessions.first {
             ThinkModeView(session: session)
         } else {
@@ -193,6 +220,9 @@ struct RootView: View {
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
                 .safeAreaInset(edge: .bottom) {
                     VStack(alignment: .leading, spacing: 6) {
+                        Button { showTutorial = true } label: { Label("使用教學", systemImage: "questionmark.circle") }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("sidebar.tutorial")
                         SettingsLink { Label("設定", systemImage: "gearshape") }
                             .buttonStyle(.borderless)
                         Text(AppInfo.display).font(.caption2).foregroundStyle(.secondary)

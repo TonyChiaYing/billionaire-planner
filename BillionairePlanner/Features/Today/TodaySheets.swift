@@ -85,7 +85,7 @@ struct QuickInsertSheet: View {
             }
             .onChange(of: [timed ? 1 : 0, start, estimate ?? 0]) { refresh(planner) }
         }
-        .frame(minWidth: 420, minHeight: 480)
+        .plannerZoom(minWidth: 420, minHeight: 480)
     }
 
     private func refresh(_ planner: Planner) {
@@ -186,7 +186,7 @@ struct AddToTodaySheet: View {
             .navigationTitle("加入今天")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
-        .frame(minWidth: 460, minHeight: 560)
+        .plannerZoom(minWidth: 460, minHeight: 560)
     }
 
     private func addRow(_ a: ActionItem, planner: Planner) -> some View {
@@ -277,7 +277,7 @@ struct DaySkeletonSheet: View {
             .sheet(item: $editing) { DayBlockEditor(block: $0, day: day) }
             .sheet(isPresented: $adding) { DayBlockEditor(block: nil, day: day) }
         }
-        .frame(minWidth: 440, minHeight: 480)
+        .plannerZoom(minWidth: 440, minHeight: 480)
     }
 }
 
@@ -326,7 +326,7 @@ struct DayBlockEditor: View {
                 }
             }
         }
-        .frame(minWidth: 380, minHeight: 360)
+        .plannerZoom(minWidth: 380, minHeight: 360)
     }
 }
 
@@ -382,7 +382,7 @@ struct PlacementEditSheet: View {
                 locked = placement.isLocked
             }
         }
-        .frame(minWidth: 380, minHeight: 340)
+        .plannerZoom(minWidth: 380, minHeight: 340)
     }
 }
 
@@ -454,6 +454,6 @@ struct FocusTimerSheet: View {
             .navigationTitle("專注")
             .onAppear { planner.start(placement) }
         }
-        .frame(minWidth: 460, minHeight: 460)
+        .plannerZoom(minWidth: 460, minHeight: 460)
     }
 }

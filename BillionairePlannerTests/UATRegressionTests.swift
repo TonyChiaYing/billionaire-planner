@@ -304,4 +304,30 @@ final class UATRegressionTests: XCTestCase {
         XCTAssertEqual(p.weeklyDecision(w, goalID: g.id)?.reason, "週四太累")
         XCTAssertEqual(w.nextWeekCapacityNote, "出差")
     }
+
+    // MARK: V204：版面縮放與使用教學
+
+    func testV204ZOOM_StepsClampAndLabels() {
+        XCTAssertEqual(UIZoom.clamp(1.0), 1.0)
+        XCTAssertEqual(UIZoom.clamp(3.0), 1.5)
+        XCTAssertEqual(UIZoom.clamp(0.1), 0.8)
+        XCTAssertEqual(UIZoom.clamp(1.04), 1.0)
+        XCTAssertEqual(UIZoom.zoomIn(1.0), 1.1)
+        XCTAssertEqual(UIZoom.zoomOut(1.0), 0.9)
+        XCTAssertEqual(UIZoom.zoomIn(1.5), 1.5, "最大值不再放大")
+        XCTAssertEqual(UIZoom.zoomOut(0.8), 0.8, "最小值不再縮小")
+        XCTAssertEqual(UIZoom.label(1.2), "120%")
+        var z = 1.0
+        for _ in 0..<10 { z = UIZoom.zoomIn(z) }
+        XCTAssertEqual(z, 1.5)
+    }
+
+    func testV204TUTORIAL_PagesCoverCoreFlowWithExamples() {
+        let pages = Tutorial.pages
+        XCTAssertEqual(pages.map(\.id), Array(0..<pages.count))
+        XCTAssertTrue(pages.allSatisfy { !$0.title.isEmpty && !$0.example.isEmpty && !$0.steps.isEmpty })
+        let tabs = Set(pages.compactMap(\.tab))
+        XCTAssertEqual(tabs, Set(AppTab.allCases), "每個分頁都要有教學")
+        XCTAssertTrue(Tutorial.exampleGoal.hasPrefix("[範例]"), "範例資料要一眼看得出是範例")
+    }
 }

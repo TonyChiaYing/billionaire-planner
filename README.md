@@ -71,3 +71,7 @@ bash version.sh restore 1.0.0                        # 退回（目前版本先�
 ```
 
 版號四段 `主.次.修.建置`，目前版本見 `VERSION` 與 `CHANGELOG.md`。Apple 的顯示版本只能三段，所以 `MARKETING_VERSION` 用前三段，完整四段放在 build 號（`CURRENT_PROJECT_VERSION`）；App 內顯示 `v<版本>`，與資料夾名稱 `BillionairePlanner_v<版本>` 相同。GitHub 的 `v1` 分支保存 v1.0.0 原始碼。
+
+## 使用教學與版面大小
+- 第一次開啟會顯示「使用教學」；之後從側邊欄「使用教學」、「輔助說明」選單（⌘?）或設定再打開。
+- 版面大小：Mac 用 ⌘＋／⌘－／⌘0，或設定 →「顯示與說明」；iPhone／iPad 在設定裡調整。

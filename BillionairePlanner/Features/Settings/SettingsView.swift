@@ -23,11 +23,23 @@ struct SettingsView: View {
     @State private var showExport = false
     @State private var report: ReportBox?
     @State private var showTemplates = false
+    @State private var showTutorial = false
 
     var body: some View {
         let migration = context.all(MigrationRun.self).first { $0.completedAt != nil }
         NavigationStack {
             Form {
+                Section {
+                    ZoomControl()
+                    Button {
+                        #if os(iOS)
+                        showTutorial = true
+                        #else
+                        NotificationCenter.default.post(name: .showTutorial, object: nil)
+                        #endif
+                    } label: { Label("打開使用教學", systemImage: "questionmark.circle") }
+                    .accessibilityIdentifier("settings.tutorial")
+                } header: { Text("顯示與說明") } footer: { Text("Mac 也可以用 ⌘＋／⌘－／⌘0 調整版面大小。") }
                 Section {
                     MinutePicker(title: "一天開始", minutes: $dayStart)
                     MinutePicker(title: "一天結束", minutes: $dayEnd)
@@ -79,6 +91,7 @@ struct SettingsView: View {
             }
             .formStyle(.grouped)
             .navigationTitle("設定")
+            .sheet(isPresented: $showTutorial) { TutorialView() }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     #if os(iOS)
@@ -176,6 +189,6 @@ struct TemplateItemEditor: View {
             .navigationTitle("模板區段")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { try? context.save(); dismiss() } } }
         }
-        .frame(minWidth: 380, minHeight: 320)
+        .plannerZoom(minWidth: 380, minHeight: 320)
     }
 }

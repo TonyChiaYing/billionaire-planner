@@ -339,6 +339,6 @@ struct FocusReplaceSheet: View {
             .navigationTitle("用「\(newGoal.title)」替換")
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() } } }
         }
-        .frame(minWidth: 400, minHeight: 360)
+        .plannerZoom(minWidth: 400, minHeight: 360)
     }
 }

@@ -178,7 +178,7 @@ struct WorkCloseSheet: View {
                 }
             }
         }
-        .frame(minWidth: 440, minHeight: 440)
+        .plannerZoom(minWidth: 440, minHeight: 440)
     }
 }
 
@@ -323,7 +323,7 @@ struct EveningCloseSheet: View {
                 }
             }
         }
-        .frame(minWidth: 460, minHeight: 600)
+        .plannerZoom(minWidth: 460, minHeight: 600)
     }
 }
 
@@ -398,7 +398,7 @@ struct TomorrowDraftSheet: View {
                 selected = Set(draft.included.filter { $0.candidate.source != .lockedCommitment }.map(\.id))
             }
         }
-        .frame(minWidth: 460, minHeight: 560)
+        .plannerZoom(minWidth: 460, minHeight: 560)
     }
 
     @ViewBuilder
@@ -511,7 +511,7 @@ struct WeeklyReviewSheet: View {
                 }
             }
         }
-        .frame(minWidth: 480, minHeight: 600)
+        .plannerZoom(minWidth: 480, minHeight: 600)
     }
 
     private func existingWeekly(_ planner: Planner) -> WeeklyReview? {
@@ -564,6 +564,6 @@ struct PrincipleSheet: View {
                 }
             }
         }
-        .frame(minWidth: 420, minHeight: 420)
+        .plannerZoom(minWidth: 420, minHeight: 420)
     }
 }

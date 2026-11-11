@@ -156,6 +156,8 @@ extension Planner {
 // MARK: - 漸進式建立（三步，每步都可存草稿）
 
 struct GoalWizard: View {
+    /// V204-TUTORIAL：從教學打開時預先填好範例；使用者仍要自己按下一步才會存
+    var example = false
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @State private var step = 1
@@ -201,6 +203,14 @@ struct GoalWizard: View {
             }
             .formStyle(.grouped)
             .navigationTitle(step <= 3 ? "新目標 · \(step)/3" : "接下來要怎麼做？")
+            .onAppear {
+                guard example, title.isEmpty else { return }
+                title = Tutorial.exampleGoal
+                outcome = Tutorial.exampleOutcome
+                strategy = Tutorial.exampleStrategy
+                nextAction = Tutorial.exampleAction
+                estimate = 25
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     if step <= 3 { Button(goal == nil ? "取消" : "存成草稿") { dismiss() } }
@@ -219,7 +229,7 @@ struct GoalWizard: View {
                 }
             }
         }
-        .frame(minWidth: 460, minHeight: 460)
+        .plannerZoom(minWidth: 460, minHeight: 460)
     }
 
     /// 第 4 步：一次明確確認（UAT-01）。「稍後」不產生任何副作用。

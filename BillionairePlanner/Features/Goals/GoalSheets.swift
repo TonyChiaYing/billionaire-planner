@@ -34,7 +34,7 @@ struct GoalEditSheets: View {
                 }
                 .onAppear { load(planner) }
         }
-        .frame(minWidth: 420, minHeight: 380)
+        .plannerZoom(minWidth: 420, minHeight: 380)
     }
 
     private var title: String {
@@ -238,7 +238,7 @@ struct RecoverySheet: View {
                 if let g = goal { actionID = planner.openActions(for: g.id).first?.id }
             }
         }
-        .frame(minWidth: 480, minHeight: 560)
+        .plannerZoom(minWidth: 480, minHeight: 560)
     }
 
     @ViewBuilder
@@ -325,6 +325,6 @@ struct MigrationReportView: View {
         }
         .navigationTitle("v1 遷移報告")
         .toolbar { ToolbarItem(placement: .confirmationAction) { Button("知道了") { dismiss() } } }
-        .frame(minWidth: 460, minHeight: 420)
+        .plannerZoom(minWidth: 460, minHeight: 420)
     }
 }
