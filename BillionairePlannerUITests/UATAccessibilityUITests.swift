@@ -238,21 +238,25 @@ final class UATAccessibilityUITests: XCTestCase {
     }
 
     func testV204ZOOM_MenuZoomInScalesLayoutAndResetRestores() {
-        let tab = app.descendants(matching: .any)["tab.today"].firstMatch
+        // 量內容區的文字（版面真的重新排版，無障礙框也跟著變大）
+        let tab = app.staticTexts["今天裝得下嗎"].firstMatch
         XCTAssertTrue(tab.waitForExistence(timeout: 5))
         let base = tab.frame.height
         menu("顯示方式", "放大")
         menu("顯示方式", "放大")
         menu("顯示方式", "放大")
-        let zoomed = app.descendants(matching: .any)["tab.today"].firstMatch
+        let zoomed = app.staticTexts["今天裝得下嗎"].firstMatch
         let grew = expectation(for: NSPredicate { _, _ in zoomed.frame.height > base * 1.15 }, evaluatedWith: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [grew], timeout: 5), .completed, "放大後版面沒有變大：\(base) → \(zoomed.frame.height)")
-        // 放大後仍可操作
-        openTab("目標")
-        XCTAssertTrue(button("goals.new").isHittable)
         menu("顯示方式", "實際大小")
         let back = expectation(for: NSPredicate { _, _ in abs(zoomed.frame.height - base) < 2 }, evaluatedWith: nil)
         XCTAssertEqual(XCTWaiter.wait(for: [back], timeout: 5), .completed, "實際大小沒有回到原本：\(zoomed.frame.height)")
+        // 放大狀態下仍可正常點擊（無障礙框與畫面一致）
+        menu("顯示方式", "放大")
+        menu("顯示方式", "放大")
+        openTab("目標")
+        button("goals.new").click()
+        XCTAssertTrue(element("wizard.title").waitForExistence(timeout: 5), "放大後點擊位置不正確")
     }
 
     // MARK: V204-TUTORIAL：使用教學

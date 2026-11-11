@@ -215,9 +215,9 @@ struct RootView: View {
             NavigationSplitView {
                 List(AppTab.allCases, selection: $tab) { t in
                     Label(t.title, systemImage: t.symbol).tag(t)
-                        .font(.z(.body))   // 側邊欄樣式有自己的字級，要明確套用縮放
                         .accessibilityIdentifier("tab.\(t.rawValue)")
                 }
+                .modifier(SidebarZoom())
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
                 .safeAreaInset(edge: .bottom) {
                     VStack(alignment: .leading, spacing: 6) {
@@ -279,3 +279,18 @@ struct UITestWindowPlacement: ViewModifier {
     }
     #endif
 }
+
+#if os(macOS)
+/// 側邊欄字級跟隨系統「側邊欄大小」，不吃 font；縮放時改用對應的列大小（100% 沿用系統設定）
+struct SidebarZoom: ViewModifier {
+    @AppStorage(UIZoom.key, store: UIZoom.store) private var zoom = 1.0
+    func body(content: Content) -> some View {
+        let z = UIZoom.clamp(zoom)
+        if z == 1.0 {
+            content
+        } else {
+            content.environment(\.sidebarRowSize, z < 1.0 ? .small : (z >= 1.2 ? .large : .medium))
+        }
+    }
+}
+#endif
