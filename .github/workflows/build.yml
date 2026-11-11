@@ -74,6 +74,20 @@ jobs:
           ls ios-diag || true
           exit $code
 
+      - name: iPad tests (screens)
+        if: always()
+        run: |
+          set +e
+          PAD=$(xcrun simctl list devices available | grep -m1 -oE "iPad (Air|Pro)[^(]*\(" | sed 's/ ($//')
+          echo "simulator: $PAD"
+          xcodebuild test -project BillionairePlanner.xcodeproj -scheme BillionairePlanner \
+            -destination "platform=iOS Simulator,name=$PAD" -derivedDataPath out-ios-test \
+            -only-testing:BillionairePlannerUITests/IOSSmokeUITests CODE_SIGNING_ALLOWED=NO > ipad-test.log 2>&1
+          code=$?
+          grep -E "simulator|error:|failed|Executed|TEST (SUCCEEDED|FAILED)" ipad-test.log | tail -30
+          mkdir -p ipad-diag; D=$(grep -oE "ios-diag=[^ ]+" ipad-test.log | head -1 | cut -d= -f2); [ -n "$D" ] && cp -R "$D"/. ipad-diag/ 2>/dev/null
+          exit $code
+
       - name: Check iOS compiles
         if: always()
         run: |
@@ -89,6 +103,6 @@ jobs:
           git config user.name github-actions; git config user.email actions@github.com
           git checkout --orphan build
           git rm -rf --cached . > /dev/null
-          for f in core-test.log app-test.log ui-test.log build.log ios.log ios-test.log ios-diag ui-diag BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
+          for f in core-test.log app-test.log ui-test.log build.log ios.log ios-test.log ios-diag ipad-test.log ipad-diag ui-diag BillionairePlanner_v*.app.zip; do [ -e "$f" ] && git add -f "$f"; done
           git commit -m "build $(cat VERSION) ${GITHUB_SHA::7}"
           git push -f origin build

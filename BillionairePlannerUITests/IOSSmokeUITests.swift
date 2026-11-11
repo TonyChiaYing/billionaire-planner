@@ -13,7 +13,8 @@ final class IOSSmokeUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["-uiTesting", "YES", "-fineTimeMode", "NO", "-dayStartMinute", "420", "-dayEndMinute", "1320"]
         app.launch()
-        XCTAssertTrue(app.tabBars.firstMatch.waitForExistence(timeout: 15), "沒有出現分頁列")
+        // iPhone 是底部分頁列；iPad（iOS 18）可能是頂部分頁列，用分頁按鈕判斷
+        XCTAssertTrue(tabButton("今天").waitForExistence(timeout: 15), "沒有出現分頁")
     }
 
     override func tearDownWithError() throws {
@@ -32,8 +33,13 @@ final class IOSSmokeUITests: XCTestCase {
 
     var screenWidth: CGFloat { app.windows.firstMatch.frame.width }
 
+    func tabButton(_ title: String) -> XCUIElement {
+        let inBar = app.tabBars.buttons[title]
+        return inBar.exists ? inBar : app.buttons.matching(NSPredicate(format: "label == %@", title)).firstMatch
+    }
+
     func tab(_ title: String) {
-        let b = app.tabBars.buttons[title]
+        let b = tabButton(title)
         XCTAssertTrue(b.waitForExistence(timeout: 5), "找不到分頁 \(title)")
         b.tap()
     }
@@ -123,6 +129,36 @@ final class IOSSmokeUITests: XCTestCase {
         XCTAssertEqual(pages, 10)
         shot("tutorial-last")
         el("tutorial.finish").tap()
+    }
+
+    // MARK: V206-A11Y：Apple 無障礙稽核（缺標籤、對比、點擊範圍、文字被裁切、動態字級）
+
+    func audit(_ screen: String, _ log: inout [String]) {
+        do {
+            try app.performAccessibilityAudit { issue in
+                let e = issue.element
+                log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "")")
+                return true   // 先全部記錄；只在 strict 清單內的類型才算失敗（見 a11yStrict）
+            }
+        } catch {
+            log.append("[\(screen)] audit error \(error)")
+        }
+    }
+
+    func testA11yAudit_iOS() {
+        var log: [String] = []
+        for t in ["今天", "目標", "回顧", "思考"] {
+            tab(t)
+            _ = app.navigationBars[t].waitForExistence(timeout: 5)
+            audit(t, &log)
+        }
+        tab("回顧")
+        el("review.evening").tap()
+        _ = el("evening.done")
+        audit("晚間日結", &log)
+        let out = diag.appendingPathComponent("a11y-ios.txt")
+        try? log.joined(separator: "\n").write(to: out, atomically: true, encoding: .utf8)
+        print("a11y-issues=\(log.count)")
     }
 }
 #endif

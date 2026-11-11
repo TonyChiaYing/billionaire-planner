@@ -156,6 +156,12 @@ struct TutorialView: View {
             .navigationTitle("使用教學 · \(index + 1)/\(Tutorial.pages.count)")
             .safeAreaInset(edge: .bottom) {
                 HStack {
+                    #if os(macOS)
+                    // Mac：關閉與上一步／下一步放在同一列（不再多一排工具列）
+                    Button("關閉") { dismiss() }
+                        .keyboardShortcut(.cancelAction)
+                        .accessibilityIdentifier("tutorial.close")
+                    #endif
                     Button("上一步") { index -= 1 }
                         .disabled(index == 0)
                         .accessibilityIdentifier("tutorial.prev")
@@ -181,11 +187,13 @@ struct TutorialView: View {
                 .padding(16)
                 .background(.bar)
             }
+            #if os(iOS)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("關閉") { dismiss() }.accessibilityIdentifier("tutorial.close")
                 }
             }
+            #endif
         }
         .plannerZoom(minWidth: 560, minHeight: 520)
     }

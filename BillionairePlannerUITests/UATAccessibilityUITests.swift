@@ -287,6 +287,38 @@ final class UATAccessibilityUITests: XCTestCase {
         XCTAssertTrue(app.sheets.firstMatch.waitForNonExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts[Tutorial_exampleGoal].exists)
     }
+
+    // MARK: V206-A11Y：Apple 無障礙稽核（macOS）
+
+    func testA11yAudit_macOS() {
+        var log: [String] = []
+        let dir = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("bp-ui-diag")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        func audit(_ screen: String) {
+            do {
+                try app.performAccessibilityAudit { issue in
+                    let e = issue.element
+                    log.append("[\(screen)] \(issue.auditType.rawValue) | \(issue.compactDescription) | id=\(e?.identifier ?? "") label=\(e?.label ?? "")")
+                    return true
+                }
+            } catch { log.append("[\(screen)] audit error \(error)") }
+        }
+        for t in ["今天", "目標", "回顧", "思考"] {
+            openTab(t)
+            audit(t)
+        }
+        openTab("回顧")
+        button("review.evening").click()
+        _ = button("evening.done")
+        audit("晚間日結")
+        app.typeKey(.escape, modifierFlags: [])
+        button("sidebar.tutorial").click()
+        _ = element("tutorial.title").waitForExistence(timeout: 5)
+        audit("使用教學")
+        try? log.joined(separator: "\n").write(to: dir.appendingPathComponent("a11y-macos.txt"), atomically: true, encoding: .utf8)
+        print("diag=\(dir.path)")
+        print("a11y-issues=\(log.count)")
+    }
 }
 
 private let Tutorial_exampleGoal = "[範例] 完成 20 分鐘晨間閱讀"
