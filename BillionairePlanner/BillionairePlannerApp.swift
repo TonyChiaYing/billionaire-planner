@@ -215,6 +215,7 @@ struct RootView: View {
             NavigationSplitView {
                 List(AppTab.allCases, selection: $tab) { t in
                     Label(t.title, systemImage: t.symbol).tag(t)
+                        .font(.z(.body))   // 側邊欄樣式有自己的字級，要明確套用縮放
                         .accessibilityIdentifier("tab.\(t.rawValue)")
                 }
                 .navigationSplitViewColumnWidth(min: 170, ideal: 190)
