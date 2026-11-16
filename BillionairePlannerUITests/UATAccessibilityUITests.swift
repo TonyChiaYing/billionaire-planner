@@ -331,6 +331,9 @@ final class UATAccessibilityUITests: XCTestCase {
     // MARK: V207-DELETE：從目標清單右鍵永久刪除、從詳細頁刪除下一步
 
     /// 目標列是一個按鈕，標籤合併了「焦點、標題、期程、成果」
+    /// 視窗裡的按鈕（排除 Touch Bar 上同名的按鈕）
+    func windowButton(_ title: String) -> XCUIElement { app.windows.buttons[title].firstMatch }
+
     func goalRow(_ title: String) -> XCUIElement {
         app.buttons.matching(NSPredicate(format: "label CONTAINS %@", title)).firstMatch
     }
@@ -345,7 +348,7 @@ final class UATAccessibilityUITests: XCTestCase {
         let item = app.menuItems["永久刪除…"].firstMatch
         XCTAssertTrue(item.waitForExistence(timeout: 3), "右鍵選單沒有「永久刪除…」")
         item.click()
-        let confirm = app.buttons["永久刪除"].firstMatch
+        let confirm = windowButton("永久刪除")
         XCTAssertTrue(confirm.waitForExistence(timeout: 5), "沒有出現確認")
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS '無法復原' OR value CONTAINS '無法復原'")).firstMatch.exists
                       || app.descendants(matching: .any).containing(NSPredicate(format: "label CONTAINS '無法復原'")).firstMatch.exists,
@@ -363,7 +366,7 @@ final class UATAccessibilityUITests: XCTestCase {
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         row.rightClick()
         app.menuItems["永久刪除…"].firstMatch.click()
-        let cancel = app.buttons["取消"].firstMatch
+        let cancel = windowButton("取消")
         XCTAssertTrue(cancel.waitForExistence(timeout: 5))
         cancel.click()
         XCTAssertTrue(row.waitForExistence(timeout: 3), "取消後目標不應消失")
@@ -377,7 +380,7 @@ final class UATAccessibilityUITests: XCTestCase {
         detailRow.click()
         XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForExistence(timeout: 5))
         button("action.delete").click()
-        let confirm = app.buttons["刪除這個下一步"].firstMatch
+        let confirm = windowButton("刪除這個下一步")
         XCTAssertTrue(confirm.waitForExistence(timeout: 5))
         confirm.click()
         XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForNonExistence(timeout: 5))

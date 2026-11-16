@@ -46,9 +46,17 @@ struct GoalRowMenu: ViewModifier {
     let goal: Goal
     let planner: Planner
     @Binding var deleting: Goal?
+    /// 焦點區的列另外有排序與取消焦點（同一個選單，避免兩個 contextMenu 互相蓋掉）
+    var focusActions = false
 
     func body(content: Content) -> some View {
         content.contextMenu {
+            if focusActions {
+                Button("往上") { planner.moveFocus(goal, by: -1) }
+                Button("往下") { planner.moveFocus(goal, by: 1) }
+                Button("取消焦點") { planner.unfocus(goal) }
+                Divider()
+            }
             if goal.status == .archived || goal.status == .completed {
                 Button { planner.reopen(goal) } label: { Label("重新開啟", systemImage: "arrow.uturn.backward") }
             }

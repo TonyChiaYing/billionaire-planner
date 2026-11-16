@@ -29,12 +29,7 @@ struct GoalsView: View {
                     }
                     ForEach(focus) { g in
                         NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
-                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting))
-                            .contextMenu {
-                                Button("往上") { planner.moveFocus(g, by: -1) }
-                                Button("往下") { planner.moveFocus(g, by: 1) }
-                                Button("取消焦點") { planner.unfocus(g) }
-                            }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting, focusActions: true))
                             .accessibilityAction(named: "往上") { planner.moveFocus(g, by: -1) }
                             .accessibilityAction(named: "往下") { planner.moveFocus(g, by: 1) }
                     }
