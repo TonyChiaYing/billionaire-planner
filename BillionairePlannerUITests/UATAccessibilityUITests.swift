@@ -330,11 +330,16 @@ final class UATAccessibilityUITests: XCTestCase {
 
     // MARK: V207-DELETE：從目標清單右鍵永久刪除、從詳細頁刪除下一步
 
+    /// 目標列是一個按鈕，標籤合併了「焦點、標題、期程、成果」
+    func goalRow(_ title: String) -> XCUIElement {
+        app.buttons.matching(NSPredicate(format: "label CONTAINS %@", title)).firstMatch
+    }
+
     func testV207DELETE_RightClickDeleteGoalRemovesItAndItsTodayPlan() {
         createGoalToFinishStep(title: "UT Delete Me", action: "Delete me 25 min")
         button("wizard.focusAndToday").click()
         button("wizard.done").click()
-        let row = app.staticTexts["UT Delete Me"].firstMatch
+        let row = goalRow("UT Delete Me")
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         row.rightClick()
         let item = app.menuItems["永久刪除…"].firstMatch
@@ -354,7 +359,7 @@ final class UATAccessibilityUITests: XCTestCase {
     func testV207DELETE_CancelKeepsGoal() {
         createGoalToFinishStep(title: "UT Keep Me")
         button("wizard.later").click()
-        let row = app.staticTexts["UT Keep Me"].firstMatch
+        let row = goalRow("UT Keep Me")
         XCTAssertTrue(row.waitForExistence(timeout: 5))
         row.rightClick()
         app.menuItems["永久刪除…"].firstMatch.click()
@@ -367,14 +372,16 @@ final class UATAccessibilityUITests: XCTestCase {
     func testV207DELETE_DeleteNextStepFromDetail() {
         createGoalToFinishStep(title: "UT Detail", action: "Remove this step")
         button("wizard.later").click()
-        app.staticTexts["UT Detail"].firstMatch.click()
+        let detailRow = goalRow("UT Detail")
+        XCTAssertTrue(detailRow.waitForExistence(timeout: 5))
+        detailRow.click()
         XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForExistence(timeout: 5))
         button("action.delete").click()
         let confirm = app.buttons["刪除這個下一步"].firstMatch
         XCTAssertTrue(confirm.waitForExistence(timeout: 5))
         confirm.click()
         XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["UT Detail"].firstMatch.exists, "只刪下一步，目標要保留")
+        XCTAssertTrue(app.navigationBars["UT Detail"].exists || app.staticTexts["UT Detail"].firstMatch.exists || goalRow("UT Detail").exists, "只刪下一步，目標要保留")
     }
 }
 
