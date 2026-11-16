@@ -300,6 +300,79 @@ extension Planner {
         save()
     }
 
+    // MARK: 刪除（V207-DELETE）
+    // 產品規則：優先封存；永久刪除是使用者明確確認後的「受控清理」——
+    // 一次刪掉這個目標自己的紀錄，不靠 cascade；使用者自己寫的原則與思考紀錄保留，只解除連結。
+
+    struct GoalDeletionSummary: Equatable {
+        var strategies = 0, actions = 0, placements = 0, milestones = 0, outcomes = 0, history = 0, unlinkedNotes = 0
+        /// 確認對話框的說明文字
+        var description: String {
+            var parts: [String] = []
+            if strategies > 0 { parts.append("\(strategies) 個策略") }
+            if actions > 0 { parts.append("\(actions) 個行動（含 \(placements) 筆安排）") }
+            if milestones > 0 { parts.append("\(milestones) 個里程碑") }
+            if outcomes > 0 { parts.append("\(outcomes) 項成果紀錄") }
+            if history > 0 { parts.append("\(history) 筆調整歷史") }
+            var text = parts.isEmpty ? "這個目標沒有其他紀錄。" : "會一起刪除：" + parts.joined(separator: "、") + "。"
+            if unlinkedNotes > 0 { text += "\n\(unlinkedNotes) 則原則／思考紀錄會保留，只解除與這個目標的連結。" }
+            return text + "\n此動作無法復原；只想先收起來請改用「封存」。"
+        }
+    }
+
+    func deletionSummary(_ goal: Goal) -> GoalDeletionSummary {
+        let actionIDs = Set(context.all(ActionItem.self).filter { $0.goalID == goal.id }.map(\.id))
+        return GoalDeletionSummary(
+            strategies: context.all(Strategy.self).filter { $0.goalID == goal.id }.count,
+            actions: actionIDs.count,
+            placements: context.all(PlanPlacement.self).filter { actionIDs.contains($0.actionID) }.count,
+            milestones: context.all(Milestone.self).filter { $0.goalID == goal.id }.count,
+            outcomes: context.all(OutcomeEvidence.self).filter { $0.goalID == goal.id }.count,
+            history: context.all(StrategyDecision.self).filter { $0.goalID == goal.id }.count
+                + context.all(RecoveryEpisode.self).filter { $0.goalID == goal.id }.count
+                + context.all(DeadlineRevision.self).filter { $0.goalID == goal.id }.count,
+            unlinkedNotes: context.all(Principle.self).filter { $0.goalID == goal.id }.count
+                + context.all(ThinkingSession.self).filter { $0.goalID == goal.id }.count)
+    }
+
+    /// 永久刪除目標（呼叫前必須已由使用者確認）。用 id，畫面可以先關閉再刪，避免顯示已刪除的資料。
+    func deleteGoalPermanently(id: UUID) {
+        guard let goal = goal(id) else { return }
+        let actions = context.all(ActionItem.self).filter { $0.goalID == id }
+        let actionIDs = Set(actions.map(\.id))
+        let strategyIDs = Set(context.all(Strategy.self).filter { $0.goalID == id }.map(\.id))
+        context.all(PlanPlacement.self).filter { actionIDs.contains($0.actionID) }.forEach(context.delete)
+        actions.forEach(context.delete)
+        context.all(Strategy.self).filter { $0.goalID == id }.forEach(context.delete)
+        context.all(Milestone.self).filter { $0.goalID == id }.forEach(context.delete)
+        context.all(OutcomeEvidence.self).filter { $0.goalID == id }.forEach(context.delete)
+        context.all(StrategyDecision.self).filter { $0.goalID == id }.forEach(context.delete)
+        context.all(RecoveryEpisode.self).filter { $0.goalID == id }.forEach(context.delete)
+        context.all(DeadlineRevision.self).filter { $0.goalID == id }.forEach(context.delete)
+        for p in context.all(Principle.self) where p.goalID == id || p.strategyID.map(strategyIDs.contains) == true {
+            p.goalID = nil; p.strategyID = nil
+        }
+        for t in context.all(ThinkingSession.self) where t.goalID == id || t.strategyID.map(strategyIDs.contains) == true {
+            t.goalID = nil; t.strategyID = nil
+        }
+        for r in context.all(DailyReview.self) where r.blockedGoalIDs.contains(id) {
+            r.blockedGoalIDs.removeAll { $0 == id }
+        }
+        let wasFocus = goal.isFocus
+        context.delete(goal)
+        save()
+        if wasFocus { renumberFocus() }
+    }
+
+    /// 刪除一個下一步（含它的安排）。已記錄的成果保留在目標上，只解除與這個行動的連結。
+    func deleteAction(id: UUID) {
+        guard let a = context.all(ActionItem.self).first(where: { $0.id == id }) else { return }
+        context.all(PlanPlacement.self).filter { $0.actionID == id }.forEach(context.delete)
+        for e in context.all(OutcomeEvidence.self) where e.actionID == id { e.actionID = nil }
+        context.delete(a)
+        save()
+    }
+
     /// 遷移後手動連結（取代 v1 的標題關聯）
     func link(_ action: ActionItem, to goal: Goal) {
         action.goalID = goal.id

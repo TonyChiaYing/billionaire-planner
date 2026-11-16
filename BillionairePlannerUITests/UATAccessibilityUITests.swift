@@ -327,6 +327,55 @@ final class UATAccessibilityUITests: XCTestCase {
         print("a11y-issues=\(log.count)")
         XCTAssertTrue(strict.isEmpty, "文字對比不足：\n" + strict.joined(separator: "\n"))
     }
+
+    // MARK: V207-DELETE：從目標清單右鍵永久刪除、從詳細頁刪除下一步
+
+    func testV207DELETE_RightClickDeleteGoalRemovesItAndItsTodayPlan() {
+        createGoalToFinishStep(title: "UT Delete Me", action: "Delete me 25 min")
+        button("wizard.focusAndToday").click()
+        button("wizard.done").click()
+        let row = app.staticTexts["UT Delete Me"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.rightClick()
+        let item = app.menuItems["永久刪除…"].firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 3), "右鍵選單沒有「永久刪除…」")
+        item.click()
+        let confirm = app.buttons["永久刪除"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5), "沒有出現確認")
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS '無法復原' OR value CONTAINS '無法復原'")).firstMatch.exists
+                      || app.descendants(matching: .any).containing(NSPredicate(format: "label CONTAINS '無法復原'")).firstMatch.exists,
+                      "確認裡沒有說明會刪掉什麼")
+        confirm.click()
+        XCTAssertTrue(row.waitForNonExistence(timeout: 5), "目標沒有被刪除")
+        openTab("今天")
+        XCTAssertFalse(app.staticTexts["Delete me 25 min"].firstMatch.waitForExistence(timeout: 2), "今天的安排沒有一起移除")
+    }
+
+    func testV207DELETE_CancelKeepsGoal() {
+        createGoalToFinishStep(title: "UT Keep Me")
+        button("wizard.later").click()
+        let row = app.staticTexts["UT Keep Me"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 5))
+        row.rightClick()
+        app.menuItems["永久刪除…"].firstMatch.click()
+        let cancel = app.buttons["取消"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+        cancel.click()
+        XCTAssertTrue(row.waitForExistence(timeout: 3), "取消後目標不應消失")
+    }
+
+    func testV207DELETE_DeleteNextStepFromDetail() {
+        createGoalToFinishStep(title: "UT Detail", action: "Remove this step")
+        button("wizard.later").click()
+        app.staticTexts["UT Detail"].firstMatch.click()
+        XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForExistence(timeout: 5))
+        button("action.delete").click()
+        let confirm = app.buttons["刪除這個下一步"].firstMatch
+        XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+        confirm.click()
+        XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["UT Detail"].firstMatch.exists, "只刪下一步，目標要保留")
+    }
 }
 
 private let Tutorial_exampleGoal = "[範例] 完成 20 分鐘晨間閱讀"

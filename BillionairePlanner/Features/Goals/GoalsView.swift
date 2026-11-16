@@ -8,6 +8,7 @@ struct GoalsView: View {
     @Environment(\.dataVersion) private var dataVersion
     @State private var showWizard = false
     @State private var showClosed = false
+    @State private var deleting: Goal?
 
     var body: some View {
         let _ = dataVersion
@@ -28,6 +29,7 @@ struct GoalsView: View {
                     }
                     ForEach(focus) { g in
                         NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting))
                             .contextMenu {
                                 Button("往上") { planner.moveFocus(g, by: -1) }
                                 Button("往下") { planner.moveFocus(g, by: 1) }
@@ -47,17 +49,20 @@ struct GoalsView: View {
 
                 if !drafts.isEmpty {
                     Section {
-                        ForEach(drafts) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) } }
+                        ForEach(drafts) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting)) }
                     } header: { Text("草稿") } footer: { Text("補上策略與一個下一步，就能加入焦點並出現在今天。") }
                 }
                 if !others.isEmpty {
                     Section("其他進行中") {
-                        ForEach(others) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) } }
+                        ForEach(others) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting)) }
                     }
                 }
                 if !paused.isEmpty {
                     Section("暫停中") {
-                        ForEach(paused) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) } }
+                        ForEach(paused) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting)) }
                     }
                 }
                 if !unlinked.isEmpty {
@@ -68,13 +73,15 @@ struct GoalsView: View {
                 if !closed.isEmpty {
                     Section {
                         DisclosureGroup("已完成與封存（\(closed.count)）", isExpanded: $showClosed) {
-                            ForEach(closed) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) } }
+                            ForEach(closed) { g in NavigationLink { GoalDetailView(goal: g) } label: { GoalRow(goal: g, planner: planner) }
+                            .modifier(GoalRowMenu(goal: g, planner: planner, deleting: $deleting)) }
                         }
                     }
                 }
             }
             .darkCanvas()
             .accessibilityLabel("目標清單")
+            .confirmGoalDeletion($deleting)
             .navigationTitle("目標")
             .toolbar {
                 ToolbarItemGroup {

@@ -330,4 +330,71 @@ final class UATRegressionTests: XCTestCase {
         XCTAssertEqual(tabs, Set(AppTab.allCases), "每個分頁都要有教學")
         XCTAssertTrue(Tutorial.exampleGoal.hasPrefix("[範例]"), "範例資料要一眼看得出是範例")
     }
+
+    // MARK: V207-DELETE：封存與永久刪除
+
+    func testV207DELETE_GoalDeletesOwnRecordsKeepsOthersAndNotes() {
+        let p = planner()
+        let keep = runningGoal("[UT] 保留的目標")
+        _ = p.requestFocus(keep)
+        let g = runningGoal("[UT] 要刪的目標")
+        _ = p.requestFocus(g)
+        let a = p.openActions(for: g.id).first!
+        p.plan(a, on: p.today)
+        _ = p.addMilestone(g, title: "m", targetDate: nil)
+        p.recordEvidence(g, kind: .note, value: nil, note: "成果", actionID: a.id)
+        let principle = Principle(text: "先做最難的")
+        principle.goalID = g.id
+        p.context.insert(principle)
+        let r = p.review(for: p.today)
+        r.blockedGoalIDs = [g.id, keep.id]
+
+        let sum = p.deletionSummary(g)
+        XCTAssertEqual(sum.strategies, 1)
+        XCTAssertEqual(sum.actions, 1)
+        XCTAssertEqual(sum.placements, 1)
+        XCTAssertEqual(sum.milestones, 1)
+        XCTAssertEqual(sum.outcomes, 1)
+        XCTAssertEqual(sum.unlinkedNotes, 1)
+        XCTAssertTrue(sum.description.contains("無法復原"))
+
+        p.deleteGoalPermanently(id: g.id)
+        XCTAssertNil(p.goal(g.id))
+        XCTAssertTrue(p.context.all(ActionItem.self).allSatisfy { $0.goalID != g.id })
+        XCTAssertTrue(p.context.all(Strategy.self).allSatisfy { $0.goalID != g.id })
+        XCTAssertTrue(p.placements(on: p.today).allSatisfy { $0.actionID != a.id })
+        XCTAssertTrue(p.evidence(for: g.id).isEmpty)
+        XCTAssertNotNil(p.context.all(Principle.self).first { $0.text == "先做最難的" }, "使用者寫的原則要保留")
+        XCTAssertNil(principle.goalID)
+        XCTAssertEqual(p.review(for: p.today).blockedGoalIDs, [keep.id])
+        // 另一個目標完全不受影響，焦點重新排序
+        XCTAssertNotNil(p.goal(keep.id))
+        XCTAssertEqual(p.openActions(for: keep.id).count, 1)
+        XCTAssertEqual(p.focusGoals.map(\.id), [keep.id])
+        XCTAssertEqual(keep.focusRank, 0)
+    }
+
+    func testV207DELETE_ArchiveKeepsEverythingAndCanReopen() {
+        let p = planner()
+        let g = runningGoal()
+        p.archive(g)
+        XCTAssertEqual(g.status, .archived)
+        XCTAssertEqual(p.openActions(for: g.id).count, 1, "封存不刪任何紀錄")
+        p.reopen(g)
+        XCTAssertNotEqual(g.status, .archived)
+    }
+
+    func testV207DELETE_ActionDeleteRemovesPlacementsKeepsOutcome() {
+        let p = planner()
+        let g = runningGoal()
+        let a = p.openActions(for: g.id).first!
+        p.complete(p.plan(a, on: p.today))
+        p.recordEvidence(g, kind: .note, value: nil, note: "跑完", actionID: a.id)
+        p.deleteAction(id: a.id)
+        XCTAssertTrue(p.context.all(ActionItem.self).allSatisfy { $0.id != a.id })
+        XCTAssertTrue(p.placements(on: p.today).isEmpty)
+        XCTAssertEqual(p.evidence(for: g.id).count, 1, "成果保留在目標上")
+        XCTAssertNil(p.evidence(for: g.id).first?.actionID)
+        XCTAssertNotNil(p.goal(g.id))
+    }
 }

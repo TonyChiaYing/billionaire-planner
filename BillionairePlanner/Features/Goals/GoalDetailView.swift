@@ -12,6 +12,9 @@ struct GoalDetailView: View {
     @State private var focusAlert: FocusRequestResult?
     @State private var showReplace = false
     @State private var recovery: RecoveryEpisode?
+    @State private var deleting: Goal?
+    @State private var deletingAction: ActionItem?
+    @Environment(\.dismiss) private var dismissDetail
 
     enum GoalSheet: String, Identifiable {
         case edit, action, strategy, switchStrategy, milestone, evidence, deadline, pause, restart
@@ -41,6 +44,29 @@ struct GoalDetailView: View {
             ToolbarItem {
                 Button { sheet = .edit } label: { Label("編輯", systemImage: "pencil") }
             }
+            ToolbarItem {
+                Menu {
+                    if goal.status != .archived {
+                        Button { Planner(context).archive(goal) } label: { Label("封存", systemImage: "archivebox") }
+                    }
+                    Button(role: .destructive) { deleting = goal } label: { Label("永久刪除…", systemImage: "trash") }
+                        .accessibilityIdentifier("goalDetail.delete")
+                } label: { Label("更多", systemImage: "ellipsis.circle") }
+                .accessibilityIdentifier("goalDetail.more")
+            }
+        }
+        .confirmGoalDeletion($deleting, beforeDelete: { dismissDetail() })
+        .confirmationDialog("刪除「\(deletingAction?.title ?? "")」？", isPresented: Binding(get: { deletingAction != nil },
+                                                                                     set: { if !$0 { deletingAction = nil } }),
+                            titleVisibility: .visible, presenting: deletingAction) { a in
+            Button("刪除這個下一步", role: .destructive) {
+                Planner(context).deleteAction(id: a.id)
+                deletingAction = nil
+            }
+            .accessibilityIdentifier("action.delete.confirm")
+            Button("取消", role: .cancel) { deletingAction = nil }
+        } message: { _ in
+            Text("它在各天的安排也會一起移除；已記錄的成果會保留在目標上。此動作無法復原。")
         }
         .sheet(item: $sheet) { s in GoalEditSheets(goal: goal, kind: s) }
         .sheet(item: $recovery) { RecoverySheet(episode: $0) }
@@ -178,6 +204,14 @@ struct GoalDetailView: View {
                     } else {
                         Button("加入今天") { planner.plan(a, on: today) }.buttonStyle(.bordered)
                     }
+                    Button { deletingAction = a } label: { Image(systemName: "trash") }
+                        .buttonStyle(.borderless)
+                        .help("刪除這個下一步")
+                        .accessibilityLabel("刪除「\(a.title)」")
+                        .accessibilityIdentifier("action.delete")
+                }
+                .contextMenu {
+                    Button(role: .destructive) { deletingAction = a } label: { Label("刪除這個下一步…", systemImage: "trash") }
                 }
             }
             Button { sheet = .action } label: { Label("新增下一步", systemImage: "plus") }
@@ -306,9 +340,14 @@ struct GoalDetailView: View {
                     Button("標為完成") { planner.complete(goal) }.buttonStyle(.bordered)
                 }
                 Button("開始新週期") { sheet = .restart }.buttonStyle(.bordered)
-                if goal.status != .archived { Button("封存") { planner.archive(goal) }.buttonStyle(.borderless) }
+                if goal.status != .archived { Button("封存") { planner.archive(goal) }.buttonStyle(.bordered) }
+                Spacer()
+                Button(role: .destructive) { deleting = goal } label: { Label("永久刪除…", systemImage: "trash") }
+                    .buttonStyle(.bordered)
+                    .accessibilityIdentifier("goalDetail.deleteButton")
             }
-            Text("任何調整都會保留過去的成果與歷史。").font(.z(.caption)).foregroundStyle(Color.subtleText)
+            Text("暫停、完成、封存都會保留過去的成果與歷史；永久刪除會先列出要刪的內容再請你確認。")
+                .font(.z(.caption)).foregroundStyle(Color.subtleText)
         }
     }
 }
