@@ -381,7 +381,9 @@ final class UATAccessibilityUITests: XCTestCase {
         XCTAssertTrue(confirm.waitForExistence(timeout: 5))
         confirm.click()
         XCTAssertTrue(app.staticTexts["Remove this step"].firstMatch.waitForNonExistence(timeout: 5))
-        XCTAssertTrue(app.navigationBars["UT Detail"].exists || app.staticTexts["UT Detail"].firstMatch.exists || goalRow("UT Detail").exists, "只刪下一步，目標要保留")
+        XCTAssertTrue(app.buttons["新增下一步"].firstMatch.exists, "只刪下一步，應該還在目標詳細頁")
+        openTab("目標")
+        XCTAssertTrue(goalRow("UT Detail").waitForExistence(timeout: 5), "只刪下一步，目標要保留")
     }
 }
 
